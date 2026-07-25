@@ -411,6 +411,46 @@
       margin-top: 0;
     }
 
+    .closing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 720px;
+      margin: 32px 0 40px;
+      font-family: var(--sans);
+    }
+
+    .closing-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid var(--forest);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .closing-action.primary {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .closing-action.secondary {
+      background: transparent;
+      color: var(--forest);
+    }
+
+    .closing-action:hover,
+    .closing-action:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--white);
+      outline: none;
+    }
+
     footer {
       width: min(1120px, calc(100% - 48px));
       margin: 0 auto 52px;
@@ -503,6 +543,14 @@
 
       .pull-quote {
         padding: 22px;
+      }
+
+      .closing-actions {
+        flex-direction: column;
+      }
+
+      .closing-action {
+        width: 100%;
       }
     }
 
@@ -962,10 +1010,10 @@
             The template is not the answer to AI-assisted development. It is a place where we can
             make our current answers visible and improve them together.
           </p>
-          <p>
-            Explore the template, review the files, and help improve the experiment on
-            <a href="https://github.com/imtoam/AIPartner">GitHub</a>.
-          </p>
+          <div class="closing-actions" aria-label="Continue with AIPartner">
+            <a class="closing-action primary" href="https://imtoam.github.io/AIPartner/">Start with AIPartner</a>
+            <a class="closing-action secondary" href="https://github.com/imtoam/AIPartner">View the repository</a>
+          </div>
 
           <div class="source-list">
             <h3>Reference foundations</h3>
