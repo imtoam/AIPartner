@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A screen-by-screen guide to publishing AIPartner with GitHub Pages and sharing the English or French article on Facebook." />
+  <title>Publish AIPartner for Facebook</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --white: #fffdf8;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --glow: #e9b8a4;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.68;
+    }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.4);
+      text-underline-offset: 0.18em;
+    }
+
+    .masthead {
+      padding: 28px 30px 86px;
+      overflow: hidden;
+      position: relative;
+      background: var(--forest-dark);
+      color: var(--white);
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 253, 248, 0.34);
+      border-radius: 50%;
+      position: absolute;
+      right: 22px;
+      bottom: -70px;
+      opacity: 0;
+      transform: scale(0.3);
+      animation: glow 6.4s ease-out infinite;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+
+      18% {
+        opacity: 0.28;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner,
+    .page,
+    footer {
+      width: min(980px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline,
+    .label,
+    .route,
+    .settings,
+    .button,
+    .problem h3 {
+      font-family: var(--sans);
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      color: rgba(255, 253, 248, 0.7);
+      font-size: 0.75rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      max-width: 800px;
+      margin-top: 78px;
+    }
+
+    .label {
+      margin: 0 0 16px;
+      color: var(--glow);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 0.95;
+    }
+
+    .dek {
+      max-width: 690px;
+      margin: 28px 0 0;
+      color: rgba(255, 253, 248, 0.78);
+      font-size: 1.25rem;
+    }
+
+    .page {
+      width: min(980px, calc(100% - 38px));
+      margin-top: -38px;
+      margin-bottom: 60px;
+    }
+
+    .panel {
+      padding: clamp(30px, 6vw, 64px);
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      background: var(--white);
+      box-shadow: var(--shadow);
+    }
+
+    .warning {
+      padding: 24px;
+      border-left: 4px solid var(--accent);
+      background: var(--accent-soft);
+      color: #61392b;
+    }
+
+    .warning h2 {
+      margin: 0;
+      font-size: 1.65rem;
+      line-height: 1.15;
+    }
+
+    .warning p {
+      margin: 12px 0 0;
+    }
+
+    h2 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.04;
+    }
+
+    .lead {
+      max-width: 720px;
+      margin: 20px 0 0;
+      color: #46514f;
+      font-size: 1.1rem;
+    }
+
+    .route {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 30px;
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .route span {
+      padding: 9px 12px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+    }
+
+    .route b {
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .steps {
+      margin: 34px 0 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: steps;
+    }
+
+    .steps li {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 18px;
+      padding-bottom: 24px;
+      counter-increment: steps;
+      position: relative;
+    }
+
+    .steps li::before {
+      content: counter(steps, decimal-leading-zero);
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      z-index: 1;
+      border: 1px solid var(--forest);
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+    }
+
+    .steps li::after {
+      content: "";
+      width: 1px;
+      position: absolute;
+      top: 40px;
+      bottom: 0;
+      left: 20px;
+      background: var(--line);
+    }
+
+    .steps li:last-child::after {
+      display: none;
+    }
+
+    .steps strong {
+      display: block;
+      margin: 5px 0 3px;
+      font-family: var(--sans);
+      font-size: 0.95rem;
+    }
+
+    .steps p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .settings {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      margin-top: 30px;
+      border: 1px solid var(--line);
+      background: var(--line);
+    }
+
+    .setting {
+      padding: 22px;
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .setting span {
+      display: block;
+      color: rgba(255, 253, 248, 0.64);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .setting strong {
+      display: block;
+      margin-top: 8px;
+      font-size: 1rem;
+    }
+
+    .links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: flex;
+      align-items: center;
+      min-height: 86px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      font-size: 0.83rem;
+      font-weight: 700;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .problems {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+      margin-top: 32px;
+    }
+
+    .problem {
+      padding: 22px;
+      border-left: 3px solid var(--accent);
+      background: #faf7f0;
+    }
+
+    .problem h3 {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .problem p {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .final {
+      background: var(--forest-dark);
+      color: var(--white);
+    }
+
+    .final .lead {
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .final a {
+      color: var(--glow);
+    }
+
+    footer {
+      width: min(980px, calc(100% - 38px));
+      padding: 0 0 44px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 700px) {
+      .settings,
+      .links,
+      .problems {
+        grid-template-columns: 1fr;
+      }
+
+      .topline {
+        flex-direction: column;
+        gap: 6px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .masthead::before,
+      .masthead::after {
+        opacity: 0.15;
+        transform: scale(2.4);
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>AIPartner publishing guide</span>
+        <span>GitHub Pages and Facebook</span>
+      </div>
+      <div class="hero">
+        <p class="label">One branch, one folder, one Save button</p>
+        <h1>Publish the site without getting lost in the file view</h1>
+        <p class="dek">
+          You do not publish index.html by selecting it. Confirm that it exists, then leave Code and
+          configure GitHub Pages under the repository Settings.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="panel">
+      <div class="warning">
+        <h2>Do not open index.html</h2>
+        <p>
+          The Code page is only a checkpoint. GitHub Pages publishes the main branch from the
+          repository root. It does not publish one selected file.
+        </p>
+      </div>
+      <div class="route" aria-label="GitHub navigation route">
+        <span>AIPartner repository</span>
+        <b>then</b>
+        <span>Settings</span>
+        <b>then</b>
+        <span>Pages</span>
+        <b>then</b>
+        <span>Deploy from a branch</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="label">Checkpoint 1</p>
+      <h2>Confirm the entry file, then stop using Code</h2>
+      <ol class="steps">
+        <li>
+          <p>
+            <strong>Open the repository</strong>
+            Go to github.com/imtoam/AIPartner.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Look at the first file list</strong>
+            Confirm that index.html appears at the top level beside README.md and START_HERE.md.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Do not select the file</strong>
+            Its presence is enough. Continue through the Settings tab near the top of the repository.
+          </p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="panel">
+      <p class="label">Checkpoint 2</p>
+      <h2>Turn on GitHub Pages</h2>
+      <ol class="steps">
+        <li>
+          <p>
+            <strong>Select Settings</strong>
+            If it is hidden, open the additional repository navigation menu and choose Settings.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Select Pages</strong>
+            Find it in the left sidebar under Code and automation.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Choose the source</strong>
+            Under Build and deployment, set Source to Deploy from a branch.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Choose the location</strong>
+            Select main in the branch menu and /(root) in the folder menu.
+          </p>
+        </li>
+        <li>
+          <p>
+            <strong>Select Save</strong>
+            Do not choose GitHub Actions. This static site does not need a custom workflow.
+          </p>
+        </li>
+      </ol>
+
+      <div class="settings" aria-label="Required GitHub Pages settings">
+        <div class="setting">
+          <span>Source</span>
+          <strong>Deploy from a branch</strong>
+        </div>
+        <div class="setting">
+          <span>Branch</span>
+          <strong>main</strong>
+        </div>
+        <div class="setting">
+          <span>Folder</span>
+          <strong>/(root)</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <p class="label">Checkpoint 3</p>
+      <h2>Wait for the live address</h2>
+      <p class="lead">
+        Stay on the Pages screen after saving. The first deployment may take several minutes.
+        GitHub will display a message when the site is live.
+      </p>
+      <div class="links">
+        <a class="button" href="https://imtoam.github.io/AIPartner/">Human starting page</a>
+        <a class="button" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project.html">English article</a>
+        <a class="button" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html">French article</a>
+      </div>
+      <p class="lead">
+        The French article will not exist online until ai-native-project-fr.html has been committed
+        and pushed.
+      </p>
+    </section>
+
+    <section class="panel">
+      <p class="label">If something is missing</p>
+      <h2>Use the symptom, not guesswork</h2>
+      <div class="problems">
+        <article class="problem">
+          <h3>Settings is missing</h3>
+          <p>
+            Open the additional repository menu. If it is still absent, confirm that you are signed
+            into the owner account and have administrator permission.
+          </p>
+        </article>
+        <article class="problem">
+          <h3>Pages is missing</h3>
+          <p>
+            Look under Code and automation. A private repository may require a paid plan for GitHub
+            Pages. A public repository works with GitHub Free.
+          </p>
+        </article>
+        <article class="problem">
+          <h3>The branch menu says None</h3>
+          <p>
+            Open it and select main. If main is absent, the local branch has not been pushed to
+            GitHub.
+          </p>
+        </article>
+        <article class="problem">
+          <h3>Save is disabled</h3>
+          <p>
+            The same source may already be saved. Check for main and /(root), then look for the live
+            site message.
+          </p>
+        </article>
+        <article class="problem">
+          <h3>The site shows 404</h3>
+          <p>
+            Wait several minutes. Confirm main and /(root), then open Actions and inspect the latest
+            pages build and deployment run.
+          </p>
+        </article>
+        <article class="problem">
+          <h3>Only one article fails</h3>
+          <p>
+            Confirm that its file is visible inside introduction on GitHub. Local files are not
+            published until they are committed and pushed.
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel final">
+      <p class="label">Facebook</p>
+      <h2>Share the website address, not the repository address</h2>
+      <p class="lead">
+        After the selected article opens through github.io, use the matching EN or FR entry in
+        facebook-post.md. Facebook should receive the github.io article URL.
+      </p>
+      <p class="lead">
+        For GitHub's official explanation of the same settings, see
+        <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site">Configuring a publishing source for GitHub Pages</a>.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    AIPartner / Human publishing guide
+  </footer>
+</body>
+</html>

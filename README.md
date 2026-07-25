@@ -1,6 +1,6 @@
 # AIPartner
 
-Human entry: [Open the visual guide](https://imtoam.github.io/AIPartner/)
+Human entry: [Open the visual guide](https://imtoam.github.io/AIPartner/index.html)
 
 AI entry: Read START_HERE.md in full and follow its greenfield initialization protocol.
 

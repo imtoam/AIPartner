@@ -1,0 +1,1024 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Pourquoi une IA puissante a encore besoin d'un partenaire humain pour développer et livrer des logiciels fiables, et comment cette collaboration transforme le rôle du programmeur." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html" />
+  <meta property="og:site_name" content="Développement logiciel humain et IA" />
+  <meta property="og:locale" content="fr_FR" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:title" content="Pourquoi l'IA a encore besoin d'un humain pour développer des logiciels" />
+  <meta property="og:description" content="L'IA peut accomplir une grande partie du travail, mais le contexte limité, l'incertitude des résultats et la continuité fragmentée rendent la collaboration humaine indispensable au développement et à la livraison." />
+  <meta property="og:image" content="https://imtoam.github.io/AIPartner/introduction/facebook-share-card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Carte éditoriale sur la collaboration entre l'humain et l'IA dans le développement logiciel" />
+  <link rel="canonical" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html" />
+  <link rel="alternate" hreflang="en" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project.html" />
+  <link rel="alternate" hreflang="fr" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html" />
+  <title>Pourquoi l'IA a encore besoin d'un humain pour développer des logiciels</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d3;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --white: #fffdf8;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.4);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-color: var(--forest);
+    }
+
+    .masthead {
+      background:
+        radial-gradient(
+          circle at calc(100% - 110px) calc(100% - 25px),
+          rgba(233, 184, 164, 0.14) 0,
+          rgba(255, 253, 248, 0.045) 78px,
+          transparent 170px
+        ),
+        var(--forest-dark);
+      color: var(--white);
+      min-height: 530px;
+      padding: 30px 32px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 20px;
+      bottom: -65px;
+      opacity: 0;
+      box-shadow:
+        0 0 16px rgba(233, 184, 164, 0.24),
+        inset 0 0 12px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes radiating-glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.28);
+      }
+
+      14% {
+        opacity: 0.3;
+      }
+
+      58% {
+        opacity: 0.13;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--sans);
+      font-size: 0.77rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .topline span:last-child {
+      text-align: right;
+    }
+
+    .hero-copy {
+      max-width: 880px;
+      margin-top: 108px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.7rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+    }
+
+    .dek {
+      max-width: 680px;
+      margin: 34px 0 0;
+      color: rgba(255, 253, 248, 0.78);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 48px));
+      margin: -42px auto 80px;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 54px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contents {
+      position: sticky;
+      top: 28px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      font-family: var(--sans);
+    }
+
+    .contents h2 {
+      margin: 0 0 15px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .contents ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: nav;
+    }
+
+    .contents li {
+      counter-increment: nav;
+      border-top: 1px solid #e6ded1;
+    }
+
+    .contents a {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 6px;
+      padding: 10px 0;
+      color: var(--ink);
+      font-size: 0.79rem;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .contents a::before {
+      content: counter(nav, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    .article {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: clamp(38px, 7vw, 86px);
+      box-shadow: var(--shadow);
+    }
+
+    .article-header {
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 58px;
+    }
+
+    .article-header p {
+      max-width: 680px;
+      margin: 0;
+      font-size: 1.32rem;
+      color: #3f4b49;
+    }
+
+    .article section {
+      scroll-margin-top: 28px;
+      margin: 0 0 66px;
+    }
+
+    .article section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .article h2 {
+      max-width: 720px;
+      margin: 0 0 26px;
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .article h3 {
+      margin: 38px 0 12px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article p {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font-size: 1.08rem;
+    }
+
+    .article ul,
+    .article ol {
+      max-width: 700px;
+      margin: 24px 0 30px;
+      padding-left: 1.3rem;
+    }
+
+    .article li {
+      padding-left: 0.35rem;
+      margin: 0 0 10px;
+      font-size: 1.03rem;
+    }
+
+    .pull-quote {
+      max-width: 720px;
+      margin: 38px 0;
+      padding: 28px 30px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-soft);
+      color: #512b1f;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0;
+    }
+
+    .framework-card {
+      border: 1px solid var(--line);
+      background: #faf7f1;
+      padding: 22px;
+    }
+
+    .framework-card h3 {
+      margin: 0 0 9px;
+      color: var(--accent);
+    }
+
+    .framework-card p {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .loop {
+      margin: 18px 0;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      background: #f8f5ee;
+    }
+
+    .loop strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .loop p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .principle {
+      max-width: 720px;
+      margin: 34px 0;
+      padding: 25px 28px;
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .principle span {
+      display: block;
+      margin-bottom: 8px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.45;
+    }
+
+    .source-list {
+      border-top: 1px solid var(--line);
+      margin-top: 35px;
+      padding-top: 22px;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+    }
+
+    .source-list h3 {
+      margin-top: 0;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto 52px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .masthead {
+        min-height: 480px;
+      }
+
+      .hero-copy {
+        margin-top: 82px;
+      }
+
+      .page-shell {
+        display: block;
+        margin-top: -30px;
+      }
+
+      .contents {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+      }
+
+      .contents ol {
+        columns: 2;
+        column-gap: 28px;
+      }
+
+      .contents li {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .masthead {
+        min-height: 440px;
+        padding: 22px 20px 58px;
+      }
+
+      .topline {
+        align-items: flex-start;
+        font-size: 0.63rem;
+      }
+
+      .hero-copy {
+        margin-top: 70px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+      }
+
+      .dek {
+        font-size: 1.05rem;
+      }
+
+      .page-shell {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .contents {
+        padding: 19px;
+      }
+
+      .contents ol {
+        columns: 1;
+      }
+
+      .article {
+        padding: 34px 24px;
+      }
+
+      .article h2 {
+        font-size: 2.15rem;
+      }
+
+      .article p {
+        font-size: 1rem;
+      }
+
+      .framework-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pull-quote {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .masthead::before {
+        animation: none;
+        opacity: 0.12;
+        transform: scale(2.5);
+      }
+
+      .masthead::after {
+        display: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .masthead {
+        min-height: auto;
+        padding: 30px;
+        color: #000;
+        background: #fff;
+        border-bottom: 2px solid #000;
+      }
+
+      .masthead::before,
+      .masthead::after,
+      .contents {
+        display: none;
+      }
+
+      .hero-copy {
+        margin-top: 45px;
+      }
+
+      .dek,
+      .eyebrow,
+      .topline {
+        color: #222;
+      }
+
+      .page-shell {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .article {
+        border: 0;
+        box-shadow: none;
+        padding: 32px 0;
+      }
+
+      .article section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>Développement logiciel humain et IA</span>
+        <span>Les limites, les rôles et une première exploration</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">Après la promesse d'une automatisation complète</p>
+        <h1>Pourquoi l'IA a encore besoin d'un humain pour développer des logiciels</h1>
+        <p class="dek">
+          L'IA est devenue suffisamment puissante pour laisser penser que les ingénieurs en logiciel
+          pourraient disparaître. L'expérience des projets qui grandissent révèle un autre avenir.
+          L'IA peut accomplir une grande partie du travail, mais le contexte limité, l'incertitude
+          des résultats et la continuité fragmentée rendent la collaboration humaine indispensable
+          au développement et à la livraison.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <nav class="contents" aria-label="Sommaire de l'article">
+      <h2>Sommaire</h2>
+      <ol>
+        <li><a href="#before-ai">L'ancienne contrainte</a></li>
+        <li><a href="#replacement">L'hypothèse du remplacement</a></li>
+        <li><a href="#limits">Les limites apparues</a></li>
+        <li><a href="#partner">Un partenaire, pas un exécutant</a></li>
+        <li><a href="#roles">Les rôles que l'humain doit assumer</a></li>
+        <li><a href="#discipline">Transformer les rôles en structure</a></li>
+        <li><a href="#foundations">Des fondations éprouvées</a></li>
+        <li><a href="#attempt">Une première exploration</a></li>
+      </ol>
+    </nav>
+
+    <main class="article">
+      <div class="article-header">
+        <p>
+          La question importante n'est plus de savoir si l'IA peut écrire des logiciels. Elle le
+          peut. La question est de comprendre pourquoi cette capacité ne produit pas
+          automatiquement un produit cohérent, fiable et livrable.
+        </p>
+      </div>
+
+      <article>
+        <section id="before-ai">
+          <span class="section-number">01 / Une brève préhistoire</span>
+          <h2>Le logiciel était autrefois limité par la production humaine</h2>
+          <p>
+            La capacité de production logicielle dépendait autrefois du temps humain. Des ambitions
+            plus grandes exigeaient davantage de programmeurs, de spécialistes et de coordination.
+            <em>The Mythical Man-Month</em> a révélé la contradiction de ce modèle : ajouter des
+            personnes pouvait accroître la capacité de production tout en multipliant la
+            communication, l'intégration et les désaccords.
+          </p>
+          <p>
+            Agile a rendu le coût de la coordination plus maîtrisable grâce à de petites équipes
+            pluridisciplinaires, des boucles de retour courtes et des logiciels fonctionnels.
+            Pourtant, chaque partie de la boucle dépendait encore de personnes pour analyser,
+            réaliser, inspecter, expliquer et transmettre les connaissances. L'IA a soudain levé
+            une grande partie de cette contrainte de production.
+          </p>
+        </section>
+
+        <section id="replacement">
+          <span class="section-number">02 / La première conclusion</span>
+          <h2>Le remplacement complet a commencé à sembler possible</h2>
+          <p>
+            L'IA peut explorer une base de code, discuter des besoins, proposer une conception,
+            réaliser des fonctionnalités, créer des tests, analyser des défaillances et mettre à
+            jour la documentation. Un travail qui exigeait autrefois plusieurs jours d'attention
+            humaine peut désormais être produit en quelques heures ou quelques minutes.
+          </p>
+          <p>
+            La première conclusion semblait évidente. Si le développement logiciel était une
+            chaîne composée d'analyse, de programmation, de tests et de documentation, et si l'IA
+            pouvait accomplir chaque maillon, l'ingénierie logicielle ressemblait à une profession
+            appelée à disparaître prochainement. Beaucoup ont commencé à croire que l'IA
+            remplacerait les travailleurs humains dans tout le secteur à mesure que les modèles
+            progresseraient et que les fenêtres de contexte s'élargiraient.
+          </p>
+          <p>
+            Les petits projets et les démonstrations ont renforcé cette impression. Une seule
+            conversation pouvait produire une application complète. Pourtant, le développement
+            logiciel réel s'arrête rarement là. Les applications deviennent souvent des projets de
+            longue durée, chargés d'un historique accumulé, de données de production, de priorités
+            concurrentes, de risques opérationnels et de connaissances qu'aucune session ni fenêtre
+            de contexte ne peut contenir à elle seule.
+          </p>
+          <p class="pull-quote">
+            Générer du code et porter un projet logiciel ne sont pas le même problème.
+          </p>
+        </section>
+
+        <section id="limits">
+          <span class="section-number">03 / Limites structurelles</span>
+          <h2>Des capacités accrues ont révélé une autre catégorie de faiblesses</h2>
+          <p>
+            Ces faiblesses ne sont pas une simple liste de fonctions manquantes que le prochain
+            modèle effacera forcément. Elles proviennent d'une puissance de calcul finie, d'une
+            attention limitée, d'une génération probabiliste, de sessions temporaires et de
+            l'absence d'autorité dans le monde réel. Les modèles progresseront, mais un projet vivant
+            peut continuer à grandir au-delà de toute capacité fixe.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Contexte limité</h3>
+              <p>
+                L'ensemble du projet comprend le code, l'intention produit, les approches rejetées,
+                les priorités, les conditions de production, les autorisations et les échecs
+                passés. Aucune session ne conserve tout cela indéfiniment, et il est difficile de
+                distinguer un contexte manquant d'un contexte sans pertinence.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Continuité fragmentée</h3>
+              <p>
+                Les sessions se terminent, les conversations sont compressées, les modèles changent
+                et les agents commencent avec des informations différentes. L'IA ne possède aucun
+                équivalent naturel d'une personne qui reste auprès du projet et se souvient de la
+                raison pour laquelle la décision d'hier compte encore aujourd'hui.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Exactitude probabiliste</h3>
+              <p>
+                Une réponse cohérente peut néanmoins résoudre le mauvais problème. Un test peut
+                réussir tout en démontrant une affirmation erronée. L'IA peut produire à la fois
+                l'assurance et la réalisation, même lorsque le point de départ est faux.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Force locale, faiblesse globale</h3>
+              <p>
+                L'IA est puissante lorsque la tâche et ses preuves tiennent dans le contexte actif.
+                Un grand projet exige des décisions cohérentes à travers de nombreuses tâches, de
+                nombreux fichiers, de longues périodes et des conséquences opérationnelles.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Coordination sans pilotage</h3>
+              <p>
+                Des agents supplémentaires augmentent le débit, mais ils ne créent ni objectifs
+                communs, ni responsabilité claire, ni revue indépendante, ni intégration sûre, ni
+                définition commune de l'achèvement.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Aucune responsabilité durable</h3>
+              <p>
+                L'IA peut recommander une priorité ou accepter verbalement un risque. Elle ne perd
+                pas les données, ne répond pas devant l'utilisateur, ne dirige pas l'entreprise et
+                ne reste pas responsable après la fin de la session.
+              </p>
+            </div>
+          </div>
+          <div class="principle">
+            <span>La conséquence</span>
+            <p>Le code peut désormais croître plus vite que la compréhension partagée, la vérification et le contrôle.</p>
+          </div>
+        </section>
+
+        <section id="partner">
+          <span class="section-number">04 / La nouvelle répartition du travail</span>
+          <h2>L'IA a besoin d'un partenaire, pas d'un exécutant humain</h2>
+          <p>
+            Ces limites ne ramènent pas le développement logiciel à son ancienne forme. L'IA peut
+            toujours accomplir la plupart des tâches courantes de réalisation, d'analyse, de test
+            et de documentation. L'humain n'est pas là pour répéter ce travail plus lentement.
+          </p>
+          <p>
+            La contribution humaine se déplace vers le niveau qui relie de nombreuses tâches en un
+            seul produit. Quelqu'un doit préserver l'objectif, décider quelle information fait autorité,
+            reconnaître qu'une demande repose sur un point de départ erroné, résoudre les conflits
+            entre solutions locales, exiger des preuves et accepter le risque résiduel.
+          </p>
+          <p>
+            L'expérience du développement logiciel reste essentielle, car ce partenaire doit
+            comprendre comment les systèmes échouent. Ce rôle est toutefois plus large que celui
+            du programmeur traditionnel. Il se rapproche de celui d'un responsable capable de
+            passer du produit à la livraison, à l'architecture, à la qualité et à l'exploitation,
+            tout en utilisant l'IA pour l'exécution.
+          </p>
+          <p class="pull-quote">
+            L'IA accomplit le travail local. L'humain veille à ce que ce travail reste une partie
+            d'un système unique, cohérent, utile et responsable.
+          </p>
+        </section>
+
+        <section id="roles">
+          <span class="section-number">05 / La voie du programmeur</span>
+          <h2>La voie du programmeur passe par une responsabilité plus large</h2>
+          <p>
+            Les postes centrés sur la programmation courante peuvent diminuer, mais le besoin
+            d'assumer les résultats du logiciel demeure. L'occasion n'est pas donnée à une personne
+            d'imiter six services distincts. Elle consiste à acquérir une vision suffisamment large
+            pour adopter la bonne perspective professionnelle lorsque le projet exige une décision
+            que l'IA ne peut pas assumer.
+          </p>
+          <ul>
+            <li>Penser comme un responsable produit pour décider qui le travail sert et pourquoi il compte.</li>
+            <li>Penser comme un chef de projet pour maîtriser le périmètre, l'ordre, les responsabilités et l'achèvement.</li>
+            <li>Penser comme un architecte lorsque des choix locaux menacent la cohérence globale du système.</li>
+            <li>Penser comme un spécialiste QA lorsqu'un résultat plausible manque encore de preuves convaincantes.</li>
+            <li>Penser comme un exploitant lorsque le logiciel commence à toucher des données de production et de vrais utilisateurs.</li>
+          </ul>
+          <p>
+            La responsabilité humaine relie toutes ces perspectives. La personne décide quelle
+            autorité reçoit l'IA, quels risques sont acceptables et quand le résultat est prêt à
+            toucher les utilisateurs. Lorsque l'IA accomplit une grande partie du travail de
+            réalisation, un programmeur expérimenté peut porter cette responsabilité élargie et
+            conduire un travail qui exigeait autrefois une petite équipe.
+          </p>
+        </section>
+
+        <section id="discipline">
+          <span class="section-number">06 / Des rôles à la structure du projet</span>
+          <h2>Donner au partenariat une structure de projet durable</h2>
+          <p>
+            La section précédente décrit les rôles qu'un collaborateur humain compétent doit
+            assumer. Pourtant, un rôle ne suffit pas à créer un partenariat fonctionnel. Les
+            décisions humaines doivent laisser une trace durable que les sessions et les agents
+            ultérieurs pourront trouver, appliquer et vérifier. Le travail de l'IA doit se dérouler
+            dans des limites assez claires pour permettre l'autonomie sans perdre le contrôle.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Rendre l'intention explicite</h3>
+              <p>
+                Consigner l'utilisateur, le problème, le résultat recherché, la priorité, les
+                contraintes, les incertitudes et les décisions approuvées. Cela empêche une
+                déduction de l'IA de devenir silencieusement une orientation produit.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Préserver la continuité</h3>
+              <p>
+                Maintenir l'état actuel, le travail actif, les dépendances, les responsabilités, les
+                décisions et l'historique dans des sources connues. Une nouvelle session doit
+                pouvoir trouver ce qui compte sans reconstruire le projet depuis les conversations.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Protéger les limites</h3>
+              <p>
+                Consigner la structure du système, les contrats, les décisions de conception
+                importantes et leurs raisons. La réalisation locale reste libre à l'intérieur de
+                limites qui protègent l'ensemble du système.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Exiger des preuves</h3>
+              <p>
+                Définir les critères d'acceptation, les tests, les attentes de revue et une
+                définition de l'achèvement. Le code généré reste une proposition tant que des
+                preuves ne démontrent pas le comportement convenu.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Construire des protections</h3>
+              <p>
+                Conserver les faits relatifs à l'environnement, les restrictions sur les données
+                de production, les procédures de déploiement, l'observation, la reprise et les
+                moyens de reprise en main humaine. Les tests et l'automatisation doivent échouer
+                sans danger.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Définir l'autorité</h3>
+              <p>
+                Donner à chaque participant un rôle clair et une limite d'écriture. Réserver
+                l'orientation produit, les risques importants, la vie privée, l'argent, les effets
+                en production et les actions irréversibles à une approbation humaine explicite.
+              </p>
+            </div>
+          </div>
+          <p>
+            Ces mécanismes transforment la supervision personnelle en mémoire et en contrôle
+            externes du projet. Les instructions répétées peuvent alors évoluer de la prose vers un
+            état structuré, des contrôles automatisés et des contraintes techniques. L'objectif
+            n'est pas une consigne toujours plus longue. C'est un projet qui reste navigable sans
+            devoir être chargé entièrement par une personne ou un modèle.
+          </p>
+          <p>
+            La structure doit toutefois rester proportionnelle au besoin. Un humain et une IA
+            n'exigent pas de règles de coordination élaborées. Une deuxième IA chargée de la revue
+            crée un besoin de limites propres à cette fonction. Un deuxième rédacteur soulève des
+            questions de responsabilité et d'intégration. Les données de production, les tâches
+            sans surveillance et les décisions à fort impact justifient chacune des protections
+            plus fortes.
+          </p>
+          <p class="pull-quote">
+            À l'échelle d'un projet, l'humain ne peut pas superviser chaque ligne de code générée
+            par l'IA, et l'IA ne peut pas gérer seule l'ensemble du projet. Un partenariat viable
+            doit compenser ces deux limites.
+          </p>
+          <p>
+            Ensemble, ces mécanismes forment l'accord de travail entre les partenaires. Ils donnent
+            à l'IA assez de contexte et d'autorité pour travailler de façon autonome dans des
+            limites explicites. Ils concentrent l'attention humaine, elle aussi limitée, sur
+            l'objectif, les conflits, les preuves, les risques importants et la responsabilité
+            finale. Ils offrent également aux deux parties une mémoire commune du projet qui
+            survit à la conversation.
+          </p>
+          <p>
+            Une fois le partenariat ainsi défini, la question suivante est de savoir comment le
+            mettre en oeuvre sans inventer une nouvelle méthode lourde. Les participants sont
+            nouveaux, mais les problèmes sous-jacents de retour, d'apprentissage, de flux, de
+            livraison, de risque et de coordination ne le sont pas.
+          </p>
+        </section>
+
+        <section id="foundations">
+          <span class="section-number">07 / Des fondations éprouvées</span>
+          <h2>Le partenariat est nouveau, mais ses disciplines ne le sont pas</h2>
+          <p>
+            Les six mécanismes précédents ne doivent pas rester des principes abstraits. Des
+            pratiques établies de développement logiciel et de gouvernance offrent déjà des moyens
+            de les mettre en oeuvre. Elles deviennent les matériaux de construction de la
+            collaboration entre l'humain et l'IA.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Agile</h3>
+              <p>
+                Des boucles de retour courtes, des logiciels fonctionnels, la collaboration avec le
+                client et la capacité de répondre au changement relient une intention explicite à
+                des résultats observables avant que la production rapide de l'IA ne s'engage trop
+                loin dans une mauvaise direction.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Lean Startup</h3>
+              <p>
+                Des hypothèses explicites, de petites expériences et un apprentissage validé
+                vérifient la justesse de l'intention produit avant qu'une réalisation rapide ne
+                devienne un engagement important.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Kanban</h3>
+              <p>
+                Des états de travail visibles, un travail en cours maîtrisé et des politiques de
+                flux explicites préservent la continuité du projet et empêchent les agents d'ouvrir
+                plus de tâches que le projet ne peut en vérifier et en achever.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Continuous Delivery</h3>
+              <p>
+                Le contrôle de version, les tests automatisés, les petits changements,
+                l'observabilité et la reprise transforment les preuves et les protections en
+                système de livraison. Le code généré reste livrable et récupérable au lieu d'être
+                simplement déclaré achevé dans une conversation.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Gouvernance des risques</h3>
+              <p>
+                Une autorité claire, l'évaluation contextuelle des risques, leur mesure, leur
+                atténuation et le retour arrière définissent les domaines dans lesquels l'IA peut
+                agir seule et maintiennent cette liberté proportionnelle aux conséquences d'une
+                erreur.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Scrum lorsque le contexte le justifie</h3>
+              <p>
+                Les équipes stables peuvent bénéficier de rôles explicites, d'un objectif commun,
+                d'un rythme de livraison et d'une définition de l'achèvement lorsque leur problème
+                de coordination justifie cette structure. Une personne et une IA ne devraient pas
+                reproduire toute la cérémonie avant que le besoin n'existe.
+              </p>
+            </div>
+          </div>
+          <p>
+            Ces pratiques ne constituent pas un détour par rapport à la solution. Elles offrent
+            des mises en oeuvre éprouvées de ses différentes composantes. Ce qu'elles n'offrent
+            pas, c'est une structure unique conçue autour du contexte limité des modèles, des
+            agents temporaires, de l'autorité de l'IA et de contrôles qui ne deviennent nécessaires
+            qu'à mesure que les capacités et les risques apparaissent. C'est à ce problème
+            d'intégration encore ouvert que le modèle commence à répondre.
+          </p>
+        </section>
+
+        <section id="attempt">
+          <span class="section-number">08 / Une première exploration</span>
+          <h2>Une première tentative, résumée dans un modèle</h2>
+          <p>
+            Cet article est accompagné d'un modèle qui résume l'expérience acquise en construisant
+            un véritable projet avec l'IA. Il consigne une première tentative pour rendre la
+            collaboration entre l'humain et l'IA plus explicite, durable et reproductible. C'est un
+            exemple à examiner et à améliorer, pas une réponse complète.
+          </p>
+          <p>
+            Dans cette tentative, une personne apporte une idée et l'IA guide la discussion
+            initiale. L'intention produit, les décisions, l'état actuel, le travail actif, les
+            preuves et l'autorité deviennent un contexte durable du projet au lieu de rester dans
+            une conversation. L'expérience commence avec de nouveaux projets, car l'initialisation
+            est la partie la plus difficile et la plus variable.
+          </p>
+          <p>
+            Les instructions destinées à l'IA restent en Markdown, tandis que les personnes
+            disposent d'une vue d'ensemble lisible en HTML. Une structure stable contient l'accord
+            de travail complet, tandis que les sections consacrées à la revue, à la planification,
+            aux rédacteurs multiples, à la production et aux risques élevés ne deviennent
+            pertinentes que lorsque le projet rencontre ces conditions.
+          </p>
+          <p>
+            Le modèle préserve ce qui a été appris jusqu'ici et le propose comme point de départ
+            pour poursuivre l'expérimentation. J'espère que d'autres le confronteront à des projets
+            réels, révéleront ce qui manque et contribueront à l'améliorer.
+          </p>
+          <p class="pull-quote">
+            Le modèle n'est pas la réponse au développement assisté par l'IA. C'est un lieu où nous
+            pouvons rendre visibles nos réponses actuelles et les améliorer ensemble.
+          </p>
+          <p>
+            Explorez le modèle, examinez les fichiers et contribuez à améliorer l'expérience sur
+            <a href="https://github.com/imtoam/AIPartner">GitHub</a>.
+          </p>
+
+          <div class="source-list">
+            <h3>Références fondamentales</h3>
+            <p>
+              Fred Brooks,
+              <a href="https://www.cs.cmu.edu/~15712/papers/mythicalmanmonth00fred.pdf"><em>The Mythical Man-Month</em></a>,
+              le
+              <a href="https://agilemanifesto.org/">Manifeste pour le développement Agile de logiciels</a>,
+              les
+              <a href="https://agilemanifesto.org/principles">Principes sous-jacents au Manifeste Agile</a>,
+              les
+              <a href="https://leanstartup.co/about/principles/">principes du Lean Startup</a>,
+              les
+              <a href="https://kanbanguides.org/">guides Kanban</a>,
+              les pratiques
+              <a href="https://dora.dev/capabilities/continuous-delivery/">DORA de livraison continue</a>,
+              et le
+              <a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">cadre de gestion des risques liés à l'IA du NIST</a>.
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    Développement logiciel humain et IA / Version 0.8 /
+    <a href="ai-native-project.html" lang="en">English</a>
+  </footer>
+</body>
+</html>

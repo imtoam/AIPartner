@@ -1,92 +1,143 @@
-# Publishing the Article for Facebook
+# Publish AIPartner for Facebook
 
-## Recommended approach
+Human HTML guide: FACEBOOK_PUBLISHING.html
 
-Host the article as a public static webpage and share its HTTPS address in Facebook.
+## The important correction
 
-Facebook does not reproduce the custom HTML and CSS inside a normal post. The post provides the introduction and link preview. When a reader selects the link, Facebook opens the full webpage in its in-app browser or the reader's external browser.
+Do not select or open index.html to publish the website.
 
-GitHub Pages is a good host for this article because the page is static and does not require a server, database, login, or build system.
+The Code page is used only to confirm that index.html exists at the top level of the repository.
+GitHub Pages publishes a branch and folder, not one selected file.
 
-## Do not publish the whole working repository
+For AIPartner, the required publishing source is:
 
-Use a separate public repository for the article unless every file in the current project is already intended to be public.
+- Branch: main
+- Folder: /(root)
 
-Publishing the entire working repository can expose source code, configuration, project history, internal documentation, or other material unrelated to the article. The publishing repository should contain only the files needed by the public page.
+## Part 1: Confirm the file is on GitHub
 
-## Files to publish
+1. Open:
+   https://github.com/imtoam/AIPartner
+2. Select Code if the repository file list is not already visible.
+3. Confirm that index.html appears in the first level of the file list.
+4. Do not open index.html.
+5. Continue to Part 2.
 
-Copy these files into the root of the publishing repository:
+If index.html is missing from the GitHub file list, return to GitHub Desktop, commit the local
+changes, select Push origin, and refresh the repository page.
 
-- ai-native-project.html
-- facebook-share-card.png
+## Part 2: Enable GitHub Pages
 
-Rename ai-native-project.html to index.html. The published repository root should then look like this:
+Starting from the AIPartner repository page:
 
-    index.html
-    facebook-share-card.png
+1. Select Settings in the repository navigation near the top of the page.
+2. If Settings is hidden, open the additional navigation menu and select Settings there.
+3. In the left sidebar, find the Code and automation group.
+4. Select Pages.
+5. Find the Build and deployment section.
+6. In the Source menu, select Deploy from a branch.
+7. A branch row will appear below Source.
+8. In the first menu of that row, select main.
+9. In the second menu, select /(root).
+10. Select Save.
 
-The SVG source can also be included if desired:
+Do not select GitHub Actions as the Source. This static website does not need a custom workflow.
 
-    facebook-share-card.svg
+The final settings must read:
 
-The Facebook post copy and this guide do not need to be published with the website.
+Source: Deploy from a branch
 
-## Create the GitHub Pages site
+Branch: main
 
-1. Create a new public GitHub repository. A clear name such as human-ai-software works well.
-2. Add index.html and facebook-share-card.png to the repository root.
-3. Open the repository Settings page.
-4. Select Pages under Code and automation.
-5. Under Build and deployment, choose Deploy from a branch.
-6. Select the main branch and the root folder.
-7. Save and wait for GitHub to display the public site address.
+Folder: /(root)
 
-For a project repository, the default address normally has this form:
+## Part 3: Wait for publication
 
-    https://GITHUB_USERNAME.github.io/REPOSITORY_NAME/
+After selecting Save:
 
-The article must be publicly reachable without a login because Facebook needs to fetch the page and its preview image.
+1. Stay on the Pages settings screen.
+2. GitHub will start a Pages deployment.
+3. Wait for the message that the site is live. The first deployment may take several minutes.
+4. Open:
+   https://imtoam.github.io/AIPartner/
 
-## Configure the preview image
+The root address should display the visual human starting guide.
 
-The article already contains Open Graph metadata for Facebook. Before publishing, change the og:image value in index.html from the relative filename to the final absolute HTTPS address.
+The English article address is:
 
-For example:
+https://imtoam.github.io/AIPartner/introduction/ai-native-project.html
 
-    <meta property="og:image" content="https://GITHUB_USERNAME.github.io/REPOSITORY_NAME/facebook-share-card.png" />
+The French article address is:
 
-An absolute address is safer for link preview crawlers than a relative address.
+https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html
 
-The article URL itself does not need to be hardcoded in the page. Facebook can use the address that was shared.
+The French page will not exist online until ai-native-project-fr.html has been committed and pushed.
 
-## Publish on Facebook
+## If the Pages screen does not look right
+
+### Settings is missing
+
+Open the additional repository navigation menu. If Settings is still absent, confirm that you are
+signed into the repository owner account and have administrator permission.
+
+### Pages is missing
+
+Look in the left sidebar under Code and automation. If the repository is private and the current
+GitHub plan does not support Pages for private repositories, make the repository public or use a
+plan that supports private Pages.
+
+### The branch menu says None
+
+Open it and select main. If main does not appear, confirm that the local commit was pushed to
+GitHub.
+
+### Save is disabled
+
+The same publishing source may already be saved. Check whether the screen already shows main and
+/(root), then look near the top of the Pages screen for the published site address.
+
+### The site shows 404
+
+Check these items:
+
+1. Wait several minutes and refresh.
+2. Confirm the Pages source is main and /(root).
+3. Confirm index.html is visible at the repository root under Code.
+4. Open the Actions tab and look for the latest pages build and deployment run.
+5. A green result means deployment completed.
+6. A red result can be opened to show the failed step.
+
+The filename must be exactly index.html. Capitalization matters.
+
+### The root guide works but an article does not
+
+Confirm that the article file is visible in the introduction directory on GitHub. A file that
+exists only on the computer cannot be published until it is committed and pushed.
+
+## Publish the Facebook post
+
+Only continue after the selected article opens through its github.io address.
 
 1. Open facebook-post.md.
-2. Choose the recommended post or the short version.
-3. Replace PUBLIC_ARTICLE_URL with the GitHub Pages address.
-4. Paste the text into Facebook.
-5. Wait for the link preview to appear.
-6. Confirm that the title, description, and share card are correct.
-7. Publish the post.
+2. Choose EN or FR.
+3. Choose the recommended or short version.
+4. Copy the text and its matching article URL into Facebook.
+5. Wait for Facebook to display the preview.
+6. Confirm the title and image before publishing.
 
-The reader selects the preview or URL and Facebook opens the full HTML article.
+If Facebook shows an older preview, submit the selected article URL to the Facebook Sharing
+Debugger and request a new scrape.
 
-## If the preview is stale
+## The two GitHub surfaces
 
-Facebook may retain an earlier title, description, or image after the webpage changes. Confirm that the public page and image load without authentication, then ask Facebook to inspect the public URL again using its sharing debugger before publishing the final post.
+Repository:
 
-## Optional custom domain
+https://github.com/imtoam/AIPartner
 
-GitHub Pages can also use a custom domain. This is useful if the article becomes part of a continuing publication, but it is not required for the first release. The default github.io address is sufficient for a Facebook link.
+Use it to manage files, commits, settings, and deployment status.
 
-## Alternative hosts
+Published website:
 
-Cloudflare Pages, Netlify, and similar static hosts can serve the same two files. The requirements are the same:
+https://imtoam.github.io/AIPartner/
 
-- A public HTTPS article URL
-- A public HTTPS preview image URL
-- No login wall
-- No dependency on local files
-
-GitHub Pages is the simplest starting point when the article files are already managed with Git.
+Use it for human reading and Facebook links.

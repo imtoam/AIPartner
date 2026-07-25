@@ -1,277 +1,264 @@
-# When Writing Code Is No Longer the Bottleneck
-
-Why we need an AI-native project template
+# Why AI Still Needs a Human to Build Software
 
-## It starts with an idea
+After the promise of complete automation
 
-In the past, whether a software idea could become a working product was constrained first by
-engineering capacity, team size, and implementation time. Product managers defined requirements,
-architects designed systems, programmers wrote code, QA verified the result, and project managers
-coordinated delivery. Even someone who understood the whole problem could rarely carry the entire
-software lifecycle alone.
+AI became powerful enough to suggest that software engineers might disappear. Experience with
+growing projects reveals a different future. AI can perform much of the work, but finite context,
+uncertain output, and fragmented continuity make human collaboration essential to development and
+delivery.
 
-Generative AI changes that constraint. Someone with sound product, engineering, and quality
-judgment can now delegate much of the analysis, implementation, testing, and documentation to AI.
-A loosely formed idea can grow into a system far beyond what one person could build manually.
+The important question is no longer whether AI can write software. It can. The question is why that
+ability does not automatically become a coherent, dependable, and deliverable product.
 
-The change goes well beyond faster coding. The expensive part of software production is shifting
-away from entering code and toward the ability to:
+## Software was once limited by human production
 
-- decide which problem is worth solving.
-- turn ambiguous intent into verifiable goals.
-- manage scope, priority, and risk.
-- preserve architectural, data, and business consistency.
-- determine whether AI-generated work is actually correct.
-- remain accountable for the product and its production consequences.
+Software capacity once meant human time. Greater ambition required more programmers, more
+specialists, and more coordination. The Mythical Man-Month exposed the contradiction inside that
+model: adding people could add production capacity while multiplying communication, onboarding,
+and disagreement.
 
-Code still matters, but producing code is no longer automatically the scarcest resource in the
-system.
+Agile made the coordination cost more manageable through small cross-functional teams, short
+feedback loops, and working software. Yet every part of the loop still waited for people to
+analyze, implement, inspect, explain, and transfer knowledge. AI suddenly removed much of that
+production constraint.
 
-## The programmer's role is changing
+## Complete replacement began to look possible
 
-As AI becomes capable of producing most routine implementation, roles defined primarily by the
-quantity of code produced will shrink. Software engineering experience remains essential because
-AI can produce plausible-looking implementations at high speed. Code reading, debugging,
-architectural judgment, and verification become more important in that environment.
+AI can explore a codebase, discuss requirements, propose a design, implement features, create
+tests, investigate failures, and update documentation. Work that once consumed days of human
+attention can now be produced in hours or minutes.
 
-The people with the strongest future advantage may not write large amounts of code every day, but
-they will need to understand a system from several perspectives:
+The first conclusion seemed obvious. If software development was a chain of analysis, coding,
+testing, and documentation, and AI could perform every link, software engineering looked like a
+profession that might soon disappear. Many people began to believe that AI would replace human
+workers across the field as models improved and context windows expanded.
 
-- think like a product manager about users, value, and priority.
-- think like a project manager about scope, dependencies, cadence, and closure.
-- think like an architect about boundaries, contracts, and long-term evolution.
-- think like QA about evidence, edge cases, and regression.
-- think like an experienced production engineer about real failure modes.
-- think like a system owner about when automation may proceed and when it must stop for approval.
+Small projects and demonstrations reinforced this view. A single conversation could produce a
+complete application. Real-world software development, however, rarely ends there. Applications
+often grow into long-running projects with accumulated history, production data, competing
+priorities, operational risk, and more knowledge than any single session or context window can
+hold.
 
-The human role is moving from local code production toward system ownership. One possible name for
-this role is an AI-native Product & Engineering Lead, a person who uses AI to extend their reach
-while retaining product judgment, engineering judgment, and final responsibility.
+> Generating code and carrying a software project are not the same problem.
 
-That change creates a new contradiction. AI can sharply reduce implementation cost, but it cannot
-reliably manage an ever-growing project through a single conversation.
+## More capability exposed a different class of weakness
 
-## The new bottleneck: long-running projects under bounded context
+These weaknesses are not simply a list of missing features that the next model will certainly
+erase. They arise from finite computation, bounded attention, probabilistic generation, temporary
+sessions, and the absence of real-world authority. Models will improve, but a living project can
+continue to grow beyond any fixed capacity.
 
-A large project includes much more than local coding tasks. It carries long-lived project
-knowledge:
+### Bounded context
 
-- why a design decision was made.
-- which file, database, or interface is the current source of truth.
-- which statements are facts and which remain untested assumptions.
-- which scope or release a change belongs to.
-- which data must never be polluted and which actions are irreversible.
-- who may change priorities, approve releases, or accept risk.
-- what evidence is required before work is truly complete.
-- which old decisions have been superseded by new evidence.
+The whole project includes code, product intent, rejected approaches, priorities, production
+conditions, permissions, and old failures. No session holds all of it indefinitely, and missing
+context is difficult to distinguish from irrelevant context.
 
-Context windows cannot grow without limit. Even if an entire repository fits into a model's
-context, "having read everything" does not mean every relevant constraint will be applied correctly
-to the current decision. Session changes, context compression, model changes, and handoffs between
-AI agents all lose implicit information.
+### Fragmented continuity
 
-Larger context windows postpone the problem. They do not solve it. A scalable project has to be
-navigable without being loaded in full.
+Sessions end, conversations are compressed, models change, and agents begin with different
+information. AI has no natural equivalent of a person who remains with the project and remembers
+why yesterday's decision still matters.
 
-The same is true for humans. If a project can continue only because one person remembers its
-history, or because an enormous chat transcript is still available, it has not yet been fully
-engineered.
+### Probabilistic correctness
 
-## More AI agents do not automatically solve management
+A coherent answer can still solve the wrong problem. A test can pass while proving the wrong claim.
+AI can generate confidence and implementation together, even when the premise is false.
 
-Additional AI agents can increase parallel throughput. They do not automatically create shared
-goals, a common set of facts, or clear accountability. Without external governance, multiple
-agents may produce:
+### Local strength, global weakness
 
-- duplicated or contradictory implementations.
-- concurrent overwrites of shared files.
-- reviewers modifying code they were expected to assess independently.
-- sessions working from different versions of project truth.
-- locally correct changes that damage the wider system.
-- work that appears complete but has no acceptance evidence.
+AI is powerful when a task and its evidence fit inside the active context. A large project requires
+consistent decisions across many tasks, files, time periods, and operational consequences.
 
-The central multi-agent question is therefore not how to launch more agents. It is how to define
-roles, permissions, handoffs, sources of truth, integration ownership, and verification gates.
-Parallel execution must be built on governance.
+### Coordination without management
 
-## Existing methods remain valuable, but none solves the whole problem
+Additional agents increase throughput but do not create shared goals, ownership, independent
+review, safe integration, or a common definition of completion.
 
-This template does not attempt to invent a vocabulary isolated from established software practice.
-It draws on proven ideas from several methods without forcing every project into a single
-framework.
+### No lasting accountability
 
-### Agile: values, not mandatory ceremony
+AI can recommend a priority or accept a risk in words. It does not lose the data, answer to the
+user, operate the company, or remain responsible after the session ends.
 
-The [Principles behind the Agile Manifesto](https://agilemanifesto.org/principles) emphasize
-continuous delivery of value, responsiveness to change, working software, technical excellence,
-simplicity, and regular reflection. Those principles remain valid in the AI era.
+The consequence:
 
-A project with one human and one AI does not necessarily need a Daily Scrum, fixed Sprints, or a
-full team-role structure. The template inherits Agile adaptability without requiring the same
-ceremonies in every project.
+> Code can now grow faster than shared understanding, verification, and control.
 
-### Lean Startup: managing uncertainty around an idea
+## AI needs a partner, not a human typist
 
-The [Lean Startup](https://leanstartup.co/about/principles/) Build-Measure-Learn loop and validated
-learning are well suited to early projects. Initialization needs to do more than expand an idea
-into a requirements list. It should separate facts, inferences, and hypotheses, identify the most
-important uncertainty, and define the evidence that would justify continuing, pivoting, or
-stopping.
+These limits do not return software development to its old form. AI can still perform most routine
+implementation, analysis, testing, and documentation. The human is not needed to repeat that work
+more slowly.
 
-### Kanban: managing continuous flow
+The human contribution moves to the layer that connects many tasks into one product. Someone must
+preserve the purpose, decide which fact has authority, recognize when the request is based on a
+false premise, resolve conflicts between local solutions, demand evidence, and accept the remaining
+risk.
 
-[Kanban](https://kanbanguides.org/) is useful for expressing AI-assisted work as an explicit flow
-rather than assuming all work can be committed to a fixed iteration in advance. A work item begins
-as an idea, moves through clarification and approval, then proceeds through implementation, review,
-verification, and release.
+Software development experience remains essential because this partner must understand how systems
+fail. The role, however, is broader than the traditional programmer. It is closer to an owner who
+can move between product, delivery, architecture, quality, and operation while using AI for
+execution.
 
-Each state change needs entry conditions and evidence. An AI declaration that something is done is
-not enough.
+> AI performs the local work. The human keeps the local work part of one coherent, valuable, and
+> accountable system.
 
-### Continuous Delivery: making quality a continuous capability
+## The programmer's path is broader ownership
 
-The [DORA Continuous Delivery guidance](https://dora.dev/capabilities/continuous-delivery/)
-emphasizes automated testing, version control, continuous integration, test-data management, and
-observability. The template draws on these practices to keep a system verifiable, releasable, and
-recoverable rather than postponing quality until the end of a phase.
+Routine coding positions may contract, but the need to own software outcomes remains. The
+opportunity is not for one person to imitate six separate departments. It is to develop enough
+range to enter the right professional perspective when the project needs a decision that AI cannot
+own.
 
-### Risk governance: matching governance strength to context
+- Think as a product manager when deciding who the work serves and why it matters.
+- Think as a project manager when controlling scope, sequence, ownership, and closure.
+- Think as an architect when local choices threaten system-wide coherence.
+- Think as QA when a plausible result still lacks convincing evidence.
+- Think as an operator when software begins to affect production data and real users.
 
-The [NIST AI Risk Management Framework](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
-organizes risk activity around Govern, Map, Measure, and Manage. It explicitly avoids treating its
-guidance as a linear checklist that every user must execute in full. This template borrows that
-structure and extends it to the risks of using AI to build software:
+Human accountability connects all of these perspectives. The person decides what authority AI
+receives, which risks are acceptable, and when the result is ready to affect users. With AI
+performing much of the implementation labor, one experienced programmer can carry this wider
+responsibility and lead work that once required a small team.
 
-- Govern: roles, permissions, sources of truth, and approval boundaries.
-- Map: the project environment, users, data, dependencies, and potential effects.
-- Measure: tests, reviews, independent calculations, monitoring, and other evidence.
-- Manage: mitigation, acceptance, suspension, rollback, or stronger governance.
+## Give the partnership a durable project structure
 
-This is a design adaptation for AI-assisted development. It does not imply that the original NIST
-framework prescribes the development process described here.
+The previous section describes the roles a capable human collaborator must carry. A role alone,
+however, does not create a working partnership. Human decisions must leave a durable trace that
+later sessions and agents can find, apply, and verify. AI work must happen inside boundaries that
+are clear enough to support autonomy without losing control.
 
-## Three loops must operate together
+### Make intent explicit
 
-An AI-native project contains at least three connected loops. They must not be collapsed into one.
+Record the user, problem, desired outcome, priority, constraints, uncertainty, and approved
+decisions. This prevents an AI inference from quietly becoming product direction.
 
-### Product learning loop
+### Preserve continuity
 
-The product loop starts with a hypothesis, tests it through an experiment, collects evidence, and
-ends with a product decision. It asks whether the team is building something worth building.
+Maintain current state, active work, dependencies, ownership, decisions, and history in known
+sources. A new session should be able to find what matters without reconstructing the project from
+chat.
 
-### Software delivery loop
+### Protect boundaries
 
-The delivery loop starts with a proposal and approval, followed by implementation, review,
-verification, and release. It asks whether the system was changed reliably.
+Record system structure, contracts, important design decisions, and the reasons behind them. Local
+implementation remains free inside boundaries that protect the whole system.
 
-### Governance evolution loop
+### Demand evidence
 
-The governance loop starts when an event matches a known trigger. The team assesses the risk,
-prepares a rule change, obtains human approval, activates the change, and verifies the result. It
-asks whether current collaboration and safety rules are still adequate.
+Define acceptance criteria, tests, review expectations, and a Definition of Done. Generated code
+remains a proposal until evidence demonstrates the agreed behavior.
 
-Traditional development frameworks often focus mainly on one or two of these loops. This template
-places all three inside the same project control plane.
+### Build safeguards
 
-## The solution: fully bundled, selectively activated
+Preserve environment facts, production data restrictions, deployment procedures, observation,
+recovery, and human takeover paths. Tests and automation must fail safely.
 
-The template should not be divided into beginner, advanced, and enterprise repositories that
-require later migration. Stage-based templates transfer upgrade cost to the user and may force
-application code to move merely because governance has changed.
+### Define authority
 
-A better approach is to bundle every governance capability from day one while loading only the
-rules triggered by the project's actual conditions.
+Give each participant a clear role and writing boundary. Reserve product direction, material risk,
+privacy, money, production effects, and irreversible actions for explicit human approval.
 
-The first implementation deliberately supports greenfield initialization only. Existing-project
-adoption, imports, and reinitialization retain named interface points but no behavior. This keeps
-the first protocol focused while leaving room for later onboarding methods without changing the
-greenfield contract.
+These mechanisms turn personal oversight into external project memory and control. Repeated
+instructions can then mature from prose into structured state, automated checks, and technical
+constraints. The goal is not an ever-larger prompt. It is a project that remains navigable without
+being loaded in full by either a person or a model.
 
-For example:
+Structure should still remain proportional to need. One human and one AI do not require elaborate
+coordination rules. A second AI acting as reviewer creates a need for review boundaries. A second
+writer creates ownership and integration concerns. Production data, unattended jobs, and
+high-impact decisions each justify stronger safeguards.
 
-- with one AI, reviewer and concurrent-writer rules remain inactive.
-- when a second AI performs peer review, activate role separation, review output, and finding
-  resolution rules.
-- when a second writer appears, activate branch, worktree, ownership, and integration rules.
-- when production data appears, activate test isolation, irreversible-data, and recovery rules.
-- when unattended jobs begin, activate idempotency, locking, health checks, retries, and human
-  takeover conditions.
-- when several long-running features appear, activate layered roadmap, backlog, and feature-plan
-  governance.
+> At project scale, the human cannot supervise every line of AI-generated code, and AI cannot
+> manage the whole project alone. A workable partnership must compensate for both limits.
 
-These triggers depend on actual capabilities, risks, and collaboration events, not project age. A
-new project may require production-data governance on its first day. Another may operate for six
-months with only the single-human, single-AI baseline.
+Together, these mechanisms form the working agreement between the partners. They give AI enough
+context and authority to work independently within explicit boundaries. They focus limited human
+attention on purpose, conflicts, evidence, material risk, and final responsibility. They also give
+both sides a shared project memory that survives the conversation.
 
-All modules may exist in the repository, but the AI must not read them all on every task. A compact
-router determines current state and loads only active modules. This avoids both template migration
-and context pollution.
+Once the partnership is defined this way, the next question is how to implement it without
+inventing another heavyweight methodology. The participants are new, but the underlying problems
+of feedback, learning, flow, delivery, risk, and coordination are not.
 
-## Division of responsibility
+## The partnership is new, but its disciplines are not
 
-If the template still requires users to read many Markdown files, manually choose rules, and edit
-governance documents themselves, it merely repackages traditional project administration.
+The six mechanisms above do not need to remain abstract principles. Established software and
+governance practices already offer ways to put them into operation. They become the building
+materials for human and AI collaboration.
 
-The template should make AI responsible for initialization and subsequent governance work:
+### Agile
 
-1. The AI reads the startup protocol.
-2. The user describes an idea in natural language.
-3. The AI asks adaptive questions about missing information.
-4. The AI separates user facts, AI inferences, proposals, and unresolved questions.
-5. The AI prepares a project proposal, initial rules, and a preview of file changes.
-6. The user approves, rejects, or continues the discussion.
-7. After approval, the AI writes the files and runs validation.
-8. The AI generates a human-readable project overview.
-9. When later events trigger new governance, the AI proposes the relevant module.
-10. The user retains final authority over priorities, permissions, and high-risk decisions.
+Short feedback loops, working software, customer collaboration, and responsiveness to change
+connect explicit intent to observable results before rapid AI output travels too far in the wrong
+direction.
 
-AI may detect, explain, propose, execute, and verify. It may not silently enlarge its own authority,
-turn an inference into a user decision, or bypass a required gate to finish the current task.
+### Lean Startup
 
-## Markdown for execution and HTML for people
+Explicit hypotheses, small experiments, and validated learning test whether the product intent is
+true before fast implementation becomes a large commitment.
 
-AI works well with structured Markdown and YAML that can be parsed and reviewed as diffs. Humans
-benefit from summaries, cards, risk indicators, and visible pending decisions.
+### Kanban
 
-The two should not compete as separate sources of truth. The static HTML overview is generated
-from structured project state, approved documents, and active governance modules.
+Visible work states, controlled work in progress, and explicit flow policies preserve project
+continuity and stop agents from opening more work than the project can verify and finish.
 
-Initialization can occur in the existing AI workspace. A new project does not need an independent
-HTML service on day one. HTML begins as a generated, read-only view. A service becomes appropriate
-when real requirements emerge for multiple users, remote approvals, identity and access control,
-or direct browser write-back.
+### Continuous Delivery
 
-## Turn memory into constraints
+Version control, automated tests, small changes, observability, and recovery turn evidence and
+safeguards into a delivery system. Generated code remains releasable and recoverable rather than
+merely complete in a conversation.
 
-Important project knowledge should not remain forever as prose that a human or AI must remember.
-A verbal agreement should first become a documented rule, then structured state, then an automated
-check. High-risk rules should eventually become system constraints that cannot be violated
-silently.
+### Risk governance
 
-For example, a rule that tests must not write to the production database can later become
-temporary-database fixtures, read-only connections, permission boundaries, and failing quality
-gates. Executable constraints are more reliable than endlessly expanding a prompt.
+Clear authority, contextual risk assessment, measurement, mitigation, and rollback define where AI
+may act independently and keep that freedom proportional to the consequence of a mistake.
 
-## Scope of the template
+### Scrum when appropriate
 
-This template does not prescribe the same meetings and iterations for every project. It does not
-use document volume as a proxy for maturity, give AI unsupervised control, or measure progress by
-the number of generated files. Product judgment, engineering experience, and human accountability
-remain outside its scope.
+Stable teams can benefit from explicit roles, a shared goal, a delivery cadence, and a Definition
+of Done when their coordination problem justifies that structure. One person and one AI should not
+copy the full ceremony before the need exists.
 
-Its role is to provide external project memory and control. It should preserve intent, factual
-consistency, controlled change, and verifiable results as people, models, sessions, and available
-context change.
+These practices are not a detour from the solution. They provide tested implementations of its
+individual parts. What they do not provide is a single structure designed around bounded model
+context, temporary agents, AI authority, and controls that become necessary only as capabilities
+and risks appear. That remaining integration problem is where the template begins.
 
-## What success looks like
+## One early attempt, summarized in a template
 
-The practical question is how to keep a project under control when the cost of producing code
-falls sharply.
+Alongside this article is a template that summarizes experience from building a real project with
+AI. It records one early attempt to make human and AI collaboration more explicit, durable, and
+repeatable. It is an example to examine and improve, not a complete answer.
 
-The template treats bounded context as a fact, human approval as the boundary of accountability,
-risk as the trigger for governance strength, and evidence as the basis for completion. AI performs
-most of the repetitive structuring, implementation, and maintenance work.
+In this attempt, a person brings an idea and AI guides the initial discussion. Product intent,
+decisions, current state, active work, evidence, and authority become durable project context
+instead of remaining in a conversation. The experiment begins with new projects because
+initialization is the hardest and most variable part.
 
-If it succeeds, users will not need to become experts in the template. They will bring an idea,
-discuss it with AI, and make the important decisions. The template will turn those decisions into a
-project capable of growing safely.
+AI-facing instructions remain in Markdown while people receive a readable HTML overview. One
+stable structure contains the fuller working agreement, while review, planning, multiple-writer,
+production, and high-risk sections become relevant only when the project develops those
+conditions.
+
+The template preserves what has been learned so far and offers it as a starting point for further
+experimentation. I hope others will test it against real work, reveal what is missing, and improve
+it together.
+
+> The template is not the answer to AI-assisted development. It is a place where we can make our
+> current answers visible and improve them together.
+
+Explore the template, review the files, and help improve the experiment on
+[GitHub](https://github.com/imtoam/AIPartner).
+
+## Reference foundations
+
+- Fred Brooks, [The Mythical Man-Month](https://www.cs.cmu.edu/~15712/papers/mythicalmanmonth00fred.pdf)
+- [Manifesto for Agile Software Development](https://agilemanifesto.org/)
+- [Principles behind the Agile Manifesto](https://agilemanifesto.org/principles)
+- [Lean Startup principles](https://leanstartup.co/about/principles/)
+- [Kanban Guides](https://kanbanguides.org/)
+- [DORA Continuous Delivery](https://dora.dev/capabilities/continuous-delivery/)
+- [NIST AI Risk Management Framework](https://airc.nist.gov/airmf-resources/airmf/5-sec-core/)
+
+Human and AI Software Development / Version 0.8
