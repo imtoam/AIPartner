@@ -1,0 +1,221 @@
+# project_profile.example.yaml
+#
+# Exact project_profile.yaml contract for AIPartner protocol 0.4.
+# Copy this structure after proposal approval. Replace example values; do not remove required keys.
+# Mutable work-item status belongs only in current_work_source and must not be copied here.
+
+schema_version: "0.4.0"
+
+template:
+  name: "AIPartner"
+  protocol_id: "BOOTSTRAP-001"
+  protocol_version: "0.4.0"
+  source: "repository URL, release, or commit used"
+
+input:
+  source_type: "idea_only"
+  # Allowed: idea_only, requirements_reference, reference_project_readonly
+  reference_paths: []
+  target_repository_evidence: "read-only evidence that the target is greenfield"
+
+initialization:
+  mode: "greenfield"
+  status: "draft"
+  # Allowed states are defined in START_HERE.md Section 8.
+  last_completed_state: "interviewing"
+  updated_on: "YYYY-MM-DD"
+  approval:
+    state: "pending"
+    # Allowed: pending, partial, approved
+    approved_by: ""
+    approved_on: ""
+    approved_scope: []
+    evidence_ref: ""
+
+project:
+  name: ""
+  primary_language_of_record: "en"
+  product_brief_path: "docs/product_brief.md"
+  current_state_path: ""
+  current_work_source: "docs/current_work.md"
+  roadmap_path: ""
+  history_path: ""
+
+reference_adoptions:
+  # Repeat one entry for every material characteristic taken from reference material.
+  # disposition: adopt_now, approved_target, deferred, rejected, unresolved
+  - id: "REF-001"
+    characteristic: ""
+    source_evidence: ""
+    disposition: "unresolved"
+    approval_evidence_ref: ""
+    target_effect: ""
+
+role_modules:
+  ROLE-CORE:
+    state: "active"
+    evidence: "Required framework baseline"
+  ROLE-PARTNER:
+    state: "active"
+    evidence: "Required framework baseline"
+  ROLE-REVIEW:
+    state: "inactive"
+    evidence: ""
+    trigger: "A second human or AI is assigned independent review"
+  ROLE-MULTIWRITER:
+    state: "inactive"
+    evidence: ""
+    trigger: "A second writer may change project source, control files, or version history"
+
+workflow_modules:
+  WF-CORE:
+    state: "active"
+    evidence: "Required framework baseline"
+  WF-STRUCTURE:
+    state: "active"
+    evidence: "Required framework baseline"
+  WF-VCS:
+    state: "active"
+    evidence: "Required framework baseline, including explicit deferral when applicable"
+  WF-DOCS:
+    state: "active"
+    evidence: "Required framework baseline"
+  WF-DOD:
+    state: "active"
+    evidence: "Required framework baseline"
+  WF-PLANNING:
+    state: "inactive"
+    evidence: ""
+    trigger: "At least two current long-running work lines need separate priority or dependency control"
+  WF-DATA:
+    state: "inactive"
+    evidence: ""
+    trigger: "The next approved increment crosses an authoritative or non-cleanable data boundary"
+  WF-OPS:
+    state: "inactive"
+    evidence: ""
+    trigger: "The next approved increment runs without a person present"
+  WF-RECOVERY:
+    state: "inactive"
+    evidence: ""
+    trigger: "Authoritative state or an operation requires a tested recovery path"
+  WF-HIGH-IMPACT:
+    state: "inactive"
+    evidence: ""
+    trigger: "The next approved increment can materially affect money, health, safety, rights, privacy, or security"
+
+version_control:
+  mode: "local_git"
+  # Allowed: local_git, remote_single_writer, protected_collaboration, integration_branch, deferred
+  discovery_evidence: ""
+  default_branch: ""
+  remote_provider: ""
+  remote_purpose: ""
+  visibility: ""
+  template_history_treatment: ""
+  ignore_policy: ".gitignore"
+  license_policy: "LICENSE"
+  initial_checkpoint: "pending validation"
+  deferral:
+    reason: ""
+    accepted_risk: ""
+    trigger: ""
+    approval_evidence_ref: ""
+
+authority:
+  application_and_control_writer: ""
+  review_report_writer: ""
+  production_data_write_authority: ""
+  commit_authority: ""
+  push_authority: ""
+  merge_authority: ""
+  repository_administration_authority: ""
+  visibility_and_history_rewrite_authority: ""
+
+work_identity:
+  format: "WORK-NNN"
+  allocation_source: "docs/current_work.md ID registry"
+  next_available: "WORK-001"
+
+first_work:
+  id: "WORK-001"
+  active_work_source: "docs/current_work.md"
+  feature_plan_path: ""
+  # Do not add status here. The active_work_source owns mutable status.
+
+structure:
+  framework_retained:
+    - path: "AGENTS.md"
+    - path: "START_HERE.md"
+    - path: "PROJECT_WORKFLOW.md"
+    - path: "PROJECT_STRUCTURE_REFERENCE.md"
+    - path: "project_profile.example.yaml"
+    - path: "index.html"
+    - path: "README.md"
+    - path: "LICENSE"
+    - path: "framework_manifest.json"
+    - path: "tools/validate_initialization.py"
+    - path: "introduction/"
+  selected_now:
+    - path: "project_profile.yaml"
+      owner: "Implementer"
+      information_class: "maintained_source"
+      version_control: "include"
+      evidence: "Initialization state must survive handoff"
+    - path: ".gitignore"
+      owner: "Implementer"
+      information_class: "maintained_source"
+      version_control: "include"
+      evidence: "Version-control exclusion policy"
+    - path: "docs/product_brief.md"
+      owner: "Product Owner"
+      information_class: "maintained_source"
+      version_control: "include"
+      evidence: "Approved product-intent source"
+    - path: "docs/current_work.md"
+      owner: "Implementer"
+      information_class: "maintained_source"
+      version_control: "include"
+      evidence: "First permanent work item"
+    - path: "project-overview.html"
+      owner: "Implementer"
+      information_class: "derived_evidence"
+      version_control: "include"
+      evidence: "Human-readable approved state and blockers"
+  deferred_until_trigger:
+    - path: "docs/module_structure.md"
+      trigger: "Maintained code, executable configuration, schema, or operating behavior exists"
+    - path: "docs/phase_roadmap.md"
+      trigger: "WF-PLANNING activates"
+    - path: "docs/feature_plans/"
+      trigger: "A feature crosses the durable-plan threshold in PROJECT_WORKFLOW.md"
+  not_applicable: []
+  local_extensions: []
+
+unresolved_decisions:
+  - id: "U-001"
+    question: ""
+    provenance: "unresolved"
+    blocking: true
+    status: "open"
+    owner: "Product Owner"
+    resolution: ""
+    evidence_ref: ""
+
+human_overview:
+  path: "project-overview.html"
+  page_role: "project-overview"
+  sources:
+    - "project_profile.yaml"
+    - "docs/product_brief.md"
+    - "docs/current_work.md"
+  generated_on: ""
+
+verification:
+  validator: "python3 tools/validate_initialization.py ."
+  performed_on: ""
+  result: "not_run"
+  evidence:
+    - check: ""
+      result: ""
+      evidence_ref: ""

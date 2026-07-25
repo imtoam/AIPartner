@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="aipartner-page-role" content="human-start-guide" />
   <meta name="description" content="The human starting point for using AIPartner to initialize a new software project with AI." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="AIPartner Human Start" />
@@ -497,10 +498,20 @@
     }
 
     .file-card.human-entry {
-      grid-row: span 3;
+      grid-row: span 4;
       display: flex;
       flex-direction: column;
       justify-content: center;
+    }
+
+    .human-followup {
+      margin-top: 28px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+    }
+
+    .human-followup .file-name {
+      margin-top: 8px;
     }
 
     .file-card {
@@ -725,7 +736,8 @@
         You do not need to understand the template files or complete a long questionnaire. The AI
         reads the detailed protocol and leads the conversation using product, delivery,
         architecture, QA, and risk perspectives. A short description of your idea is enough to
-        start.
+        start. Tailoring is the first rule: the complete framework is a menu, and only elements
+        supported by current evidence enter the project.
       </p>
 
       <div class="steps">
@@ -809,8 +821,8 @@
             <p>
               <strong>Prepare the proposal</strong>
               The AI explains the first product scope, learning priorities, authority boundaries,
-              repository categories, governance needs, test strategy, intended files, and
-              verification plan.
+              repository categories, Git mode, governance needs, test strategy, intended files,
+              and verification plan.
             </p>
           </li>
           <li>
@@ -855,6 +867,7 @@
               <li>the problem, intended outcome, and success evidence</li>
               <li>priority, scope, and acceptable risk</li>
               <li>AI roles, permissions, and external actions</li>
+              <li>repository visibility, remote publication, and history rewrites</li>
               <li>production release and irreversible decisions</li>
               <li>activation of governance that changes how the project is controlled</li>
             </ul>
@@ -877,7 +890,10 @@
           The previous sections explain what will happen. This is where the work begins. The human
           starts with index.html to understand the process and make the important decisions. The AI
           starts with START_HERE.md to guide initialization. AGENTS.md controls the partnership and
-          roles. PROJECT_WORKFLOW.md controls how project work is delivered.
+          roles. PROJECT_WORKFLOW.md controls how project work is delivered. The structure reference
+          is loaded only when the project needs to choose or change directories and control files.
+          This page remains the human entrance after initialization; project state is generated
+          separately as project-overview.html.
         </p>
         <div class="file-map">
           <article class="file-card human-entry">
@@ -887,6 +903,14 @@
               Read this page first. It shows what to expect, what remains under human authority,
               and how to begin the conversation with AI.
             </p>
+            <div class="human-followup">
+              <span class="tag">After approval</span>
+              <h3 class="file-name">project-overview.html</h3>
+              <p>
+                Generated from project truth. It shows current state, document links, validation
+                evidence, and every blocking decision without replacing this guide.
+              </p>
+            </div>
           </article>
           <article class="file-card">
             <span class="tag ai">AI starting entrance</span>
@@ -914,6 +938,15 @@
               completion, and checking results against the original idea.
             </p>
           </article>
+          <article class="file-card">
+            <span class="tag ai">AI structure reference</span>
+            <h3 class="file-name">PROJECT_STRUCTURE_REFERENCE.md</h3>
+            <p>
+              A complete Invest-derived menu of directory boundaries, planning and tracking
+              documents, filenames, ownership, lifecycle, activation conditions, and a tailoring
+              process for selecting or extending only what the project needs.
+            </p>
+          </article>
         </div>
       </section>
 
@@ -927,7 +960,10 @@
         <div class="artifact-grid">
           <article class="artifact">
             <h3>Project profile</h3>
-            <p>Approved facts, unresolved questions, initialization state, and active governance.</p>
+            <p>
+              Approved facts, unresolved questions, repository mode, initialization state, and
+              active governance.
+            </p>
           </article>
           <article class="artifact">
             <h3>Product brief</h3>
@@ -955,7 +991,7 @@
             <h3>Decisions, history, and overview</h3>
             <p>
               Why durable decisions were made, what was completed, and a readable HTML view of
-              current truth.
+              current truth. The overview is project-overview.html; index.html stays unchanged.
             </p>
           </article>
         </div>
@@ -979,11 +1015,15 @@
           </article>
           <article class="trigger">
             <h3>Production data appears</h3>
-            <p>Add test isolation, read-only boundaries, backup, recovery, and data ownership.</p>
+            <p>Add test isolation, read-only boundaries, irreversible-data rules, and ownership.</p>
           </article>
           <article class="trigger">
             <h3>Work becomes unattended</h3>
             <p>Add idempotency, locks, retries, monitoring, and human takeover conditions.</p>
+          </article>
+          <article class="trigger">
+            <h3>Recovery becomes necessary</h3>
+            <p>Add verified backup, restore, migration, retention, and incident evidence.</p>
           </article>
           <article class="trigger">
             <h3>Several long efforts compete</h3>
@@ -1003,6 +1043,7 @@
           <li>It currently supports new projects only.</li>
           <li>The AI performs the protocol. A separate initialization service is not required.</li>
           <li>Missing tools and failed checks must be reported honestly.</li>
+          <li>Initialization is verified by the included validator, not by an AI writing “pass.”</li>
           <li>Passwords, API keys, and private credentials must not enter project documents.</li>
           <li>Generated HTML is a human view, not an independent source of project truth.</li>
           <li>The framework is open to testing, criticism, and improvement.</li>

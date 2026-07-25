@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "protocol_version": "0.4.0",
+  "files": {
+    "AGENTS.md": {
+      "mode": "managed_blocks",
+      "sha256": "d45bd776e9ceaf99758bf8d2d1c1282a36250ae0326fb421eb76f05bb63cf58f"
+    },
+    "PROJECT_WORKFLOW.md": {
+      "mode": "managed_blocks",
+      "sha256": "0db2d871123cbe31aaf80d2b70f646d52c0dfd0c0f31161c4927e9b9ba4f047e"
+    },
+    "START_HERE.md": {
+      "mode": "immutable",
+      "sha256": "337b2cc7f708c17c8173da7f0c4674d643ddbf4b1b3511c3602dca0265cea280"
+    },
+    "PROJECT_STRUCTURE_REFERENCE.md": {
+      "mode": "immutable",
+      "sha256": "54e9dc51ad875fb03be5f03ac1fd5c83ec07dbacd8292fc551355517e35d700e"
+    },
+    "project_profile.example.yaml": {
+      "mode": "immutable",
+      "sha256": "9a063cfc3cf8e2c80e93e76b69306c0ff3d530ddbc95201028e8c337cb707099"
+    },
+    "index.html": {
+      "mode": "immutable",
+      "sha256": "f5438c6c07a462cece85c8fee71279f8c1d3500547ed517702fa962c78c5cc6f"
+    },
+    "tools/validate_initialization.py": {
+      "mode": "immutable",
+      "sha256": "7a009287e8e94216763a610254eb1318e8c33afa8829ed19f0ac991e101a19d5"
+    }
+  }
+}

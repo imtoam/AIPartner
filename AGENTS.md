@@ -6,14 +6,29 @@ This file defines who participates, who decides, who may write, and how humans a
 How the project itself is shaped, implemented, tested, documented, and operated belongs in
 PROJECT_WORKFLOW.md.
 
+Framework invariant:
+
+- Keep this file and every available role module in the project.
+- Tailoring changes activation state and the managed Team facts only. It does not delete, rename,
+  reorder, or rewrite inactive modules.
+- Edit only the two regions marked BEGIN PROJECT CONFIG and END PROJECT CONFIG during
+  initialization. Changes to framework rules require a separately approved framework change.
+- Stable role module IDs remain unchanged so that validation and future AI partners can find them.
+
+Tailoring is a global rule. Apply only roles and collaboration controls supported by current
+evidence, and use the tailoring protocol in PROJECT_STRUCTURE_REFERENCE.md for structural choices.
+Tailoring cannot weaken human authority, information honesty, or a required safety boundary.
+
 ## Sections in use
 
 Checked sections apply. Unchecked sections are ignored except for their activation condition.
 
-- [x] Core roles and working rules
-- [x] Human and AI partnership
-- [ ] Independent peer review
-- [ ] Multiple writers and worktrees
+<!-- BEGIN PROJECT CONFIG: ROLE MODULE ACTIVATION -->
+- [x] ROLE-CORE: Core roles and working rules
+- [x] ROLE-PARTNER: Human and AI partnership
+- [ ] ROLE-REVIEW: Independent peer review
+- [ ] ROLE-MULTIWRITER: Multiple project writers and worktrees
+<!-- END PROJECT CONFIG: ROLE MODULE ACTIVATION -->
 
 During initialization, the AI recommends which optional role sections are needed. The Product
 Owner approves the selection.
@@ -41,7 +56,7 @@ the purpose check through the Definition of Done. Do not skip a later stage beca
 stage happened in another session. If a workflow instruction conflicts with role or authority rules
 in this file, this file controls authority and the conflict must be reported.
 
-## Core roles and working rules
+## ROLE-CORE: Core roles and working rules
 
 ### Roles
 
@@ -57,12 +72,15 @@ The Product Owner decides:
 - priority and scope
 - acceptance of material risk
 - AI roles and permissions
+- repository visibility, remote publication, and history-rewrite authority
 - production release
 - irreversible actions
 
-The Implementer is the only writer until Multiple writers and worktrees is checked.
+The Implementer is the only writer of application source, project-control files, and version
+history until ROLE-MULTIWRITER is active. A Reviewer with a report-only write boundary is not a
+second project writer.
 
-### The partnership
+### ROLE-PARTNER: The partnership
 
 The Product Owner provides authority, purpose, real-world context, and final decisions. The
 Implementer provides delivery capacity and continuously brings product management, project
@@ -116,7 +134,7 @@ Keep these categories separate:
 
 An inference is not a project fact until the user confirms it.
 
-## Independent peer review
+## ROLE-REVIEW: Independent peer review
 
 Activation condition:
 
@@ -126,8 +144,10 @@ Ignore the rest of this section until its checkbox is checked.
 
 ### Role separation
 
-The Reviewer examines code and documents independently. The Implementer verifies findings, makes
-changes, tests, updates documents, and commits.
+The Reviewer examines code and documents independently. "Read-only Reviewer" means read-only with
+respect to application source, project-control files, runtime systems, production data, and version
+history. The Reviewer may write only the explicitly assigned review report. The Implementer verifies
+findings, makes changes, tests, updates documents, and commits.
 
 Unless the Product Owner approves a different arrangement:
 
@@ -162,14 +182,16 @@ Separate confirmed defects from methodology suggestions.
 When the user asks the Implementer to read or address the review, the Implementer must reread the
 current review file. Do not rely on memory from an earlier version.
 
-The Implementer verifies every finding before changing code. An accepted finding receives a stable
-work reference outside the temporary review report.
+The Implementer verifies every finding before changing code. An accepted finding follows the
+Permanent work identity rule in PROJECT_WORKFLOW.md. A review-local identifier is not its permanent
+project identity.
 
-## Multiple writers and worktrees
+## ROLE-MULTIWRITER: Multiple project writers and worktrees
 
 Activation condition:
 
-- more than one human or AI writer works at the same time
+- more than one human or AI may write application source, project-control files, or version history
+  at the same time
 
 Ignore the rest of this section until its checkbox is checked.
 
@@ -188,6 +210,7 @@ Project-specific branch names and worktree paths belong in Team facts.
 
 Initialization fills this section. Keep it factual and current.
 
+<!-- BEGIN PROJECT CONFIG: TEAM FACTS -->
 Product Owner:
 
 Implementer:
@@ -196,10 +219,25 @@ Reviewer:
 
 Review report:
 
-Only writer:
+Application and control-file writer:
+
+Review-report writer:
+
+Production-data write authority:
+
+Commit authority:
+
+Push authority:
+
+Merge authority:
+
+Repository administration and history-rewrite authority:
+
+Repository visibility approval:
 
 Default branch:
 
 Integration branch:
 
 Worktree locations:
+<!-- END PROJECT CONFIG: TEAM FACTS -->

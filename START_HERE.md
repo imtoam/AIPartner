@@ -4,13 +4,25 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.3.0
+Protocol version: 0.4.0
 
 Purpose: AI-facilitated greenfield project initialization
 
 Audience: AI
 
 Human guide: index.html
+
+Framework invariant:
+
+- This file and PROJECT_STRUCTURE_REFERENCE.md are retained framework instructions. Initialization
+  must not edit, shorten, tailor, or delete their sections.
+- AGENTS.md and PROJECT_WORKFLOW.md may be configured only inside their marked PROJECT CONFIG
+  regions. Inactive modules remain present and unchanged.
+- framework_manifest.json defines immutable files and managed-block integrity. Do not update its
+  hashes during project initialization.
+- Read project_profile.example.yaml before creating project_profile.yaml. Do not invent a different
+  state model or duplicate mutable work status in the profile.
+- Run tools/validate_initialization.py before reporting verification.
 
 ## Instructions for the AI
 
@@ -43,11 +55,15 @@ Perform these read-only checks in order:
 4. Check whether the project already contains application code, user documents, project data,
    deployment configuration, or meaningful version history.
 
+Distinguish reusable template history from project-specific history. Template-only commits do not
+by themselves make the repository brownfield. Do not remove or rewrite that history while deciding.
+
 This version supports greenfield initialization only.
 
-After confirming that the greenfield protocol applies, read PROJECT_WORKFLOW.md in full. It is the
-canonical project method. Use initialization to configure it for this project, not to restate or
-replace its rules.
+After confirming that the greenfield protocol applies, read PROJECT_WORKFLOW.md in full and read
+PROJECT_STRUCTURE_REFERENCE.md for the repository and project-control proposal. The workflow is the
+canonical project method. The structure reference is a menu, not a requirement to create every
+entry. Use initialization to configure them for this project, not to restate or replace their rules.
 
 ### Start a new greenfield project
 
@@ -61,20 +77,20 @@ The initialization proposal must set initialization.mode to greenfield.
 
 ### Resume an interrupted greenfield initialization
 
-If project_profile.yaml records initialization.mode as greenfield and the status is draft,
-proposed, approved_pending_materialization, or verification_failed:
+If project_profile.yaml records initialization.mode as greenfield and its status is anything other
+than complete:
 
 - Read the existing initialization record.
 - Tell the user where the process stopped.
-- Continue from that state.
+- Follow the state-action table in Section 8 and continue from that state.
 - Do not repeat confirmed questions.
 - Do not treat an unapproved draft as project truth.
 
 ### Hand off an initialized project
 
-If initialization.status is approved or complete, stop using this initialization protocol. Continue
-through AGENTS.md, project_profile.yaml, PROJECT_WORKFLOW.md when project work is involved, and the
-active modules listed there. Do not repeat the initial interview.
+Only initialization.status complete hands off the project. Continue through AGENTS.md,
+project_profile.yaml, PROJECT_WORKFLOW.md when project work is involved, and the active modules
+listed there. Do not repeat the initial interview.
 
 ### Leave existing-project onboarding for a later version
 
@@ -93,6 +109,24 @@ The initialization.mode field reserves these values for future protocols:
 
 Reserved values are compatibility points. They are not permission to improvise an onboarding
 process.
+
+### Use external reference material without confusing it with the target
+
+A greenfield target may use an existing project, document set, or codebase as read-only reference
+material. The target repository state determines whether this protocol applies; the reference does
+not become the target.
+
+Record one input source type in project_profile.yaml:
+
+- idea_only.
+- requirements_reference.
+- reference_project_readonly.
+
+For each material characteristic taken from a reference, classify it as adopt_now, approved_target,
+deferred, rejected, or unresolved. An observed fact about the reference is not a current fact about
+the new target and does not activate governance by itself. The Product Owner must confirm any
+adopt_now or approved_target interpretation that materially affects product scope, architecture,
+operation, data, risk, or roles.
 
 ## 1. Non-negotiable baseline principles
 
@@ -120,7 +154,22 @@ operations lead. Bring the relevant perspectives into the conversation, explain 
 language, and preserve human authority. AGENTS.md remains the canonical source for this role after
 initialization.
 
-### 1.3 Propose before writing
+### 1.3 Tailor from evidence
+
+Tailoring is a global rule for this template. The presence of a file, section, practice, directory,
+or test layer in the template is not evidence that the project needs it.
+
+Use the decision states and tailoring procedure in PROJECT_STRUCTURE_REFERENCE.md. Recommend the
+smallest sufficient starting configuration, explain every selection, defer inactive needs to an
+explicit trigger, and allow approved local extensions. Core artifacts required to operate this
+protocol still receive project-specific content rather than generic filler.
+
+Tailoring changes activation and project-specific configuration. It never removes framework
+instructions or inactive modules. It cannot waive human authority, information honesty, permanent
+work identity, evidence-based completion, version-control disposition, or the duty to stop on a
+material discrepancy.
+
+### 1.4 Propose before writing
 
 Read-only discovery is allowed during initialization. Unless the user explicitly requests a safe,
 reversible exploratory action, do not perform any of the following before showing an initialization
@@ -137,7 +186,7 @@ proposal and obtaining approval:
 
 Only materialize the approved files after the user approves the initialization proposal.
 
-### 1.4 Separate facts, inferences, proposals, and unknowns
+### 1.5 Separate facts, inferences, proposals, and unknowns
 
 Maintain these five information classes:
 
@@ -151,20 +200,25 @@ Maintain these five information classes:
 
 "Not found" does not mean "does not exist." "Not mentioned by the user" does not mean "no."
 
-### 1.5 Protect the greenfield boundary
+Every unresolved decision records its owner, status, provenance, and whether it is blocking.
+Questions about initialization mode, product intent, first scope, authority, irreversible data,
+high-impact boundaries, or another choice that could materially change the initial solution are
+blocking. Initialization cannot advance to verified or complete while a blocking decision is open.
+
+### 1.6 Protect the greenfield boundary
 
 - Stop if meaningful project work already exists.
 - Do not reinterpret an existing repository as an empty starting point.
 - Do not delete or relocate files to make a repository appear empty.
 - Put template-managed content in stable managed boundaries or separate files.
 
-### 1.6 Do not collect or store secrets
+### 1.7 Do not collect or store secrets
 
 Do not ask the user to place API keys, passwords, private keys, or production credentials in the
 conversation, template documents, or version control. When credentials will be needed, record only
 their purpose, delivery mechanism, and environment-variable name. Never record their values.
 
-### 1.7 Define completion with evidence
+### 1.8 Define completion with evidence
 
 "AI generated it," "the code looks plausible," and "the command did not visibly fail" do not mean
 the work is complete. Every deliverable needs verification evidence proportional to its risk.
@@ -272,8 +326,9 @@ Do not assume multi-agent governance merely because the template includes multi-
 
 ### 3.9 Repository structure and information ownership
 
-Use the repository categories and ownership rules in PROJECT_WORKFLOW.md. Gather only the
-project-specific information needed to configure them:
+Use the repository categories and artifact names in PROJECT_STRUCTURE_REFERENCE.md under the
+ownership rules in PROJECT_WORKFLOW.md. Gather only the project-specific information needed to
+configure them:
 
 - why the project needs it now.
 - what belongs there and what must not.
@@ -285,6 +340,32 @@ project-specific information needed to configure them:
 The initialization proposal instantiates the categories this project needs. Do not copy the generic
 directory rules into a second project document.
 
+Classify retained framework files separately from project-selected artifacts. Current-state files
+contain only present target-project reality. Planned architecture and future operating behavior
+belong in the first feature brief, a roadmap, an ADR, or a deferred trigger.
+
+### 3.10 Git and repository history
+
+Inspect the repository before asking questions. Use the Git guidance in
+PROJECT_STRUCTURE_REFERENCE.md and recommend a tailored mode in plain language.
+
+Clarify only the decisions that apply:
+
+- whether Git is already initialized and whether its history is template-only or project-specific.
+- local-only history or a remote repository, and the purpose of the remote.
+- public or private visibility.
+- default branch and whether review, concurrency, release isolation, or a stable production
+  baseline justifies additional branches.
+- who may commit, push, merge, administer, publish, or rewrite history.
+- tracked source and evidence versus ignored secrets, production data, generated output, and local
+  runtime state.
+- license expectations, including whether code and documentation need different terms.
+- when the first validated project commit should be created.
+
+Do not require the user to invent a Git workflow. Recommend the smallest safe model and explain
+what would trigger a more complex one. Remote creation, visibility changes, pushes, publication,
+and history rewrites require explicit approval.
+
 ## 4. Configure the project method
 
 PROJECT_WORKFLOW.md owns the delivery method, including Agile feedback, Lean learning, Kanban flow,
@@ -295,6 +376,8 @@ During initialization:
 
 - do not ask the user to choose a named framework.
 - recommend active workflow sections from the project's actual conditions.
+- do not use newly generated artifacts as evidence for activating their own module.
+- treat future conditions as deferred until the next approved increment needs the control.
 - explain why each recommended practice matters to this project now.
 - configure the first feature or experiment to enter the workflow with a clear outcome, boundary,
   risk view, and acceptance evidence.
@@ -322,6 +405,7 @@ List separately:
 
 - explicit user statements.
 - observed facts with evidence references.
+- reference-material facts and their adopt, target, defer, reject, or unresolved disposition.
 - AI inferences awaiting confirmation.
 - AI proposals awaiting approval.
 - unresolved questions.
@@ -369,6 +453,10 @@ file, explain its responsibility, ownership, version-control policy, and whether
 Show where application code, documentation, tests, tools, user interfaces, data definitions,
 configuration, generated logs, reports, and runtime state will live.
 
+Use the tailoring states from PROJECT_STRUCTURE_REFERENCE.md. The proposal must show
+framework_retained, selected_now, deferred_until_trigger, not_applicable, and any local_extension
+decisions with their evidence. Do not materialize deferred or not-applicable items.
+
 The proposal must also identify:
 
 - the source of truth for the original product intent.
@@ -381,26 +469,52 @@ The proposal must also identify:
 
 Describe how the human and AI will discuss, approve, implement, test, and close the first feature.
 Include the initial alignment check, expected boundary questions, test layers, acceptance evidence,
-and the stop-and-discuss rule for discrepancies.
+the stop-and-discuss rule for discrepancies, and the first permanent work ID allocated through
+PROJECT_WORKFLOW.md.
 
-### 5.8 Files to materialize
+If the first feature crosses a durable boundary or activates WF-DATA, WF-OPS, WF-RECOVERY, or
+WF-HIGH-IMPACT, include a durable feature-plan file in the proposal. Do not reduce a high-risk
+agreement to one acceptance sentence in the active queue.
+
+### 5.8 Git and repository proposal
+
+Explain:
+
+- observed repository and history state.
+- recommended version-control mode and why it is sufficient now.
+- template-history treatment.
+- default branch, writer, commit, merge, and push authority.
+- remote provider, purpose, and visibility when proposed.
+- ignore and large-artifact policy.
+- license recommendation and unresolved ownership questions.
+- initial commit plan and any external action requiring separate approval.
+
+### 5.9 Files to materialize
 
 List the files that will be created or modified after approval and explain which question each file
 answers. Do not create overlapping documents with unclear or duplicated authority.
 
-### 5.9 Verification plan
+### 5.10 Verification plan
 
 Explain how initialization will verify:
 
 - structural completeness.
 - consistency between state and approval.
 - discoverability of active modules.
-- absence of inactive modules from active rules.
+- inactive modules remain present but are not marked active or represented as current project facts.
 - valid links and stable IDs.
 - preservation of existing user content.
 - separation of maintained source, authoritative data, generated output, and runtime state.
 - consistency of the proposed repository map with the approved product and operating model.
+- every materialized path has a selected_now decision and every local extension has an owner,
+  lifecycle, and approval when required.
+- every bundled reusable framework path has a framework_retained classification.
+- deferred and not-applicable reference items were not created.
+- Git state, tracked and ignored files, branch configuration, and approved authority match the
+  proposal.
 - generation of the human overview from authoritative facts.
+- preservation of index.html as the permanent human starting guide.
+- tools/validate_initialization.py completes without errors and its actual output is recorded.
 
 ## 6. Request approval
 
@@ -417,6 +531,10 @@ to:
 
 Silence is not approval.
 
+Record approval in project_profile.yaml with state, approver, date, approved scope, and an evidence
+reference that a future AI can interpret. Do not write "approved by the Product Owner" merely
+because the AI completed a proposal.
+
 Explicit approval is required for:
 
 - project goals and priority.
@@ -426,24 +544,31 @@ Explicit approval is required for:
 - unattended automation.
 - concurrent writing by multiple AI agents.
 - activation of material governance modules.
+- remote creation or replacement, public visibility, push or publication, and history rewrite.
 
 ## 7. Materialization order after approval
 
 After approval:
 
 1. Save approved facts, inference states, and unresolved questions.
-2. Create project_profile.yaml with initialization.mode set to greenfield.
-3. Create or update the compact routing rules in AGENTS.md.
-4. Create or update the project method and active delivery rules in PROJECT_WORKFLOW.md.
+2. Create project_profile.yaml from project_profile.example.yaml with initialization.mode set to
+   greenfield. Preserve its ownership boundaries and do not add mutable work-item status.
+3. Configure only the marked PROJECT CONFIG regions in AGENTS.md.
+4. Configure only the marked PROJECT CONFIG regions in PROJECT_WORKFLOW.md.
 5. Activate the approved role and project governance modules in their owning files.
 6. Create the approved repository categories and ownership boundaries that are needed now.
 7. Create only the project documents currently needed. Do not materialize meaningless empty
    documents.
-8. Establish the feature discussion loop, explicit work-state flow, risk-based test strategy, and
-   minimum Definition of Done.
-9. Generate a static, human-facing HTML overview.
-10. Run structural, reference, and consistency validation.
-11. Report actual writes, validation results, and remaining unknowns to the user.
+8. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
+   work-state flow, risk-based test strategy, and minimum Definition of Done.
+9. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
+   state as project-overview.html.
+10. Run tools/validate_initialization.py and any project-specific structural, reference, and
+    consistency checks. Record actual evidence rather than self-declared pass values.
+11. Apply the approved local Git configuration without discarding existing history or user work.
+12. Create the initial project commit only after validation and only when approved.
+13. Create or change a remote, push, publish, or change visibility only when explicitly approved.
+14. Report actual writes, validation results, Git state, and remaining unknowns to the user.
 
 If a required tool or renderer has not yet been implemented:
 
@@ -454,34 +579,36 @@ If a required tool or renderer has not yet been implemented:
 
 ## 8. Initialization states
 
-Initialization follows this order. Approval may not be skipped.
+Use only these states:
 
-1. uninitialized
-2. interviewing
-3. draft
-4. proposed
-5. approved_pending_materialization
-6. materialized
-7. verified
-8. complete
+| State | Meaning | Required next action |
+|---|---|---|
+| uninitialized | No interview state exists | Begin read-only discovery |
+| interviewing | The idea is being clarified | Continue the adaptive interview |
+| draft | A working interpretation exists | Resolve material unknowns and prepare the proposal |
+| proposed | The proposal is waiting for human action | Wait for approval, correction, rejection, or deferral |
+| needs_user_decision | A blocking choice is open | Ask for the smallest required decision; do not materialize |
+| approved_pending_materialization | Approval evidence and scope are recorded | Materialize only the approved scope |
+| materialized | Approved files were written | Run deterministic and project-specific validation |
+| verification_failed | A check failed | Preserve evidence, correct safely, and rerun |
+| blocked_by_environment | Validation or materialization cannot proceed safely | Record blocker and required external change |
+| verified | Required checks passed | Report results and remaining non-blocking unknowns, then set complete |
+| complete | Initialization is handed off | Stop using this protocol for ordinary work |
 
-The process may also enter one of these waiting or failure states:
+Approval may not be skipped. There is no `approved` state. A waiting or failure state preserves the
+last completed stage, confirmed facts, and evidence so the next AI can continue without restarting.
 
-- needs_user_decision
-- verification_failed
-- blocked_by_environment
-
-
-When entering a failure or waiting state, preserve confirmed information and failure evidence so
-that the next AI can continue from the same point.
+Open blocking decisions permit only interviewing, draft, proposed, or needs_user_decision. They
+forbid approved_pending_materialization, materialized, verified, and complete.
 
 ## 9. Hand off ongoing governance
 
 START_HERE.md stops governing the project when initialization is complete.
 
 - AGENTS.md owns role, authority, reviewer, and concurrent-writer activation.
-- PROJECT_WORKFLOW.md owns delivery, planning, production, operational, and high-impact activation.
-- project_profile.yaml records which sections are active and any unresolved activation decision.
+- PROJECT_WORKFLOW.md owns delivery, planning, data, operation, recovery, and high-impact activation.
+- project_profile.yaml records the approved activation summary and pointers. The owning file remains
+  authoritative, and validation prevents drift.
 
 Before closing initialization, verify that each active or available module has exactly one owning
 file and that the owning file contains its activation condition. Ongoing AI partners follow those
@@ -495,11 +622,14 @@ task.
 During initialization, read:
 
 1. the compact AGENTS.md.
-2. current project state in project_profile.yaml, if it exists.
-3. PROJECT_WORKFLOW.md.
-4. the entry points for active modules.
-5. the sources of truth directly relevant to the current task.
-6. ADRs or history only when a decision must be traced.
+2. project_profile.example.yaml as the profile contract.
+3. initialization, activation, approval, structure, and unresolved-decision state in
+   project_profile.yaml, if it exists.
+4. PROJECT_WORKFLOW.md.
+5. PROJECT_STRUCTURE_REFERENCE.md while preparing the repository and control-artifact proposal.
+6. the entry points for active modules.
+7. the sources of truth directly relevant to the current task.
+8. ADRs or history only when a decision must be traced.
 
 After initialization, use the routing rules in AGENTS.md. Do not use this file as the ongoing
 project method.
@@ -509,14 +639,26 @@ generated HTML as a source of truth.
 
 ## 11. Role of the HTML overview
 
-HTML is the human-facing project control surface, not an independent source of truth. Generate it
-from approved:
+index.html remains the permanent human starting guide. Do not replace it with project status.
+
+Generate current project state as project-overview.html. It is a human-facing control surface, not
+an independent source of truth. Generate it from approved:
 
 - project_profile.yaml state.
 - current project documents.
 - active governance modules.
 - pending decisions.
 - verification and runtime status.
+
+The overview must:
+
+- visibly distinguish approved facts, proposals, and unresolved decisions.
+- include every open blocking decision.
+- use clickable relative links to maintained project documents.
+- show its source paths and generation time.
+- never claim verified or complete when the profile or validator disagrees.
+- preserve the framework's established visual language unless the Product Owner approves a new
+  project design.
 
 Initialization does not require an HTML service. Generate a static page that can be opened
 directly. Propose a service only when real requirements appear for multiple users, remote access,
@@ -541,7 +683,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.3 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.4 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization
@@ -550,18 +692,26 @@ Initialization may be marked complete only when all of the following are true:
 
 - the user approved the project goal and first scope.
 - project_profile.yaml records initialization.mode as greenfield.
+- approval state, scope, approver, date, and evidence reference are recorded.
 - user facts, AI inferences, proposals, and unknowns are separated.
+- reference-material facts have explicit adopt, target, defer, reject, or unresolved dispositions.
 - the most important assumptions and success evidence are recorded.
 - AI authority and human-approval boundaries are explicit.
 - the AI partnership and feature discussion method are explicit.
 - the repository map separates maintained source, authoritative data, generated output, and
   runtime state.
-- the first feature has an agreed boundary and test approach.
+- the selected version-control mode, repository authority, ignore policy, license state, and initial
+  commit or explicit deferral are recorded.
+- the first feature or experiment has an agreed boundary and evidence approach.
+- the current work source is the only owner of mutable work-item status.
 - currently required role and project governance modules are active and validated in their owning
   files.
 - inactive modules remain discoverable without entering active context.
+- START_HERE.md and PROJECT_STRUCTURE_REFERENCE.md remain unchanged framework references.
 - project sources of truth do not have overlapping responsibilities.
-- the human overview can be generated from authoritative facts.
+- index.html remains the human starting guide and project-overview.html represents project state.
+- every open blocking decision has been resolved.
+- tools/validate_initialization.py reports no errors and its evidence is recorded.
 - validation results and unresolved questions were reported to the user.
 - a future AI can determine where to continue.
 
