@@ -8,6 +8,10 @@ Protocol version: 0.2.0
 
 Purpose: AI-facilitated greenfield project initialization
 
+Audience: AI
+
+Human guide: index.html
+
 ## Instructions for the AI
 
 If you are an AI entering this project and have been asked to start or initialize a new project,
