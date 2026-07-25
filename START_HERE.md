@@ -4,7 +4,7 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.2.0
+Protocol version: 0.3.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -29,6 +29,7 @@ project with:
 - controlled scope.
 - explicit risk and authority.
 - verifiable outcomes.
+- a durable human and AI partnership.
 - governance that activates as complexity grows.
 - enough continuity for a future human or AI to take over reliably.
 
@@ -43,6 +44,10 @@ Perform these read-only checks in order:
    deployment configuration, or meaningful version history.
 
 This version supports greenfield initialization only.
+
+After confirming that the greenfield protocol applies, read PROJECT_WORKFLOW.md in full. It is the
+canonical project method. Use initialization to configure it for this project, not to restate or
+replace its rules.
 
 ### Start a new greenfield project
 
@@ -68,8 +73,8 @@ proposed, approved_pending_materialization, or verification_failed:
 ### Hand off an initialized project
 
 If initialization.status is approved or complete, stop using this initialization protocol. Continue
-through AGENTS.md, project_profile.yaml, and the active modules listed there. Do not repeat the
-initial interview.
+through AGENTS.md, project_profile.yaml, PROJECT_WORKFLOW.md when project work is involved, and the
+active modules listed there. Do not repeat the initial interview.
 
 ### Leave existing-project onboarding for a later version
 
@@ -107,7 +112,15 @@ The user owns decisions about:
 
 AI may analyze, recommend, and execute. It must not present its own judgment as a user decision.
 
-### 1.2 Propose before writing
+### 1.2 Partnership means continuous guidance
+
+Follow the partnership duties defined in AGENTS.md during initialization. Do not assume the user is
+already an experienced Product Owner, project manager, architect, QA lead, security specialist, or
+operations lead. Bring the relevant perspectives into the conversation, explain decisions in plain
+language, and preserve human authority. AGENTS.md remains the canonical source for this role after
+initialization.
+
+### 1.3 Propose before writing
 
 Read-only discovery is allowed during initialization. Unless the user explicitly requests a safe,
 reversible exploratory action, do not perform any of the following before showing an initialization
@@ -124,7 +137,7 @@ proposal and obtaining approval:
 
 Only materialize the approved files after the user approves the initialization proposal.
 
-### 1.3 Separate facts, inferences, proposals, and unknowns
+### 1.4 Separate facts, inferences, proposals, and unknowns
 
 Maintain these five information classes:
 
@@ -138,20 +151,20 @@ Maintain these five information classes:
 
 "Not found" does not mean "does not exist." "Not mentioned by the user" does not mean "no."
 
-### 1.4 Protect the greenfield boundary
+### 1.5 Protect the greenfield boundary
 
 - Stop if meaningful project work already exists.
 - Do not reinterpret an existing repository as an empty starting point.
 - Do not delete or relocate files to make a repository appear empty.
 - Put template-managed content in stable managed boundaries or separate files.
 
-### 1.5 Do not collect or store secrets
+### 1.6 Do not collect or store secrets
 
 Do not ask the user to place API keys, passwords, private keys, or production credentials in the
 conversation, template documents, or version control. When credentials will be needed, record only
 their purpose, delivery mechanism, and environment-variable name. Never record their values.
 
-### 1.6 Define completion with evidence
+### 1.7 Define completion with evidence
 
 "AI generated it," "the code looks plausible," and "the command did not visibly fail" do not mean
 the work is complete. Every deliverable needs verification evidence proportional to its risk.
@@ -165,9 +178,12 @@ Initialization is not a fixed long-form questionnaire. Use an adaptive interview
 2. Restate your current understanding before asking the user to repeat anything.
 3. Identify unknowns that would materially alter product direction, architecture, or risk.
 4. Ask one small, coherent group of questions at a time.
-5. Offer useful options while preserving a free-form response path.
-6. Allow the user to answer "unknown" or "decide later."
-7. Update the current understanding as information arrives instead of restarting the questionnaire.
+5. Offer a recommended option with reasons and consequences, while preserving a free-form response
+   path.
+6. Supply the product, delivery, architecture, QA, security, and operations perspectives that are
+   relevant to the decision.
+7. Allow the user to answer "unknown" or "decide later."
+8. Update the current understanding as information arrives instead of restarting the questionnaire.
 
 If the user provides only a one-line idea, start with the smallest useful questions. If the user
 has already provided a detailed description, summarize it and ask only for genuinely missing
@@ -254,24 +270,38 @@ technical spike, or working software.
 
 Do not assume multi-agent governance merely because the template includes multi-agent modules.
 
-## 4. Do not ask the user to choose a development framework
+### 3.9 Repository structure and information ownership
 
-Do not ask, "Do you want Agile, Scrum, or Kanban?" Recommend practices from the project's actual
-conditions.
+Use the repository categories and ownership rules in PROJECT_WORKFLOW.md. Gather only the
+project-specific information needed to configure them:
 
-The template combines:
+- why the project needs it now.
+- what belongs there and what must not.
+- whether its contents are maintained source, authoritative data, derived output, or disposable
+  runtime state.
+- whether it belongs in version control.
+- which component or role owns changes to it.
 
-- Agile: continuous value, responsiveness to change, technical excellence, simplicity, and
-  reflection.
-- Lean Startup: explicit assumptions and evidence-based learning.
-- Kanban: an explicit flow for ongoing work.
-- Continuous Delivery: testability, recoverability, and release readiness.
-- risk governance: stronger controls as data, authority, and real-world impact increase.
-- Scrum: an optional module only when a stable team genuinely adopts its roles, events, and
-  Sprints.
+The initialization proposal instantiates the categories this project needs. Do not copy the generic
+directory rules into a second project document.
 
-The initialization proposal must explain why a practice fits the current project rather than merely
-naming the practice.
+## 4. Configure the project method
+
+PROJECT_WORKFLOW.md owns the delivery method, including Agile feedback, Lean learning, Kanban flow,
+Continuous Delivery evidence, risk management, testing, alignment checks, and the Definition of
+Done.
+
+During initialization:
+
+- do not ask the user to choose a named framework.
+- recommend active workflow sections from the project's actual conditions.
+- explain why each recommended practice matters to this project now.
+- configure the first feature or experiment to enter the workflow with a clear outcome, boundary,
+  risk view, and acceptance evidence.
+- leave unnecessary optional sections inactive until their activation conditions appear.
+
+Do not copy the workflow stages into the initialization record. Record only the approved
+project-specific configuration, active sections, and unresolved decisions.
 
 ## 5. Prepare the initialization understanding
 
@@ -318,7 +348,8 @@ Explain:
 
 ### 5.5 Recommended governance modules
 
-For every recommended module, show:
+Distinguish team and authority modules in AGENTS.md from project delivery and risk modules in
+PROJECT_WORKFLOW.md. For every recommended module, show:
 
 - its stable module ID.
 - the triggering evidence.
@@ -331,12 +362,33 @@ For every recommended module, show:
 List untriggered modules briefly as "currently inactive." Do not expand every inactive rule into
 the active context.
 
-### 5.6 Files to materialize
+### 5.6 Repository and file map
+
+Present the proposed top-level categories before creating them. For every category or important
+file, explain its responsibility, ownership, version-control policy, and whether it is needed now.
+Show where application code, documentation, tests, tools, user interfaces, data definitions,
+configuration, generated logs, reports, and runtime state will live.
+
+The proposal must also identify:
+
+- the source of truth for the original product intent.
+- the source of truth for current system behavior.
+- the active work list.
+- where feature discussions and test strategies will be recorded when they need durable form.
+- where durable decisions and completed-work history will be preserved.
+
+### 5.7 First feature working agreement
+
+Describe how the human and AI will discuss, approve, implement, test, and close the first feature.
+Include the initial alignment check, expected boundary questions, test layers, acceptance evidence,
+and the stop-and-discuss rule for discrepancies.
+
+### 5.8 Files to materialize
 
 List the files that will be created or modified after approval and explain which question each file
 answers. Do not create overlapping documents with unclear or duplicated authority.
 
-### 5.7 Verification plan
+### 5.9 Verification plan
 
 Explain how initialization will verify:
 
@@ -346,6 +398,8 @@ Explain how initialization will verify:
 - absence of inactive modules from active rules.
 - valid links and stable IDs.
 - preservation of existing user content.
+- separation of maintained source, authoritative data, generated output, and runtime state.
+- consistency of the proposed repository map with the approved product and operating model.
 - generation of the human overview from authoritative facts.
 
 ## 6. Request approval
@@ -380,13 +434,16 @@ After approval:
 1. Save approved facts, inference states, and unresolved questions.
 2. Create project_profile.yaml with initialization.mode set to greenfield.
 3. Create or update the compact routing rules in AGENTS.md.
-4. Activate the approved governance modules.
-5. Create only the project documents currently needed. Do not materialize meaningless empty
+4. Create or update the project method and active delivery rules in PROJECT_WORKFLOW.md.
+5. Activate the approved role and project governance modules in their owning files.
+6. Create the approved repository categories and ownership boundaries that are needed now.
+7. Create only the project documents currently needed. Do not materialize meaningless empty
    documents.
-6. Establish an explicit work-state flow and a minimum Definition of Done.
-7. Generate a static, human-facing HTML overview.
-8. Run structural, reference, and consistency validation.
-9. Report actual writes, validation results, and remaining unknowns to the user.
+8. Establish the feature discussion loop, explicit work-state flow, risk-based test strategy, and
+   minimum Definition of Done.
+9. Generate a static, human-facing HTML overview.
+10. Run structural, reference, and consistency validation.
+11. Report actual writes, validation results, and remaining unknowns to the user.
 
 If a required tool or renderer has not yet been implemented:
 
@@ -418,58 +475,34 @@ The process may also enter one of these waiting or failure states:
 When entering a failure or waiting state, preserve confirmed information and failure evidence so
 that the next AI can continue from the same point.
 
-## 9. Continuous governance after initialization
+## 9. Hand off ongoing governance
 
-Initialization does not end the template's role. Whenever a new collaboration capability,
-production risk, or level of project complexity appears, check the governance triggers.
+START_HERE.md stops governing the project when initialization is complete.
 
-Governance modules use the following states:
+- AGENTS.md owns role, authority, reviewer, and concurrent-writer activation.
+- PROJECT_WORKFLOW.md owns delivery, planning, production, operational, and high-impact activation.
+- project_profile.yaml records which sections are active and any unresolved activation decision.
 
-1. available
-2. triggered
-3. proposed
-4. approved
-5. active
-6. verified
-
-
-When an AI detects a trigger, it must:
-
-1. explain what it observed.
-2. reference the relevant trigger.
-3. identify the module as a required safety control or an advisory governance practice.
-4. preview the rules and files that would change.
-5. explain the risk of not activating it.
-6. request user approval.
-7. apply the controlled change after approval.
-8. validate the result and update the human overview.
-
-AI must not silently alter governance because it considers a practice "best."
-
-Typical trigger events include:
-
-| Event | Candidate governance capability |
-|---|---|
-| A second AI is introduced for independent review | Role separation, review output, finding resolution |
-| A second writer appears | Branch/worktree rules, ownership, integration responsibility |
-| Production or non-cleanable data is introduced | Test isolation, read-only boundaries, backup and recovery |
-| Scheduled unattended execution begins | Idempotency, locks, retries, monitoring, human takeover |
-| External users appear | Release, compatibility, feedback, and incident handling |
-| Several long-running features appear | Roadmap/backlog/feature-plan separation |
-| A high-risk decision appears | Independent verification, mandatory approval, rollback, and audit |
+Before closing initialization, verify that each active or available module has exactly one owning
+file and that the owning file contains its activation condition. Ongoing AI partners follow those
+files and must not return to this initialization protocol to manage normal project growth.
 
 ## 10. Context-loading rules
 
 The complete template may be bundled with the project, but it must not be loaded in full for every
 task.
 
-For normal work, read only:
+During initialization, read:
 
 1. the compact AGENTS.md.
-2. current project state in project_profile.yaml.
-3. the entry points for active modules.
-4. the sources of truth directly relevant to the current task.
-5. ADRs or history only when a decision must be traced.
+2. current project state in project_profile.yaml, if it exists.
+3. PROJECT_WORKFLOW.md.
+4. the entry points for active modules.
+5. the sources of truth directly relevant to the current task.
+6. ADRs or history only when a decision must be traced.
+
+After initialization, use the routing rules in AGENTS.md. Do not use this file as the ongoing
+project method.
 
 Do not treat history as current state. Do not treat the roadmap as the current task. Do not treat
 generated HTML as a source of truth.
@@ -508,7 +541,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.2 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.3 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization
@@ -520,7 +553,12 @@ Initialization may be marked complete only when all of the following are true:
 - user facts, AI inferences, proposals, and unknowns are separated.
 - the most important assumptions and success evidence are recorded.
 - AI authority and human-approval boundaries are explicit.
-- currently required governance modules are active and validated.
+- the AI partnership and feature discussion method are explicit.
+- the repository map separates maintained source, authoritative data, generated output, and
+  runtime state.
+- the first feature has an agreed boundary and test approach.
+- currently required role and project governance modules are active and validated in their owning
+  files.
 - inactive modules remain discoverable without entering active context.
 - project sources of truth do not have overlapping responsibilities.
 - the human overview can be generated from authoritative facts.

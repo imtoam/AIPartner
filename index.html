@@ -496,6 +496,13 @@
       grid-template-columns: repeat(2, 1fr);
     }
 
+    .file-card.human-entry {
+      grid-row: span 3;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
     .file-card {
       padding: 24px;
       border: 1px solid var(--line);
@@ -640,6 +647,11 @@
       .trigger-grid {
         grid-template-columns: 1fr;
       }
+
+      .file-card.human-entry {
+        grid-row: auto;
+        justify-content: flex-start;
+      }
     }
 
     @media (max-width: 560px) {
@@ -711,8 +723,9 @@
       <h2>From an unfinished idea to an approved starting structure</h2>
       <p class="intro">
         You do not need to understand the template files or complete a long questionnaire. The AI
-        reads the detailed protocol and leads the conversation. A short description of your idea is
-        enough to start.
+        reads the detailed protocol and leads the conversation using product, delivery,
+        architecture, QA, and risk perspectives. A short description of your idea is enough to
+        start.
       </p>
 
       <div class="steps">
@@ -768,7 +781,8 @@
         <h2>What happens after you describe the idea</h2>
         <p class="section-copy">
           Initialization is a conversation with a visible approval boundary. The AI organizes the
-          information, but it does not turn its own assumptions into project facts.
+          information, supplies professional perspectives you may not know to request, and keeps
+          its own assumptions separate from project facts.
         </p>
         <ol class="timeline">
           <li>
@@ -786,16 +800,17 @@
           </li>
           <li>
             <p>
-              <strong>Separate knowledge from interpretation</strong>
-              Your statements, observed facts, AI inferences, AI proposals, conflicts, and unknowns
-              remain visibly different.
+              <strong>Shape the first delivery</strong>
+              Together you define the outcome, non-goals, system and data boundaries, risks, and
+              acceptance evidence before implementation begins.
             </p>
           </li>
           <li>
             <p>
               <strong>Prepare the proposal</strong>
               The AI explains the first product scope, learning priorities, authority boundaries,
-              governance needs, intended files, and verification plan.
+              repository categories, governance needs, test strategy, intended files, and
+              verification plan.
             </p>
           </li>
           <li>
@@ -809,7 +824,8 @@
             <p>
               <strong>Create and verify</strong>
               After approval, the AI creates only the agreed structure, validates it, and reports
-              remaining unknowns and limitations.
+              remaining unknowns and limitations. It checks the result against the original idea
+              and stops for discussion if reality no longer matches the agreement.
             </p>
           </li>
         </ol>
@@ -817,17 +833,20 @@
 
       <section class="section" id="human-role">
         <p class="section-label">03 / Your role</p>
-        <h2>You do not supervise every line. You carry the decisions.</h2>
+        <h2>You carry the decisions. AI helps you see which decisions matter.</h2>
         <p class="section-copy">
-          AI may perform much of the local work, but the human remains responsible for the project
-          as a coherent product and real-world commitment.
+          You are not expected to arrive as an expert Product Owner, project manager, architect, or
+          QA lead. AI applies those perspectives throughout the project. It uses Agile feedback,
+          Lean learning, risk management, architecture, testing, and operational thinking to
+          explain choices and bring material decisions back to you.
         </p>
         <div class="authority">
           <div class="statement">
             <h3>The human is the Product Owner</h3>
             <p>
               The framework helps you apply product, project, architecture, QA, and operational
-              perspectives without requiring you to perform every implementation task yourself.
+              perspectives without requiring you to know every professional question in advance or
+              supervise every implementation detail.
             </p>
           </div>
           <div>
@@ -841,54 +860,58 @@
             </ul>
           </div>
         </div>
+        <div class="scope-note">
+          <strong>The partnership continues</strong>
+          <span>
+            For each non-trivial feature, AI reconnects the request to the original idea, discusses
+            scope and boundaries, agrees on test evidence before coding, and checks the result back
+            against the agreement. A material discrepancy pauses the work for your decision.
+          </span>
+        </div>
       </section>
 
       <section class="section" id="contents">
-        <p class="section-label">04 / Repository map</p>
-        <h2>What is in this framework</h2>
+        <p class="section-label">04 / Where we start</p>
+        <h2>The human and AI enter through different doors</h2>
         <p class="section-copy">
-          Human and AI entry points are deliberately separate. People receive a readable overview.
-          AI receives the detailed instructions needed to conduct the work consistently.
+          The previous sections explain what will happen. This is where the work begins. The human
+          starts with index.html to understand the process and make the important decisions. The AI
+          starts with START_HERE.md to guide initialization. AGENTS.md controls the partnership and
+          roles. PROJECT_WORKFLOW.md controls how project work is delivered.
         </p>
         <div class="file-map">
-          <article class="file-card">
-            <span class="tag">Human</span>
+          <article class="file-card human-entry">
+            <span class="tag">Human entrance</span>
             <h3 class="file-name">index.html</h3>
             <p>
-              This page. It explains how to begin, what the framework contains, what the AI will do,
-              and which decisions remain human.
+              Read this page first. It shows what to expect, what remains under human authority,
+              and how to begin the conversation with AI.
             </p>
           </article>
           <article class="file-card">
-            <span class="tag ai">AI</span>
+            <span class="tag ai">AI starting entrance</span>
             <h3 class="file-name">START_HERE.md</h3>
             <p>
-              The complete greenfield initialization protocol, including the adaptive interview,
-              proposal, approval gate, materialization order, and completion standard.
+              The one-time initialization protocol. It tells the AI how to conduct the first
+              conversation, configure the project rules, prepare the proposal, and wait for
+              approval.
             </p>
           </article>
           <article class="file-card">
-            <span class="tag ai">AI project rules</span>
+            <span class="tag ai">AI continuing rules</span>
             <h3 class="file-name">AGENTS.md</h3>
             <p>
-              The continuing working agreement. It defines roles, information discipline,
-              documentation ownership, the Definition of Done, and conditionally activated rules.
+              A compact team charter defining authority, role boundaries, permissions, peer review,
+              concurrent writers, and when the AI must return a decision to the human.
             </p>
           </article>
           <article class="file-card">
-            <span class="tag">Human</span>
-            <h3 class="file-name">introduction</h3>
+            <span class="tag ai">AI project method</span>
+            <h3 class="file-name">PROJECT_WORKFLOW.md</h3>
             <p>
-              The design-origin article and its publishing materials. The article explains why
-              large software projects require a durable human and AI partnership.
-            </p>
-          </article>
-          <article class="file-card">
-            <span class="tag">License</span>
-            <h3 class="file-name">LICENSE</h3>
-            <p>
-              The Creative Commons Attribution ShareAlike 4.0 International terms for sharing and
-              adapting this work.
+              The canonical method throughout the project for shaping features, managing risk,
+              defining boundaries and tests, organizing the repository, tracking work, verifying
+              completion, and checking results against the original idea.
             </p>
           </article>
         </div>
@@ -911,20 +934,29 @@
             <p>The problem, intended users, first value, scope, assumptions, and success evidence.</p>
           </article>
           <article class="artifact">
-            <h3>Current state</h3>
-            <p>What is true about the system now, separate from plans and history.</p>
+            <h3>Repository and current state</h3>
+            <p>
+              Where code, documents, tests, tools, data, and runtime output belong, and what is true
+              about the system now.
+            </p>
+          </article>
+          <article class="artifact">
+            <h3>Feature and test agreement</h3>
+            <p>
+              The outcome, non-goals, affected boundaries, risks, acceptance evidence, and test
+              strategy.
+            </p>
           </article>
           <article class="artifact">
             <h3>Current work</h3>
             <p>The unfinished work that is active now, with priority and visible blockers.</p>
           </article>
           <article class="artifact">
-            <h3>Decisions and history</h3>
-            <p>Why durable decisions were made and what work has already been completed.</p>
-          </article>
-          <article class="artifact">
-            <h3>Human overview</h3>
-            <p>A static HTML control surface generated from approved project sources of truth.</p>
+            <h3>Decisions, history, and overview</h3>
+            <p>
+              Why durable decisions were made, what was completed, and a readable HTML view of
+              current truth.
+            </p>
           </article>
         </div>
       </section>

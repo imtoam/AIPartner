@@ -1,29 +1,45 @@
 # AGENTS.md
 
-Project working agreement
+Team charter and role rules
 
-This file defines roles, change control, documentation responsibilities, and the Definition of
-Done. Project-specific facts belong in the final section.
+This file defines who participates, who decides, who may write, and how humans and AI cooperate.
+How the project itself is shaped, implemented, tested, documented, and operated belongs in
+PROJECT_WORKFLOW.md.
 
 ## Sections in use
 
 Checked sections apply. Unchecked sections are ignored except for their activation condition.
 
 - [x] Core roles and working rules
-- [x] Documentation and work tracking
-- [x] Definition of Done
+- [x] Human and AI partnership
 - [ ] Independent peer review
-- [x] Multi-level planning
 - [ ] Multiple writers and worktrees
-- [ ] Production data and scheduled operation
-- [ ] High-impact changes
 
-During initialization, the AI recommends which optional sections are needed. The Product Owner
-approves the selection.
+During initialization, the AI recommends which optional role sections are needed. The Product
+Owner approves the selection.
 
 After initialization, if an activation condition becomes true, the AI explains why the section is
 needed and asks the Product Owner before checking it. The normal project history records the
 change. No separate activation system is required.
+
+## Rule routing
+
+Read:
+
+- START_HERE.md when initializing a new project.
+- this file whenever authority, roles, permissions, review, concurrent writing, or human approval
+  is relevant.
+- read and follow PROJECT_WORKFLOW.md before shaping, planning, implementing, testing, reviewing,
+  releasing, or operating a project change.
+- only the project facts, active modules, and sources of truth relevant to the current task.
+
+For a factual answer or a small mechanical edit, do not load the complete project methodology
+unless its rules could affect the result.
+
+For every non-trivial project change, the active sections of PROJECT_WORKFLOW.md are binding from
+the purpose check through the Definition of Done. Do not skip a later stage because an earlier
+stage happened in another session. If a workflow instruction conflicts with role or authority rules
+in this file, this file controls authority and the conflict must be reported.
 
 ## Core roles and working rules
 
@@ -46,6 +62,25 @@ The Product Owner decides:
 
 The Implementer is the only writer until Multiple writers and worktrees is checked.
 
+### The partnership
+
+The Product Owner provides authority, purpose, real-world context, and final decisions. The
+Implementer provides delivery capacity and continuously brings product management, project
+management, architecture, QA, security, risk, and operations perspectives into the work.
+
+Do not assume the Product Owner knows which professional question to ask. When a decision matters,
+the Implementer must:
+
+- explain the decision in plain language.
+- recommend a course with reasons.
+- show realistic alternatives and consequences.
+- distinguish evidence from inference.
+- identify who owns the decision.
+- record material decisions where future partners can find them.
+
+This duty continues through discovery, planning, implementation, testing, release, operation, and
+reflection. Guidance is part of delivery, not an initialization-only service.
+
 ### Working rules
 
 - Follow the user's instruction within its stated scope.
@@ -63,6 +98,10 @@ every technical detail.
 Stop and ask for a decision when work requires a new external commitment, a destructive action, a
 material scope change, acceptance of a new risk, or a change in authority.
 
+Also stop when observed reality materially conflicts with the approved product intent, feature
+understanding, architecture boundary, acceptance evidence, or current plan. Do not silently choose
+which source to ignore.
+
 ### Information discipline
 
 Keep these categories separate:
@@ -76,89 +115,6 @@ Keep these categories separate:
 | Unresolved | It is unknown, conflicting, or deferred |
 
 An inference is not a project fact until the user confirms it.
-
-## Documentation and work tracking
-
-### Document map
-
-Initialization fills the actual paths. Create only documents that have a clear responsibility.
-
-| Question | Owner |
-|---|---|
-| Why does the project exist? | Product brief |
-| What is true now? | Current-state document and executable system |
-| What work is active? | Current work list |
-| What is planned later? | Roadmap, when Multi-level planning is checked |
-| Why was a decision made? | Decision record |
-| What already happened? | History and version control |
-| What did the latest review find? | Review report, when Independent peer review is checked |
-
-One line of work has one detailed owner. Other documents may point to it but must not copy its
-status in full.
-
-Do not treat history as current state. Do not treat a roadmap as the current work list. Generated
-HTML is a human view and not a source of truth.
-
-### Current work list
-
-- Keep unfinished work only.
-- Give each item a priority and a clear status.
-- Record why blocked work is blocked and what would unblock it.
-- Remove completed work after its result is recorded in history.
-- Before removing an item, confirm that the current-state document reflects any lasting system
-  change.
-
-### Decisions and history
-
-- Record decisions that affect architecture, data contracts, authority, or long-term behavior.
-- Record the reason, not only the outcome.
-- Give accepted defects or follow-up work stable references.
-- Use history and version control for completed work.
-- Do not use a temporary review report as a permanent backlog.
-
-## Definition of Done
-
-A change is complete only when every applicable item below is satisfied.
-
-1. Structure
-
-   Changed files pass the project's syntax, type, schema, or structural checks.
-
-2. Function
-
-   A test or direct check demonstrates that the intended behavior works. A syntax check alone is
-   not enough.
-
-3. Regression
-
-   Relevant regression checks pass. Add a regression case when the change fixes a defect that
-   could return.
-
-4. Current state
-
-   Update the current-state document when the change adds or alters a module, interface, data
-   contract, schema, schedule, failure mode, or operating behavior.
-
-5. Tracking
-
-   Remove completed work from the active list. Record the outcome in history. Update the roadmap or
-   feature plan when an activated planning section requires it.
-
-6. Documentation checks
-
-   Run the project's documentation and reference checks.
-
-7. Version control
-
-   Commit only intended source, configuration, tests, and maintained documentation. Keep runtime
-   output, caches, logs, and unrelated user changes out of the commit.
-
-8. Risk
-
-   Apply any additional evidence required by Production data and scheduled operation or High-impact
-   changes when those sections are checked.
-
-The project-specific commands used for these checks belong in Environment facts.
 
 ## Independent peer review
 
@@ -209,31 +165,6 @@ current review file. Do not rely on memory from an earlier version.
 The Implementer verifies every finding before changing code. An accepted finding receives a stable
 work reference outside the temporary review report.
 
-## Multi-level planning
-
-Activation condition:
-
-- the project has several phases, releases, or long-running features competing for priority
-
-Ignore the rest of this section until its checkbox is checked.
-
-Use three levels only when each level has a distinct purpose:
-
-| Level | Purpose |
-|---|---|
-| Roadmap | Major outcomes, releases, and future priority |
-| Current work list | Work in the current phase or release |
-| Feature plan | Detailed breakdown of one large feature |
-
-Rules:
-
-- The Product Owner approves movement between phases or major priorities.
-- The current work list contains current unfinished work only.
-- Future work belongs in the roadmap, not the current queue.
-- A large feature keeps its detailed status in one feature plan.
-- Other files point to the feature plan instead of copying its details.
-- Completed work moves to history.
-
 ## Multiple writers and worktrees
 
 Activation condition:
@@ -251,99 +182,24 @@ Ignore the rest of this section until its checkbox is checked.
 - Resolve cross-feature conflicts at one integration point before redistributing the result.
 - Do not overwrite or carry unrelated changes from another worktree.
 
-Project-specific branch names and worktree paths belong in Environment facts.
+Project-specific branch names and worktree paths belong in Team facts.
 
-## Production data and scheduled operation
-
-Activation condition:
-
-- the project uses production, append-only, sensitive, or otherwise non-cleanable data
-- a job runs on a schedule or without a person present
-
-Ignore the rest of this section until its checkbox is checked.
-
-### Data safety
-
-- Tests use temporary databases, fixtures, or synthetic data.
-- Read-only diagnostics use read-only connections.
-- Tests and review commands do not write production data.
-- Authoritative data, derived views, caches, and projections have explicit ownership.
-- Schema changes have a migration and recovery plan.
-- Append-only or irreversible rules are enforced where practical.
-
-### Scheduled work
-
-- Record the real runtime, schedule, and job owner.
-- Consider whether files may be read while being edited.
-- Use atomic replacement for shared runtime configuration when needed.
-- Make repeated execution safe.
-- Define locks, timeouts, retries, health checks, and human takeover conditions.
-- Record failure evidence instead of silently treating failure as no data.
-
-### Backup and recovery
-
-- Identify authoritative data that requires backup.
-- Verify backups rather than relying on file presence.
-- Define the recovery path and its acceptance evidence.
-- Keep destructive cleanup separate from ordinary processing.
-
-## High-impact changes
-
-Activation condition:
-
-- system output can materially affect money, health, safety, legal rights, privacy, or security
-- a change affects concurrency, critical data contracts, or another difficult-to-detect failure mode
-
-Ignore the rest of this section until its checkbox is checked.
-
-- Define the boundary between analysis and real-world action.
-- Require explicit human approval for risk-increasing actions.
-- Use independent calculation or review for critical logic and contracts.
-- Record assumptions, uncertainty, and known limitations.
-- Provide safe failure, rollback, and disable behavior.
-- Do not allow learned or generated output to gain authority silently.
-- Identify professional, legal, regulatory, or security review when applicable.
-
-## Environment facts
+## Team facts
 
 Initialization fills this section. Keep it factual and current.
 
-Project name:
+Product Owner:
 
-Primary runtime:
+Implementer:
 
-Supported operating systems:
-
-Syntax and structural check commands:
-
-Functional test commands:
-
-Regression commands:
-
-Documentation check commands:
-
-Current-state document:
-
-Current work list:
-
-Roadmap:
-
-Decision records:
-
-History:
+Reviewer:
 
 Review report:
 
-Production data locations:
-
-Scheduled jobs:
+Only writer:
 
 Default branch:
 
 Integration branch:
 
 Worktree locations:
-
-Generated or runtime-only paths:
-
-Known environment constraints:
