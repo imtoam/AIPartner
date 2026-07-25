@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Why powerful AI still needs a human partner to develop and deliver dependable software, and how that partnership changes the programmer's role." />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Human and AI Software Development" />
+  <meta property="og:title" content="Why AI Still Needs a Human to Build Software" />
+  <meta property="og:description" content="AI can perform much of the work, but finite context, uncertain output, and fragmented continuity make human collaboration essential to software development and delivery." />
+  <meta property="og:image" content="facebook-share-card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Why AI Still Needs a Human to Build Software" />
+  <title>Why AI Still Needs a Human to Build Software</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d3;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --white: #fffdf8;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.4);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-color: var(--forest);
+    }
+
+    .masthead {
+      background:
+        radial-gradient(
+          circle at calc(100% - 110px) calc(100% - 25px),
+          rgba(233, 184, 164, 0.14) 0,
+          rgba(255, 253, 248, 0.045) 78px,
+          transparent 170px
+        ),
+        var(--forest-dark);
+      color: var(--white);
+      min-height: 530px;
+      padding: 30px 32px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 20px;
+      bottom: -65px;
+      opacity: 0;
+      box-shadow:
+        0 0 16px rgba(233, 184, 164, 0.24),
+        inset 0 0 12px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes radiating-glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.28);
+      }
+
+      14% {
+        opacity: 0.3;
+      }
+
+      58% {
+        opacity: 0.13;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--sans);
+      font-size: 0.77rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .topline span:last-child {
+      text-align: right;
+    }
+
+    .hero-copy {
+      max-width: 880px;
+      margin-top: 108px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.7rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+    }
+
+    .dek {
+      max-width: 680px;
+      margin: 34px 0 0;
+      color: rgba(255, 253, 248, 0.78);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 48px));
+      margin: -42px auto 80px;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 54px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contents {
+      position: sticky;
+      top: 28px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      font-family: var(--sans);
+    }
+
+    .contents h2 {
+      margin: 0 0 15px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .contents ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: nav;
+    }
+
+    .contents li {
+      counter-increment: nav;
+      border-top: 1px solid #e6ded1;
+    }
+
+    .contents a {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 6px;
+      padding: 10px 0;
+      color: var(--ink);
+      font-size: 0.79rem;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .contents a::before {
+      content: counter(nav, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    .article {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: clamp(38px, 7vw, 86px);
+      box-shadow: var(--shadow);
+    }
+
+    .article-header {
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 58px;
+    }
+
+    .article-header p {
+      max-width: 680px;
+      margin: 0;
+      font-size: 1.32rem;
+      color: #3f4b49;
+    }
+
+    .article section {
+      scroll-margin-top: 28px;
+      margin: 0 0 66px;
+    }
+
+    .article section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .article h2 {
+      max-width: 720px;
+      margin: 0 0 26px;
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .article h3 {
+      margin: 38px 0 12px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article p {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font-size: 1.08rem;
+    }
+
+    .article ul,
+    .article ol {
+      max-width: 700px;
+      margin: 24px 0 30px;
+      padding-left: 1.3rem;
+    }
+
+    .article li {
+      padding-left: 0.35rem;
+      margin: 0 0 10px;
+      font-size: 1.03rem;
+    }
+
+    .pull-quote {
+      max-width: 720px;
+      margin: 38px 0;
+      padding: 28px 30px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-soft);
+      color: #512b1f;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0;
+    }
+
+    .framework-card {
+      border: 1px solid var(--line);
+      background: #faf7f1;
+      padding: 22px;
+    }
+
+    .framework-card h3 {
+      margin: 0 0 9px;
+      color: var(--accent);
+    }
+
+    .framework-card p {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .loop {
+      margin: 18px 0;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      background: #f8f5ee;
+    }
+
+    .loop strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .loop p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .principle {
+      max-width: 720px;
+      margin: 34px 0;
+      padding: 25px 28px;
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .principle span {
+      display: block;
+      margin-bottom: 8px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.45;
+    }
+
+    .source-list {
+      border-top: 1px solid var(--line);
+      margin-top: 35px;
+      padding-top: 22px;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+    }
+
+    .source-list h3 {
+      margin-top: 0;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto 52px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .masthead {
+        min-height: 480px;
+      }
+
+      .hero-copy {
+        margin-top: 82px;
+      }
+
+      .page-shell {
+        display: block;
+        margin-top: -30px;
+      }
+
+      .contents {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+      }
+
+      .contents ol {
+        columns: 2;
+        column-gap: 28px;
+      }
+
+      .contents li {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .masthead {
+        min-height: 440px;
+        padding: 22px 20px 58px;
+      }
+
+      .topline {
+        align-items: flex-start;
+        font-size: 0.63rem;
+      }
+
+      .hero-copy {
+        margin-top: 70px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+      }
+
+      .dek {
+        font-size: 1.05rem;
+      }
+
+      .page-shell {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .contents {
+        padding: 19px;
+      }
+
+      .contents ol {
+        columns: 1;
+      }
+
+      .article {
+        padding: 34px 24px;
+      }
+
+      .article h2 {
+        font-size: 2.15rem;
+      }
+
+      .article p {
+        font-size: 1rem;
+      }
+
+      .framework-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pull-quote {
+        padding: 22px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .masthead::before {
+        animation: none;
+        opacity: 0.12;
+        transform: scale(2.5);
+      }
+
+      .masthead::after {
+        display: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .masthead {
+        min-height: auto;
+        padding: 30px;
+        color: #000;
+        background: #fff;
+        border-bottom: 2px solid #000;
+      }
+
+      .masthead::before,
+      .masthead::after,
+      .contents {
+        display: none;
+      }
+
+      .hero-copy {
+        margin-top: 45px;
+      }
+
+      .dek,
+      .eyebrow,
+      .topline {
+        color: #222;
+      }
+
+      .page-shell {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .article {
+        border: 0;
+        box-shadow: none;
+        padding: 32px 0;
+      }
+
+      .article section {
+        break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>Human and AI Software Development</span>
+        <span>The limits, the roles, and a first exploration</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">After the promise of complete automation</p>
+        <h1>Why AI Still Needs a Human to Build Software</h1>
+        <p class="dek">
+          AI became powerful enough to suggest that software engineers might disappear. Experience
+          with growing projects reveals a different future. AI can perform much of the work, but
+          finite context, uncertain output, and fragmented continuity make human collaboration
+          essential to development and delivery.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <nav class="contents" aria-label="Article contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#before-ai">The old constraint</a></li>
+        <li><a href="#replacement">The replacement expectation</a></li>
+        <li><a href="#limits">The limits that emerged</a></li>
+        <li><a href="#partner">A partner, not a typist</a></li>
+        <li><a href="#roles">The roles people must carry</a></li>
+        <li><a href="#discipline">Turn roles into structure</a></li>
+        <li><a href="#foundations">Proven building materials</a></li>
+        <li><a href="#attempt">A first exploration</a></li>
+      </ol>
+    </nav>
+
+    <main class="article">
+      <div class="article-header">
+        <p>
+          The important question is no longer whether AI can write software. It can. The question
+          is why that ability does not automatically become a coherent, dependable, and
+          deliverable product.
+        </p>
+      </div>
+
+      <article>
+        <section id="before-ai">
+          <span class="section-number">01 / The short prehistory</span>
+          <h2>Software was once limited by human production</h2>
+          <p>
+            Software capacity once meant human time. Greater ambition required more programmers,
+            more specialists, and more coordination. <em>The Mythical Man-Month</em> exposed the
+            contradiction inside that model: adding people could add production capacity while
+            multiplying communication, onboarding, and disagreement.
+          </p>
+          <p>
+            Agile made the coordination cost more manageable through small cross-functional teams,
+            short feedback loops, and working software. Yet every part of the loop still waited for
+            people to analyze, implement, inspect, explain, and transfer knowledge. AI suddenly
+            removed much of that production constraint.
+          </p>
+        </section>
+
+        <section id="replacement">
+          <span class="section-number">02 / The first conclusion</span>
+          <h2>Complete replacement began to look possible</h2>
+          <p>
+            AI can explore a codebase, discuss requirements, propose a design, implement features,
+            create tests, investigate failures, and update documentation. Work that once consumed
+            days of human attention can now be produced in hours or minutes.
+          </p>
+          <p>
+            The first conclusion seemed obvious. If software development was a chain of analysis,
+            coding, testing, and documentation, and AI could perform every link, software
+            engineering looked like a profession that might soon disappear. Many people began to
+            believe that AI would replace human workers across the field as models improved and
+            context windows expanded.
+          </p>
+          <p>
+            Small projects and demonstrations reinforced this view. A single conversation could
+            produce a complete application. Real-world software development, however, rarely ends
+            there. Applications often grow into long-running projects with accumulated history,
+            production data, competing priorities, operational risk, and more knowledge than any
+            single session or context window can hold.
+          </p>
+          <p class="pull-quote">
+            Generating code and carrying a software project are not the same problem.
+          </p>
+        </section>
+
+        <section id="limits">
+          <span class="section-number">03 / Structural limits</span>
+          <h2>More capability exposed a different class of weakness</h2>
+          <p>
+            These weaknesses are not simply a list of missing features that the next model will
+            certainly erase. They arise from finite computation, bounded attention, probabilistic
+            generation, temporary sessions, and the absence of real-world authority. Models will
+            improve, but a living project can continue to grow beyond any fixed capacity.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Bounded context</h3>
+              <p>
+                The whole project includes code, product intent, rejected approaches, priorities,
+                production conditions, permissions, and old failures. No session holds all of it
+                indefinitely, and missing context is difficult to distinguish from irrelevant
+                context.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Fragmented continuity</h3>
+              <p>
+                Sessions end, conversations are compressed, models change, and agents begin with
+                different information. AI has no natural equivalent of a person who remains with
+                the project and remembers why yesterday's decision still matters.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Probabilistic correctness</h3>
+              <p>
+                A coherent answer can still solve the wrong problem. A test can pass while proving
+                the wrong claim. AI can generate confidence and implementation together, even when
+                the premise is false.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Local strength, global weakness</h3>
+              <p>
+                AI is powerful when a task and its evidence fit inside the active context. A large
+                project requires consistent decisions across many tasks, files, time periods, and
+                operational consequences.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Coordination without management</h3>
+              <p>
+                Additional agents increase throughput but do not create shared goals, ownership,
+                independent review, safe integration, or a common definition of completion.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>No lasting accountability</h3>
+              <p>
+                AI can recommend a priority or accept a risk in words. It does not lose the data,
+                answer to the user, operate the company, or remain responsible after the session
+                ends.
+              </p>
+            </div>
+          </div>
+          <div class="principle">
+            <span>The consequence</span>
+            <p>Code can now grow faster than shared understanding, verification, and control.</p>
+          </div>
+        </section>
+
+        <section id="partner">
+          <span class="section-number">04 / The new division of labor</span>
+          <h2>AI needs a partner, not a human typist</h2>
+          <p>
+            These limits do not return software development to its old form. AI can still perform
+            most routine implementation, analysis, testing, and documentation. The human is not
+            needed to repeat that work more slowly.
+          </p>
+          <p>
+            The human contribution moves to the layer that connects many tasks into one product.
+            Someone must preserve the purpose, decide which fact has authority, recognize when the
+            request is based on a false premise, resolve conflicts between local solutions, demand
+            evidence, and accept the remaining risk.
+          </p>
+          <p>
+            Software development experience remains essential because this partner must understand
+            how systems fail. The role, however, is broader than the traditional programmer. It is
+            closer to an owner who can move between product, delivery, architecture, quality, and
+            operation while using AI for execution.
+          </p>
+          <p class="pull-quote">
+            AI performs the local work. The human keeps the local work part of one coherent,
+            valuable, and accountable system.
+          </p>
+        </section>
+
+        <section id="roles">
+          <span class="section-number">05 / The programmer's path</span>
+          <h2>The programmer's path is broader ownership</h2>
+          <p>
+            Routine coding positions may contract, but the need to own software outcomes remains.
+            The opportunity is not for one person to imitate six separate departments. It is to
+            develop enough range to enter the right professional perspective when the project needs
+            a decision that AI cannot own.
+          </p>
+          <ul>
+            <li>Think as a product manager when deciding who the work serves and why it matters.</li>
+            <li>Think as a project manager when controlling scope, sequence, ownership, and closure.</li>
+            <li>Think as an architect when local choices threaten system-wide coherence.</li>
+            <li>Think as QA when a plausible result still lacks convincing evidence.</li>
+            <li>Think as an operator when software begins to affect production data and real users.</li>
+          </ul>
+          <p>
+            Human accountability connects all of these perspectives. The person decides what
+            authority AI receives, which risks are acceptable, and when the result is ready to
+            affect users. With AI performing much of the implementation labor, one experienced
+            programmer can carry this wider responsibility and lead work that once required a
+            small team.
+          </p>
+        </section>
+
+        <section id="discipline">
+          <span class="section-number">06 / From roles to project structure</span>
+          <h2>Give the partnership a durable project structure</h2>
+          <p>
+            The previous section describes the roles a capable human collaborator must carry. A
+            role alone, however, does not create a working partnership. Human decisions must leave
+            a durable trace that later sessions and agents can find, apply, and verify. AI work
+            must happen inside boundaries that are clear enough to support autonomy without losing
+            control.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Make intent explicit</h3>
+              <p>
+                Record the user, problem, desired outcome, priority, constraints, uncertainty, and
+                approved decisions. This prevents an AI inference from quietly becoming product
+                direction.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Preserve continuity</h3>
+              <p>
+                Maintain current state, active work, dependencies, ownership, decisions, and
+                history in known sources. A new session should be able to find what matters without
+                reconstructing the project from chat.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Protect boundaries</h3>
+              <p>
+                Record system structure, contracts, important design decisions, and the reasons
+                behind them. Local implementation remains free inside boundaries that protect the
+                whole system.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Demand evidence</h3>
+              <p>
+                Define acceptance criteria, tests, review expectations, and a Definition of Done.
+                Generated code remains a proposal until evidence demonstrates the agreed behavior.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Build safeguards</h3>
+              <p>
+                Preserve environment facts, production data restrictions, deployment procedures,
+                observation, recovery, and human takeover paths. Tests and automation must fail
+                safely.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Define authority</h3>
+              <p>
+                Give each participant a clear role and writing boundary. Reserve product direction,
+                material risk, privacy, money, production effects, and irreversible actions for
+                explicit human approval.
+              </p>
+            </div>
+          </div>
+          <p>
+            These mechanisms turn personal oversight into external project memory and control.
+            Repeated instructions can then mature from prose into structured state, automated
+            checks, and technical constraints. The goal is not an ever-larger prompt. It is a
+            project that remains navigable without being loaded in full by either a person or a
+            model.
+          </p>
+          <p>
+            Structure should still remain proportional to need. One human and one AI do not require
+            elaborate coordination rules. A second AI acting as reviewer creates a need for review
+            boundaries. A second writer creates ownership and integration concerns. Production
+            data, unattended jobs, and high-impact decisions each justify stronger safeguards.
+          </p>
+          <p class="pull-quote">
+            At project scale, the human cannot supervise every line of AI-generated code, and AI
+            cannot manage the whole project alone. A workable partnership must compensate for both
+            limits.
+          </p>
+          <p>
+            Together, these mechanisms form the working agreement between the partners. They give
+            AI enough context and authority to work independently within explicit boundaries. They
+            focus limited human attention on purpose, conflicts, evidence, material risk, and final
+            responsibility. They also give both sides a shared project memory that survives the
+            conversation.
+          </p>
+          <p>
+            Once the partnership is defined this way, the next question is how to implement it
+            without inventing another heavyweight methodology. The participants are new, but the
+            underlying problems of feedback, learning, flow, delivery, risk, and coordination are
+            not.
+          </p>
+        </section>
+
+        <section id="foundations">
+          <span class="section-number">07 / Proven building materials</span>
+          <h2>The partnership is new, but its disciplines are not</h2>
+          <p>
+            The six mechanisms above do not need to remain abstract principles. Established
+            software and governance practices already offer ways to put them into operation. They
+            become the building materials for human and AI collaboration.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Agile</h3>
+              <p>
+                Short feedback loops, working software, customer collaboration, and responsiveness
+                to change connect explicit intent to observable results before rapid AI output
+                travels too far in the wrong direction.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Lean Startup</h3>
+              <p>
+                Explicit hypotheses, small experiments, and validated learning test whether the
+                product intent is true before fast implementation becomes a large commitment.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Kanban</h3>
+              <p>
+                Visible work states, controlled work in progress, and explicit flow policies
+                preserve project continuity and stop agents from opening more work than the
+                project can verify and finish.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Continuous Delivery</h3>
+              <p>
+                Version control, automated tests, small changes, observability, and recovery turn
+                evidence and safeguards into a delivery system. Generated code remains releasable
+                and recoverable rather than merely complete in a conversation.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Risk governance</h3>
+              <p>
+                Clear authority, contextual risk assessment, measurement, mitigation, and rollback
+                define where AI may act independently and keep that freedom proportional to the
+                consequence of a mistake.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Scrum when appropriate</h3>
+              <p>
+                Stable teams can benefit from explicit roles, a shared goal, a delivery cadence,
+                and a Definition of Done when their coordination problem justifies that structure.
+                One person and one AI should not copy the full ceremony before the need exists.
+              </p>
+            </div>
+          </div>
+          <p>
+            These practices are not a detour from the solution. They provide tested implementations
+            of its individual parts. What they do not provide is a single structure designed around
+            bounded model context, temporary agents, AI authority, and controls that become
+            necessary only as capabilities and risks appear. That remaining integration problem is
+            where the template begins.
+          </p>
+        </section>
+
+        <section id="attempt">
+          <span class="section-number">08 / A first exploration</span>
+          <h2>One early attempt, summarized in a template</h2>
+          <p>
+            Alongside this article is a template that summarizes experience from building a real
+            project with AI. It records one early attempt to make human and AI collaboration more
+            explicit, durable, and repeatable. It is an example to examine and improve, not a
+            complete answer.
+          </p>
+          <p>
+            In this attempt, a person brings an idea and AI guides the initial discussion. Product
+            intent, decisions, current state, active work, evidence, and authority become durable
+            project context instead of remaining in a conversation. The experiment begins with new
+            projects because initialization is the hardest and most variable part.
+          </p>
+          <p>
+            AI-facing instructions remain in Markdown while people receive a readable HTML
+            overview. One stable structure contains the fuller working agreement, while review,
+            planning, multiple-writer, production, and high-risk sections become relevant only
+            when the project develops those conditions.
+          </p>
+          <p>
+            The template preserves what has been learned so far and offers it as a starting point
+            for further experimentation. I hope others will test it against real work, reveal what
+            is missing, and improve it together.
+          </p>
+          <p class="pull-quote">
+            The template is not the answer to AI-assisted development. It is a place where we can
+            make our current answers visible and improve them together.
+          </p>
+          <p>
+            Explore the template, review the files, and help improve the experiment on
+            <a href="https://github.com/imtoam/AIPartner">GitHub</a>.
+          </p>
+
+          <div class="source-list">
+            <h3>Reference foundations</h3>
+            <p>
+              Fred Brooks,
+              <a href="https://www.cs.cmu.edu/~15712/papers/mythicalmanmonth00fred.pdf"><em>The Mythical Man-Month</em></a>,
+              the
+              <a href="https://agilemanifesto.org/">Manifesto for Agile Software Development</a>,
+              the
+              <a href="https://agilemanifesto.org/principles">Principles behind the Agile Manifesto</a>,
+              <a href="https://leanstartup.co/about/principles/">Lean Startup principles</a>,
+              <a href="https://kanbanguides.org/">Kanban Guides</a>,
+              <a href="https://dora.dev/capabilities/continuous-delivery/">DORA Continuous Delivery</a>,
+              and the
+              <a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">NIST AI Risk Management Framework</a>.
+            </p>
+          </div>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    Human and AI Software Development / Version 0.8
+  </footer>
+</body>
+</html>

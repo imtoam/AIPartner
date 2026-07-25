@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
+  <title id="title">Why AI Still Needs a Human to Build Software</title>
+  <desc id="description">A dark green editorial share card with warm cream text and a subtle expanding glow motif.</desc>
+  <defs>
+    <radialGradient id="backgroundGlow" cx="88%" cy="92%" r="52%">
+      <stop offset="0%" stop-color="#e9b8a4" stop-opacity="0.16" />
+      <stop offset="42%" stop-color="#fffdf8" stop-opacity="0.04" />
+      <stop offset="100%" stop-color="#123a37" stop-opacity="0" />
+    </radialGradient>
+    <filter id="softGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="8" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="#123a37" />
+  <rect width="1200" height="630" fill="url(#backgroundGlow)" />
+
+  <circle cx="1070" cy="590" r="102" fill="none" stroke="#fffdf8" stroke-opacity="0.16" stroke-width="2" />
+  <circle cx="1070" cy="590" r="184" fill="none" stroke="#e9b8a4" stroke-opacity="0.11" stroke-width="2" />
+  <circle cx="1070" cy="590" r="274" fill="none" stroke="#fffdf8" stroke-opacity="0.07" stroke-width="2" />
+  <circle cx="1070" cy="590" r="82" fill="none" stroke="#e9b8a4" stroke-opacity="0.22" stroke-width="10" filter="url(#softGlow)" />
+
+  <text x="74" y="68" fill="#fffdf8" fill-opacity="0.72" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="600" letter-spacing="3.2">
+    HUMAN AND AI SOFTWARE DEVELOPMENT
+  </text>
+  <text x="1126" y="68" fill="#fffdf8" fill-opacity="0.58" font-family="Inter, Arial, sans-serif" font-size="13" font-weight="600" letter-spacing="2.4" text-anchor="end">
+    AN ESSAY
+  </text>
+
+  <rect x="74" y="124" width="44" height="4" fill="#e9b8a4" />
+  <text x="74" y="169" fill="#e9b8a4" font-family="Inter, Arial, sans-serif" font-size="16" font-weight="700" letter-spacing="2.6">
+    AFTER THE PROMISE OF COMPLETE AUTOMATION
+  </text>
+
+  <text x="68" y="265" fill="#fffdf8" font-family="Iowan Old Style, Baskerville, Georgia, serif" font-size="72" font-weight="400" letter-spacing="-1.6">
+    <tspan x="68" dy="0">Why AI Still Needs</tspan>
+    <tspan x="68" dy="78">a Human to Build</tspan>
+    <tspan x="68" dy="78">Software</tspan>
+  </text>
+
+  <text x="74" y="548" fill="#fffdf8" fill-opacity="0.76" font-family="Iowan Old Style, Baskerville, Georgia, serif" font-size="24">
+    <tspan x="74" dy="0">Finite context, uncertain output, and fragmented continuity</tspan>
+    <tspan x="74" dy="34">make human collaboration essential.</tspan>
+  </text>
+</svg>
