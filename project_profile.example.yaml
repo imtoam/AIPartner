@@ -1,15 +1,15 @@
 # project_profile.example.yaml
 #
-# Exact project_profile.yaml contract for AIPartner protocol 0.5.
+# Exact project_profile.yaml contract for AIPartner protocol 0.6.
 # Copy this structure after proposal approval. Replace example values; do not remove required keys.
 # Mutable work-item status belongs only in current_work_source and must not be copied here.
 
-schema_version: "0.5.0"
+schema_version: "0.6.0"
 
 template:
   name: "AIPartner"
   protocol_id: "BOOTSTRAP-001"
-  protocol_version: "0.5.0"
+  protocol_version: "0.6.0"
   source: "repository URL, release, or commit used"
 
 input:
@@ -231,9 +231,9 @@ structure:
     - path: "docs/terminology.md"
       trigger: "Terminology mode changes to registry"
     - path: "docs/view_registry.md"
-      trigger: "A second generated human view activates"
+      trigger: "The control surface expands beyond one static generated page"
     - path: "project_views/"
-      trigger: "Architecture, operations, business, or decisions view activates"
+      trigger: "A required perspective needs a separate page or live endpoint"
   not_applicable: []
   local_extensions: []
 
@@ -267,6 +267,43 @@ human_interface:
       - "project_profile.yaml"
       - "docs/product_brief.md"
       - "docs/current_work.md"
+  perspectives:
+    management:
+      audience: "Product Owner, management, and project leadership"
+      purpose: "Direction, scope, progress, cadence, risk, decisions, and management advice"
+      owner: "Product Owner and Implementer"
+      source_state: "active"
+      state_reason: "Core governance sources exist from initialization"
+      sources:
+        - "project_profile.yaml"
+        - "docs/product_brief.md"
+        - "docs/current_work.md"
+      activation_trigger: ""
+    business:
+      audience: "Domain specialists and daily business operators"
+      purpose: "Business recommendations, domain logic, data health, decision status, and exception handling"
+      owner: "Domain owner"
+      source_state: "not_yet_available"
+      state_reason: "No typed domain read model or business workflow exists yet"
+      sources: []
+      activation_trigger: "A typed domain read model or business workflow exists"
+    operations:
+      audience: "IT operators and reliability owners"
+      purpose: "Service, job, provider, storage, backup, incident, and recovery health"
+      owner: "Operations owner"
+      source_state: "not_yet_available"
+      state_reason: "No runtime service, scheduled job, provider, or authoritative store exists yet"
+      sources: []
+      activation_trigger: "A runtime service, scheduled job, provider, or authoritative store exists"
+    architecture_delivery:
+      audience: "Developers, architects, and delivery owners"
+      purpose: "Current and target architecture, module boundaries, dependencies, implementation plans, and drift"
+      owner: "Implementer"
+      source_state: "degraded"
+      state_reason: "Current work is visible; detailed current-state architecture awaits executable project structure"
+      sources:
+        - "docs/current_work.md"
+      activation_trigger: "Add the current-state map when maintained code or executable behavior exists"
 
 verification:
   validator: "python3 tools/validate_initialization.py ."

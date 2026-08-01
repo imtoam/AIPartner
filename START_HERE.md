@@ -4,7 +4,7 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.5.0
+Protocol version: 0.6.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -245,6 +245,12 @@ authoritative data retain their declared ownership. Static HTML, dashboards, and
 derived views with visible sources, generation time, freshness, and failures. They never become the
 only place where a decision, status, architecture fact, or business fact exists.
 
+Every initialized project nevertheless requires one HTML control surface from the beginning.
+People should use it to govern direction, architecture, scope, progress, cadence, risk, business
+health, operational health, and decisions rather than serving as assistants who manually reconcile
+raw logs, databases, and development files. The four required perspectives and their unavailable
+states are defined by WF-VIEWS.
+
 ## 2. How to conduct the initialization conversation
 
 Initialization is not a fixed long-form questionnaire. Use an adaptive interview:
@@ -403,10 +409,16 @@ general `language` answer from silently controlling unrelated surfaces.
 
 ### 3.12 Human project interface
 
-Static `project-overview.html` is the starting mode. Determine whether architecture, operations,
-business, or decision views have actual sources and consumers now; otherwise record their triggers.
-Recommend local HTTP only when live refresh, search, filtering, or structured local-AI access is a
-current need. Loopback, read-only service is the safe default. Network exposure and write-back are
+Static `project-overview.html` is a required starting control surface, not an optional dashboard.
+From initialization onward it contains four stable perspectives: management consultation,
+business/domain operations, system operations, and architecture/delivery. For each one, propose its
+audience, purpose, accountable owner, source state and reason, declared sources, and activation or
+recovery trigger. A perspective with no current evidence stays visible as `not_yet_available`,
+`not_applicable`, `blocked`, or `degraded`; it must not be omitted or shown as healthy.
+
+Keep these four perspectives in one static page initially. Recommend split pages or local HTTP only
+when live refresh, search, filtering, navigation depth, or structured local-AI access is a current
+need. Loopback, read-only service is the safe HTTP default. Network exposure and write-back are
 separate approvals, not consequences of choosing HTTP.
 
 ## 4. Configure the project method
@@ -425,6 +437,7 @@ During initialization:
 - configure the first feature or experiment to enter the workflow with a clear outcome, boundary,
   risk view, and acceptance evidence.
 - record the compact communication contract and the initial static human-view contract.
+- record all four control-surface perspective contracts, including honest unavailable states.
 - leave unnecessary optional sections inactive until their activation conditions appear.
 
 Do not copy the workflow stages into the initialization record. Record only the approved
@@ -539,9 +552,12 @@ Present the recommended communication contract as one decision, showing the engi
 of record, conversation language, human-view locale, source-evidence policy, translation boundary,
 and whether a terminology registry is selected now or deferred to a trigger.
 
-Show the initial static overview and each additional human view as selected, deferred, or not
-applicable. For any proposed HTTP mode, state bind scope, read/write authority, source contracts,
-security consequences, and the trigger that makes a service necessary.
+Show the initial static overview as selected_now. For each of its four required perspectives, show
+the audience, purpose, accountable owner, current source state and reason, declared source paths,
+and activation or recovery trigger. The perspective itself is never deferred; only its unavailable
+source state, a separate page, or live behavior may be deferred. Show additional pages as selected,
+deferred, or not applicable. For any proposed HTTP mode, state bind scope, read/write authority,
+source contracts, security consequences, and the trigger that makes a service necessary.
 
 ### 5.10 Files to materialize
 
@@ -570,6 +586,8 @@ Explain how initialization will verify:
   language field.
 - generated human views identify sources, locale, generation time, version, freshness, and failure
   state without owning project truth.
+- the generated overview contains all four required perspectives, accountable owners, honest source
+  states, and activation or recovery triggers where evidence is unavailable.
 - any proposed HTTP service has explicit bind scope, read/write authority, and approval evidence.
 - generation of the human overview from authoritative facts.
 - preservation of index.html as the permanent human starting guide.
@@ -625,8 +643,9 @@ After approval:
 9. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
    work-state flow, risk-based test strategy, and minimum Definition of Done.
 10. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
-    state as project-overview.html from declared sources, with visible provenance and freshness;
-    the framework default command is `python3 tools/render_project_overview.py .`.
+    state as project-overview.html from declared sources, with visible provenance, freshness, and
+    management, business, operations, and architecture/delivery perspectives; the framework
+    default command is `python3 tools/render_project_overview.py .`.
 11. Run tools/validate_initialization.py and any project-specific structural, reference, drift, and
     consistency checks. Record actual evidence rather than self-declared pass values.
 12. Apply the approved local Git configuration without discarding existing history or user work.
@@ -716,6 +735,20 @@ an independent source of truth. Generate it from approved:
 - pending decisions.
 - verification and runtime status.
 
+The control surface is how people govern the project without reconstructing it from raw logs,
+development files, databases, or source code. It must always expose:
+
+- management consultation: direction, value, scope, progress, cadence, risks, decisions, and advice.
+- business/domain operations: recommendations, business logic, domain-data health, exceptions, and
+  actions needing specialist judgment.
+- system operations: services, jobs, providers, storage, backups, incidents, recovery, capacity,
+  and health.
+- architecture and delivery: current and approved target architecture, module boundaries,
+  dependencies, implementation plans, status, technical risk, and drift.
+
+If a perspective has no authoritative evidence yet, show its source state, accountable owner, and
+activation or recovery trigger. Absence of evidence is never rendered as a healthy state.
+
 The overview must:
 
 - visibly distinguish approved facts, proposals, and unresolved decisions.
@@ -751,7 +784,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.5 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.6 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization
@@ -775,7 +808,8 @@ Initialization may be marked complete only when all of the following are true:
 - the first feature or experiment has an agreed boundary and evidence approach.
 - the current work source is the only owner of mutable work-item status.
 - project-overview.html is generated from declared sources and exposes provenance, locale,
-  generation time, freshness, errors, and every blocking decision.
+  generation time, freshness, errors, every blocking decision, and all four required human
+  perspectives with honest source states, reasons, owners, and activation or recovery triggers.
 - currently required role and project governance modules are active and validated in their owning
   files.
 - inactive modules remain discoverable without entering active context.

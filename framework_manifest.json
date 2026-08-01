@@ -1,50 +1,50 @@
 {
   "schema_version": 1,
-  "protocol_version": "0.5.0",
+  "protocol_version": "0.6.0",
   "files": {
     "AGENTS.md": {
       "mode": "managed_blocks",
-      "sha256": "2562b4d7a443b810628e3b698167b69f6c70719e5cea816ccfa3557a9b23cc23"
+      "sha256": "673f0ce0edfc35af755dbb672903f37fff99d9de10af3a80991487308538f63f"
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "50b4b1e74ae534f18af37767dcc8ec27623f35f9ed6fbafaa6a6ccc97e340f3b"
+      "sha256": "6af672ddfd2f6e552ae941df96762bb0df3a1b956ccd8701c91314f1fa9db871"
     },
     "START_HERE.md": {
       "mode": "immutable",
-      "sha256": "2e5b341e5e392379973af52ee86af26c6f70e157fee3c84911e75b7189701927"
+      "sha256": "62987d7a8126de449534f03c77d7803c36bec529d12321f9ebd95d3cfce99d15"
     },
     "PROJECT_STRUCTURE_REFERENCE.md": {
       "mode": "immutable",
-      "sha256": "0060b1d0be5cbde509de2b1ae4ef196189f7c42d9b3975aceb62bc982a59bd21"
+      "sha256": "f16f48e6c544ae495ac105142a165c014fbad3f8f163f23530a57186bcefc5de"
     },
     "project_profile.example.yaml": {
       "mode": "immutable",
-      "sha256": "e53a4a4984bb2f6adcc3774c7fd533e5447d7ce6bc4978aae79245fb49082e15"
+      "sha256": "a2d36ef07a8a24e1e0fa62073677ce3773532f42585d2d954ffd06e103f48fd5"
     },
     "index.html": {
       "mode": "immutable",
-      "sha256": "eee84b1f0b1e812e1238d3595aaab72510dca2d3aa97f4e08446766544dbda84"
+      "sha256": "cba0745b0bd5fc1f0ee6cb097a87f3b446f0c0bffae70c4f4ee7e6d98fc67317"
     },
     "tools/validate_initialization.py": {
       "mode": "immutable",
-      "sha256": "51594fea00c0e6e814e071403ae746828a419d2d88bca6984fa699d36663b8b7"
+      "sha256": "f4c118bff305d475df3a724328150efdc8961ce1fd3766290b61b3b9ed6b1842"
     },
     "tools/render_project_overview.py": {
       "mode": "immutable",
-      "sha256": "ff5cd3aafb641ecef85a93e1f68c99474daca1c1612bf728670dc86973ac1526"
+      "sha256": "565e24d989f8424bab9ffcb1e7e335549b93422d78ce3d7ebfb1ae78ef858979"
     },
     "README.md": {
       "mode": "immutable",
-      "sha256": "736fe0f36f96e13281762638110c2b10da00caa1440a418770d3d55f54330412"
+      "sha256": "79a07955b8ce97bbb99e267ad0eba14085e52184fe2cbaf278ed55055807179d"
     },
     "introduction/ai-native-project.html": {
       "mode": "immutable",
-      "sha256": "c4346a26e778e7d9126fa43e38a3ea131f048be9cac983c4a65b373cfb6fc192"
+      "sha256": "e0ae00fa8868f1b33d7f7facf4761e77e1fe1cc2062855ac06bb7a4b04046910"
     },
     "introduction/ai-native-project-fr.html": {
       "mode": "immutable",
-      "sha256": "29b41028f6f9125aa343e91c4be6b088db4b1c05c3e8d78bdaed8d817024e01a"
+      "sha256": "46f6a8b61540c336557a10061a65b2dd35b5882fd69f06a2259c085e757d74ef"
     }
   }
 }

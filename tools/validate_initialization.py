@@ -46,6 +46,21 @@ POST_MATERIALIZATION_STATES = {
     "complete",
 }
 
+REQUIRED_PERSPECTIVES = {
+    "management": "perspective-management",
+    "business": "perspective-business",
+    "operations": "perspective-operations",
+    "architecture_delivery": "perspective-architecture-delivery",
+}
+
+PERSPECTIVE_STATES = {
+    "active",
+    "not_yet_available",
+    "not_applicable",
+    "blocked",
+    "degraded",
+}
+
 FRAMEWORK_FILES = {
     "AGENTS.md": (
         "Framework invariant:",
@@ -57,7 +72,7 @@ FRAMEWORK_FILES = {
         "BEGIN PROJECT CONFIG: TEAM FACTS",
     ),
     "START_HERE.md": (
-        "Protocol version: 0.5.0",
+        "Protocol version: 0.6.0",
         "Framework invariant:",
         "Establish language without creating a language questionnaire",
         "Keep human views subordinate to project truth",
@@ -73,6 +88,7 @@ FRAMEWORK_FILES = {
         "WF-VCS: Version control",
         "WF-DOCS: Documentation and work tracking",
         "WF-VIEWS: Human-readable project views",
+        "Four mandatory perspectives",
         "WF-DOD: Definition of Done",
         "WF-PLANNING: Multi-level planning",
         "WF-DRIFT: Architecture and governance drift control",
@@ -93,9 +109,12 @@ FRAMEWORK_FILES = {
         "## 11. Minimal greenfield starting set",
     ),
     "project_profile.example.yaml": (
-        'schema_version: "0.5.0"',
+        'schema_version: "0.6.0"',
         "communication:",
         "human_interface:",
+        "perspectives:",
+        "architecture_delivery:",
+        "state_reason:",
         "reference_adoptions:",
         "framework_retained:",
         "unresolved_decisions:",
@@ -104,7 +123,7 @@ FRAMEWORK_FILES = {
     "index.html": (
         'name="aipartner-page-role" content="human-start-guide"',
         'id="begin"',
-        "Protocol 0.5",
+        "Protocol 0.6",
         "Language and terminology",
         "START_HERE.md",
     ),
@@ -112,16 +131,17 @@ FRAMEWORK_FILES = {
         "START_HERE.md",
         "AGENTS.md",
         "PROJECT_WORKFLOW.md",
-        "Protocol version: 0.5.0",
+        "Protocol version: 0.6.0",
     ),
     "framework_manifest.json": (
         '"schema_version": 1',
-        '"protocol_version": "0.5.0"',
+        '"protocol_version": "0.6.0"',
         '"files"',
     ),
     "tools/render_project_overview.py": (
         "Render project-overview.html from declared AIPartner project sources",
         'name="aipartner-derived-view" content="true"',
+        "PERSPECTIVES",
         "os.replace",
     ),
 }
@@ -435,6 +455,7 @@ def validate_human_interface(
     locale = field(overview, "locale", minimum_indent=4)
     generator_command = field(overview, "generator_command", minimum_indent=4)
     sources = list_values(overview, "sources", indent=4)
+    perspective_root = block(interface, "perspectives", indent=2)
     communication = block(lines, "communication")
     allowed_locales = list_values(communication, "human_view_locales", indent=2)
 
@@ -448,6 +469,47 @@ def validate_human_interface(
         report.error("Default overview requires declared sources")
     if not generator_command:
         report.error("Default overview requires generator_command")
+
+    perspective_contracts: dict[str, dict[str, object]] = {}
+    for perspective_id in REQUIRED_PERSPECTIVES:
+        perspective = block(perspective_root, perspective_id, indent=4)
+        audience = field(perspective, "audience", minimum_indent=6)
+        purpose = field(perspective, "purpose", minimum_indent=6)
+        owner = field(perspective, "owner", minimum_indent=6)
+        source_state = field(perspective, "source_state", minimum_indent=6)
+        state_reason = field(perspective, "state_reason", minimum_indent=6)
+        perspective_sources = list_values(perspective, "sources", indent=6)
+        activation_trigger = field(perspective, "activation_trigger", minimum_indent=6)
+        perspective_contracts[perspective_id] = {
+            "owner": owner,
+            "source_state": source_state,
+            "state_reason": state_reason,
+            "activation_trigger": activation_trigger,
+            "sources": perspective_sources,
+        }
+        if not perspective:
+            report.error(f"Required human-interface perspective is missing: {perspective_id}")
+            continue
+        if not audience or not purpose or not owner or not state_reason:
+            report.error(
+                f"Perspective {perspective_id} requires audience, purpose, owner, and state_reason"
+            )
+        if source_state not in PERSPECTIVE_STATES:
+            report.error(
+                f"Perspective {perspective_id} has invalid source_state: "
+                f"{source_state or '(missing)'}"
+            )
+        if source_state == "active" and not perspective_sources:
+            report.error(f"Active perspective {perspective_id} requires declared sources")
+        if source_state != "active" and not activation_trigger:
+            report.error(
+                f"Inactive perspective {perspective_id} requires an activation or recovery trigger"
+            )
+        for source in perspective_sources:
+            if source not in sources:
+                report.error(
+                    f"Perspective {perspective_id} source is absent from overview.sources: {source}"
+                )
 
     if status not in POST_MATERIALIZATION_STATES:
         return
@@ -467,6 +529,23 @@ def validate_human_interface(
     for marker in required_markers:
         if marker not in overview_text:
             report.error(f"{overview_path} lacks required view marker: {marker}")
+    for perspective_id, html_id in REQUIRED_PERSPECTIVES.items():
+        if f'id="{html_id}"' not in overview_text:
+            report.error(
+                f"{overview_path} lacks required {perspective_id} perspective: {html_id}"
+            )
+        contract = perspective_contracts.get(perspective_id, {})
+        for label in ("owner", "source_state", "state_reason"):
+            value = str(contract.get(label, ""))
+            if value and value not in overview_text:
+                report.error(
+                    f"{overview_path} does not display {perspective_id} {label}: {value}"
+                )
+        activation_trigger = str(contract.get("activation_trigger", ""))
+        if activation_trigger and activation_trigger not in overview_text:
+            report.error(
+                f"{overview_path} does not display {perspective_id} activation/recovery trigger"
+            )
     if "href=" not in overview_text:
         report.error(f"{overview_path} contains no clickable document links")
     if status and status not in overview_text:
@@ -528,7 +607,7 @@ def validate_profile(root: Path, report: Report) -> None:
         report.ok("project_profile.yaml contains all required top-level sections")
 
     version = field(lines, "schema_version")
-    if version != "0.5.0":
+    if version != "0.6.0":
         report.error(f"Unsupported project profile schema_version: {version or '(missing)'}")
 
     initialization = block(lines, "initialization")
@@ -537,7 +616,7 @@ def validate_profile(root: Path, report: Report) -> None:
     if status not in ALLOWED_STATES:
         report.error(f"Invalid initialization status: {status or '(missing)'}")
     if mode != "greenfield":
-        report.error(f"Protocol 0.5 supports only greenfield mode, found: {mode or '(missing)'}")
+        report.error(f"Protocol 0.6 supports only greenfield mode, found: {mode or '(missing)'}")
 
     approval = block(initialization, "approval", indent=2)
     approval_state = field(approval, "state", minimum_indent=4)

@@ -18,6 +18,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 
+PERSPECTIVES = (
+    ("management", "Management consultation", "perspective-management"),
+    ("business", "Business and domain operations", "perspective-business"),
+    ("operations", "System operations", "perspective-operations"),
+    ("architecture_delivery", "Architecture and delivery", "perspective-architecture-delivery"),
+)
+
+PERSPECTIVE_STATES = {
+    "active",
+    "not_yet_available",
+    "not_applicable",
+    "blocked",
+    "degraded",
+}
+
+
 def scalar(raw: str) -> str:
     value = raw.strip()
     if " #" in value:
@@ -179,6 +195,7 @@ def render(root: Path) -> Path:
     initialization = top_block(lines, "initialization")
     interface = top_block(lines, "human_interface")
     overview = child_block(interface, "overview", 2)
+    perspective_root = child_block(interface, "perspectives", 2)
 
     project_name = field(project, "name", 2) or "Unnamed project"
     status = field(initialization, "status", 2) or "unknown"
@@ -195,6 +212,54 @@ def render(root: Path) -> Path:
         raise ValueError("default overview locale is missing")
     if not sources:
         raise ValueError("default overview has no declared sources")
+
+    perspective_contracts: list[dict[str, object]] = []
+    for perspective_id, title, html_id in PERSPECTIVES:
+        perspective = child_block(perspective_root, perspective_id, 4)
+        audience = field(perspective, "audience", 6)
+        purpose = field(perspective, "purpose", 6)
+        owner = field(perspective, "owner", 6)
+        source_state = field(perspective, "source_state", 6)
+        state_reason = field(perspective, "state_reason", 6)
+        perspective_sources = list_values(perspective, "sources", 6)
+        activation_trigger = field(perspective, "activation_trigger", 6)
+        if not perspective:
+            raise ValueError(f"required human-interface perspective is missing: {perspective_id}")
+        if not audience or not purpose or not owner or not state_reason:
+            raise ValueError(
+                f"perspective {perspective_id} requires audience, purpose, owner, and state_reason"
+            )
+        if source_state not in PERSPECTIVE_STATES:
+            raise ValueError(
+                f"perspective {perspective_id} has invalid source_state: "
+                f"{source_state or '(missing)'}"
+            )
+        if source_state == "active" and not perspective_sources:
+            raise ValueError(f"active perspective {perspective_id} requires declared sources")
+        if source_state != "active" and not activation_trigger:
+            raise ValueError(
+                f"inactive perspective {perspective_id} requires an activation or recovery trigger"
+            )
+        undeclared = [source for source in perspective_sources if source not in sources]
+        if undeclared:
+            raise ValueError(
+                f"perspective {perspective_id} uses sources absent from overview.sources: "
+                + ", ".join(undeclared)
+            )
+        perspective_contracts.append(
+            {
+                "id": perspective_id,
+                "title": title,
+                "html_id": html_id,
+                "audience": audience,
+                "purpose": purpose,
+                "owner": owner,
+                "source_state": source_state,
+                "state_reason": state_reason,
+                "sources": perspective_sources,
+                "activation_trigger": activation_trigger,
+            }
+        )
 
     missing = [source for source in sources if not (root / source).is_file()]
     if missing:
@@ -218,6 +283,48 @@ def render(root: Path) -> Path:
         )
     else:
         decisions = '<p class="empty">No open decisions are recorded.</p>'
+
+    perspective_sections: list[str] = []
+    for contract in perspective_contracts:
+        perspective_sources = contract["sources"]
+        assert isinstance(perspective_sources, list)
+        if perspective_sources:
+            perspective_links = "".join(
+                f'<li><a href="{html.escape(source, quote=True)}">{html.escape(source)}</a></li>'
+                for source in perspective_sources
+            )
+            source_contract = f"<ul>{perspective_links}</ul>"
+        else:
+            source_contract = (
+                '<p class="empty">No authoritative source is active yet. This is an explicit '
+                "source state, not a healthy or empty result.</p>"
+            )
+        trigger = str(contract["activation_trigger"])
+        trigger_html = (
+            '<p class="trigger"><strong>Activation / recovery trigger:</strong> '
+            f"{html.escape(trigger)}</p>"
+            if trigger
+            else ""
+        )
+        decision_html = (
+            '<div class="management-decisions"><h3>Decisions requiring attention</h3>'
+            f'<div class="grid">{decisions}</div></div>'
+            if contract["id"] == "management"
+            else ""
+        )
+        perspective_sections.append(
+            f'<section id="{contract["html_id"]}" class="perspective">'
+            '<div class="perspective-heading">'
+            f'<div><p class="audience">For {html.escape(str(contract["audience"]))}</p>'
+            f'<h2>{html.escape(str(contract["title"]))}</h2></div>'
+            f'<span class="state state-{html.escape(str(contract["source_state"]), quote=True)}">'
+            f'{html.escape(str(contract["source_state"]))}</span></div>'
+            f'<p>{html.escape(str(contract["purpose"]))}</p>'
+            f'<p><strong>Accountable owner:</strong> {html.escape(str(contract["owner"]))}</p>'
+            f'<p><strong>State reason:</strong> {html.escape(str(contract["state_reason"]))}</p>'
+            '<h3>Declared sources</h3>'
+            f"{source_contract}{trigger_html}{decision_html}</section>"
+        )
 
     source_sections = []
     for source in sources:
@@ -255,6 +362,14 @@ def render(root: Path) -> Path:
     .grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:18px; }}
     section,.decision {{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:24px; margin:18px 0; }}
     .decision {{ margin:0; }} a {{ color:var(--accent); }} pre {{ overflow:auto; background:#172022; color:#f7f4eb; padding:16px; border-radius:10px; }}
+    .control-grid {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:18px; }}
+    .control-grid .perspective {{ margin:0; }} .perspective-heading {{ display:flex; gap:18px;
+      align-items:flex-start; justify-content:space-between; }} .audience {{ color:var(--muted); margin:0; }}
+    .state {{ border:1px solid var(--line); border-radius:999px; padding:5px 10px; font-size:.8rem;
+      font-weight:750; white-space:nowrap; }} .state-active {{ color:var(--accent); border-color:var(--accent); }}
+    .state-blocked,.state-degraded {{ color:var(--warn); border-color:var(--warn); }}
+    .trigger {{ border-top:1px solid var(--line); margin-top:18px; padding-top:14px; }}
+    .management-decisions {{ border-top:1px solid var(--line); margin-top:22px; padding-top:10px; }}
     footer {{ color:var(--muted); padding:32px 0 56px; }}
   </style>
 </head>
@@ -274,9 +389,11 @@ def render(root: Path) -> Path:
       <ul>{source_links}</ul>
     </section>
     <section>
-      <h2>Open decisions</h2>
-      <div class="grid">{decisions}</div>
+      <h2>Human control surface</h2>
+      <p>Humans govern direction, architecture, scope, progress, cadence, and risk through four
+        stable perspectives. Missing runtime or domain evidence is shown explicitly.</p>
     </section>
+    <div class="control-grid">{''.join(perspective_sections)}</div>
     {''.join(source_sections)}
   </main>
   <footer>Generated by tools/render_project_overview.py from AIPartner project sources.</footer>

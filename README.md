@@ -1,6 +1,6 @@
 # AIPartner
 
-Protocol version: 0.5.0
+Protocol version: 0.6.0
 
 Human entry: open [index.html](index.html). This guide remains the human entrance after
 initialization.
@@ -14,7 +14,10 @@ AI entry after initialization is complete: read [AGENTS.md](AGENTS.md), project_
 Default overview renderer: `python3 tools/render_project_overview.py .`
 
 Generated project status belongs in project-overview.html. Initialization must not overwrite
-index.html.
+index.html. The overview is a required control surface from the start and always contains four
+perspectives: management consultation, business/domain operations, system operations, and
+architecture/delivery. Missing evidence is shown as an explicit source state and trigger, never as
+an omitted or healthy section; the state also names its reason and accountable owner.
 
 Tailoring is the first rule: the framework is a menu, and the project activates or creates only
 what current evidence requires. Tailoring changes activation and project configuration; it does not

@@ -88,6 +88,12 @@ The Product Owner provides authority, purpose, real-world context, and final dec
 Implementer provides delivery capacity and continuously brings product management, project
 management, architecture, QA, security, risk, and operations perspectives into the work.
 
+The Implementer also keeps the required HTML control surface usable for management, domain
+specialists, IT operators, and developers. Humans govern architecture, direction, progress,
+cadence, risk, and scope through that derived interface; they are not expected to reconstruct
+project state from raw logs, databases, or development files. PROJECT_WORKFLOW.md owns the exact
+four-perspective and source-truth contract.
+
 Do not assume the Product Owner knows which professional question to ask. When a decision matters,
 the Implementer must:
 

@@ -173,7 +173,7 @@ The trigger starts a proposal. It does not authorize silent restructuring.
 | project_profile.yaml | Approved initialization state, active modules, unresolved decisions, and actual paths | After initialization begins |
 | project_profile.example.yaml | Exact machine-readable profile contract | Retained framework reference |
 | index.html | Permanent human starting guide | Always; never overwrite during initialization |
-| project-overview.html | Generated human-readable project state and pending decisions | After initialization materializes approved facts |
+| project-overview.html | Mandatory four-perspective human control surface generated from project truth | After initialization materializes approved facts |
 | README.md | Short repository orientation and entry links | Normally |
 | LICENSE | Reuse and distribution terms | Public or shared repository |
 | framework_manifest.json | Integrity contract for retained rules and managed configuration boundaries | Always |
@@ -181,9 +181,10 @@ The trigger starts a proposal. It does not authorize silent restructuring.
 | tools/validate_initialization.py | Deterministic framework and initialization validator | Retained framework tool |
 | tools/render_project_overview.py | Atomic default renderer from declared project sources to the derived overview | Retained framework tool |
 
-`project-overview.html` is the only generated project page in the minimal starting set. Additional
-pages normally live under `project_views/` and activate through one view registry when real sources
-and consumers exist.
+`project-overview.html` is the only generated project page in the minimal starting set. It contains
+management, business, system-operations, and architecture/delivery perspectives from day one.
+Additional pages normally live under `project_views/` and activate through one view registry when
+a perspective's sources, audience, live behavior, or navigation depth justify a separate surface.
 
 ## 4. Git and version-control reference
 
@@ -443,7 +444,7 @@ may be generated from these sources, but generated HTML is not an independent so
 | docs/archives/ | Which superseded maintained documents must be retained for reference? | Never use as current truth |
 | docs/risk_register.md | Which enduring material risks need owners and treatment? | Optional when risks outlive one feature plan |
 | docs/terminology.md | Which terms, definitions, code forms, and translations are canonical? | Create when ambiguity, domain language, or multiple locales trigger it |
-| docs/view_registry.md | Which sources, generators, locales, and freshness rules own human views? | Create when a second generated view activates |
+| docs/view_registry.md | Which sources, generators, locales, and freshness rules own split or live human views? | Create when the control surface expands beyond one static page |
 
 If a machine-readable dashboard already depends on docs/plan.txt, that path may replace
 docs/current_work.md. Record the choice in Project facts and keep one active queue only.
@@ -633,10 +634,11 @@ values, unknown semantics, or stored lineage.
 
 Default path: `docs/view_registry.md`
 
-Create when more than `project-overview.html` exists. Record view ID, output path, page role,
-authoritative sources, runtime-evidence inputs, generator command, locale, source version,
-freshness rule, failure behavior, bind scope, and write-back authority. The registry owns view
-configuration, not rendered facts.
+Create when the control surface expands beyond `project-overview.html` into a second generated page
+or live endpoint. Record view ID, output path, page role, perspective, authoritative sources,
+runtime-evidence inputs, generator command, locale, source version, freshness rule, failure
+behavior, bind scope, and write-back authority. The registry owns view configuration, not rendered
+facts.
 
 ### 9.13 Runbooks
 
@@ -678,7 +680,8 @@ contains:
 - project_profile.yaml.
 - docs/product_brief.md.
 - docs/current_work.md with the first permanent work ID.
-- project-overview.html generated from approved facts and unresolved decisions.
+- project-overview.html generated from approved facts and unresolved decisions, with management,
+  business, operations, and architecture/delivery perspectives.
 - a compact communication contract in project_profile.yaml, using the recommended language default
   unless the Product Owner approves a different boundary.
 
@@ -687,6 +690,10 @@ operating behavior exists. It must describe present reality, never planned archi
 
 Create the first application source path and the first required test layer when the first work item
 is ready to materialize code. Do not create empty directories for appearance.
+
+The four perspectives are required even before all their source systems exist. An unavailable
+perspective contains a real source state and reason, accountable owner, and activation or recovery
+trigger; it is not an empty placeholder and does not claim healthy status.
 
 Create config/, dashboard/, db/, logs/, reports/, state/, setup/, roadmap, phase plans, feature
 plans, module owner docs, terminology, view registry, additional HTML views, ADRs, review files, and

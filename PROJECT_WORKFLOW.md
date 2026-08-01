@@ -362,7 +362,8 @@ Initialization fills the actual paths. Create only documents that have a clear r
 | What already happened? | History and version control |
 | What did the latest review find? | Review report, when peer review is active in AGENTS.md |
 | Which engineering terms have exact meanings? | Terminology registry, when ambiguity triggers it |
-| Which maintained sources generate each human view? | View registry, when more than the default overview exists |
+| What must each human role see to govern the project? | Required HTML control surface and its declared sources |
+| Which maintained sources generate each split or live view? | View registry, when the control surface expands beyond one static page |
 
 One line of work has one detailed owner. Other documents may point to it but must not copy its
 status in full.
@@ -426,9 +427,35 @@ The identifier proves continuity of the work, not its current location or status
 
 ## WF-VIEWS: Human-readable project views
 
-Every initialized project provides a static `project-overview.html` generated from approved
-sources. `index.html` remains the permanent framework guide. Do not replace either role with the
+Every initialized project provides a static `project-overview.html` as its mandatory human control
+surface. `index.html` remains the permanent framework guide. Do not replace either role with the
 other.
+
+The human role is not to act as an assistant who reconstructs the project by reading raw logs,
+development notes, databases, configuration, or source files. The interface must let people govern
+direction, architecture, scope, progress, cadence, risk, health, and decisions while retaining
+clickable access to the underlying evidence.
+
+### Four mandatory perspectives
+
+The control surface contains four stable perspectives from initialization onward:
+
+| Perspective | Primary audience | Required content |
+|---|---|---|
+| Management | Product Owner, management, and project leadership | Direction, intended value, scope, progress, cadence, material risks, open decisions, and management advice |
+| Business | Domain specialists and daily business operators | Business recommendations, domain logic, data health, decision status, exceptions, and actions needing specialist judgment |
+| Operations | IT operators and reliability owners | Services, jobs, providers, storage, backups, incidents, recovery, capacity, and current health |
+| Architecture and delivery | Developers, architects, and delivery owners | Current and approved target architecture, module boundaries, dependencies, phase and feature plans, implementation status, technical risk, and drift |
+
+All four perspectives are present even when the project is new. A perspective without current data
+must show `not_yet_available`, `not_applicable`, `blocked`, or `degraded` with its reason, source
+owner, and activation or recovery trigger. It must not disappear, invent healthy status, or force
+the user to inspect raw evidence to learn that the capability does not exist.
+
+Management advice and business recommendations remain proposals unless their owning source records
+an approval or decision. Business health is not inferred from system uptime, and operational health
+is not inferred from business outcomes. Architecture views distinguish current observed structure
+from approved target plans.
 
 Every generated view displays or embeds:
 
@@ -442,18 +469,19 @@ Every generated view displays or embeds:
 Generation fails closed. Missing or conflicting sources produce visible error or discrepancy
 evidence; an old HTML file must not silently stand in for missing current truth.
 
-Additional views activate only when they have real sources and consumers:
+The four perspectives may begin as sections in one static page. Split pages activate when their
+sources, audiences, or navigation depth justify independent surfaces:
 
 | View | Normal sources | Trigger |
 |---|---|---|
-| Architecture | Current-state map, module owner docs, ADRs, phase plans | Several stable modules or dependencies need navigation |
-| Operations | Job manifest, health read model, runbooks, status evidence | A service or unattended job operates |
-| Business | Typed business read model and documented contracts | People must interpret domain evidence or decisions |
-| Decisions | Unresolved decisions and `needs_decision` work items | The overview can no longer present them clearly |
+| Management | Product brief, roadmap, active work, risks, decisions, verification evidence | Management history or decision volume outgrows the overview section |
+| Business | Typed domain read model, business contracts, recommendations, exception queues | Live business health or daily specialist workflow exists |
+| Operations | Job manifest, health read model, runbooks, logs and status evidence | A service or unattended job requires live operational handling |
+| Architecture and delivery | Current-state map, module owner docs, ADRs, phase and feature plans | Several modules or plans need interactive navigation |
 
-When a second generated view is activated, create one view registry, normally
-`docs/view_registry.md`, that owns view IDs, source lists, generator commands, locale, freshness
-rules, and output paths. It does not own the facts being rendered.
+When the control surface splits into a second generated page or live endpoint, create one view
+registry, normally `docs/view_registry.md`, that owns view IDs, source lists, generator commands,
+locale, freshness rules, and output paths. It does not own the facts being rendered.
 
 Static HTML is the default. A local HTTP service activates only when live refresh, search, filtering,
 or structured local-AI access is needed. It binds to loopback and remains read-only by default.
@@ -510,7 +538,10 @@ A change is complete only when every applicable item below is satisfied.
 9. Human views
 
    Regenerate affected HTML or service projections from declared sources. Verify page role, source
-   links, version, freshness, locale, unresolved decisions, and visible failure behavior.
+   links, version, freshness, locale, unresolved decisions, and visible failure behavior. Confirm
+   the control surface still exposes management, business, operations, and architecture-and-delivery
+   perspectives with honest source states, reasons, accountable owners, and activation or recovery
+   triggers where applicable.
 
 10. Documentation checks
 
@@ -755,6 +786,8 @@ Planning and tracking artifact paths:
 Human-interface mode and bind scope:
 
 Human-view registry and generator commands:
+
+Required control-surface perspective sources, states, and owners:
 
 Human-view write-back authority:
 
