@@ -16,6 +16,8 @@ Framework invariant:
 - Stable workflow module IDs remain unchanged.
 - WF-VCS is a core module. A project may defer Git, but it may not remove version-control
   discovery, authority, or deferral rules.
+- WF-COMMUNICATION and WF-VIEWS are core modules. Every project records a compact language
+  contract and keeps human-facing projections subordinate to authoritative sources.
 
 Do not duplicate this methodology in AGENTS.md or START_HERE.md. Those files may route to it,
 configure it, or record approvals without redefining its rules.
@@ -46,8 +48,9 @@ and risk.
   begins.
 
 Tailoring may avoid unnecessary ceremony. It may not remove framework sections, human authority,
-permanent work identity, honest separation of fact and inference, evidence-based completion, or the
-duty to stop on a material discrepancy.
+permanent work identity, honest separation of fact and inference, the language-of-record contract,
+source-versus-view separation, evidence-based completion, or the duty to stop on a material
+discrepancy.
 
 ## Sections in use
 
@@ -55,11 +58,14 @@ Checked sections apply. Unchecked sections are ignored except for their activati
 
 <!-- BEGIN PROJECT CONFIG: WORKFLOW MODULE ACTIVATION -->
 - [x] WF-CORE: Core feature delivery
+- [x] WF-COMMUNICATION: Language, terminology, and translation
 - [x] WF-STRUCTURE: Repository structure
 - [x] WF-VCS: Version control
 - [x] WF-DOCS: Documentation and work tracking
+- [x] WF-VIEWS: Human-readable project views
 - [x] WF-DOD: Definition of Done
 - [ ] WF-PLANNING: Multi-level planning
+- [ ] WF-DRIFT: Architecture and governance drift control
 - [ ] WF-DATA: Authoritative and non-cleanable data
 - [ ] WF-OPS: Unattended operation
 - [ ] WF-RECOVERY: Backup and recovery
@@ -101,6 +107,7 @@ The AI leads a concise discussion covering the applicable questions:
 - Which module, interface, data, permission, external system, or operating process is crossed?
 - What existing behavior and compatibility must remain?
 - Which assumptions are unverified?
+- Which language, terminology, source-text, or translation boundary could change the meaning?
 - What can fail, how harmful is failure, and how will the system fail safely?
 - What must be observable, recoverable, reversible, or approved by a human?
 
@@ -120,6 +127,8 @@ Consider:
 - end-to-end tests for critical user journeys.
 - replay or migration tests when history or stored data must remain valid.
 - security, privacy, performance, concurrency, and recovery tests when the risk requires them.
+- terminology, source-preservation, translation, and generated-view checks when those contracts are
+  affected.
 
 Cover applicable positive, negative, boundary, failure, retry, idempotency, permission, and data
 isolation cases. State what will not be tested and why. Use temporary or synthetic data when real
@@ -147,6 +156,7 @@ Implementation may begin when:
 - affected boundaries and material risks are understood.
 - unresolved decisions that could change the solution are owned or resolved.
 - acceptance evidence and test approach are agreed.
+- affected canonical terms, source-language rules, and human-view consequences are explicit.
 - the work fits the current priority and does not contradict the product brief, current state,
   roadmap, or accepted decisions.
 
@@ -173,6 +183,8 @@ Before declaring completion, compare:
 - changed boundaries against the documented architecture and data ownership.
 - actual risk and operating behavior against the approved assumptions.
 - delivered scope against the agreed non-goals and deferred work.
+- maintained sources against generated HTML or service views, including freshness and unresolved
+  discrepancies.
 
 Passing tests does not excuse a product or architecture mismatch. Product alignment does not excuse
 missing verification.
@@ -197,11 +209,44 @@ After verification:
 
 - update current system truth before closing the work item.
 - record durable decisions and completed-work history.
+- regenerate affected human views from their declared sources and preserve visible stale or error
+  evidence when regeneration cannot succeed.
 - identify new evidence, invalidated assumptions, and follow-up work.
 - ask whether the result changes the next priority when the learning is material.
 
 This is the project's practical use of Agile feedback, Lean learning, Kanban flow, Continuous
 Delivery evidence, and risk management.
+
+## WF-COMMUNICATION: Language, terminology, and translation
+
+Every project records a compact communication contract during initialization. Ask for one bundled
+decision with a recommended default rather than presenting a language questionnaire.
+
+Recommended default:
+
+- the Product Owner and AI converse in the Product Owner's preferred language.
+- maintained code identifiers, schemas, typed values, technical documentation, configuration names,
+  and version-control records use one engineering language of record, normally English.
+- human-facing views may use one or more approved presentation locales.
+- externally sourced evidence preserves its original text, source language when known, time, URL,
+  hash, and lineage.
+- translation is a derived presentation artifact. It does not replace source evidence, add claims,
+  change typed values, or turn unknown, stale, or insufficient data into a conclusion.
+
+Record conversation languages, the engineering language of record, the language of code identifiers
+and typed values, human-view locales, source-evidence treatment, and the translation policy as
+separate facts. Do not use one field called merely `language` for all of these responsibilities.
+
+Create a terminology registry only when domain language, multiple locales, external contracts, or
+observed ambiguity justify it. The normal path is `docs/terminology.md`. Each governed term records
+a stable term ID, canonical engineering term, definition, code or schema form, approved
+translations, and deprecated or ambiguous aliases. A semantic change receives a new version or
+term ID; do not silently redefine a term already present in code, data, decisions, or history.
+
+Conversation and human-view translation may be flexible in style, but engineering terms and typed
+semantics remain exact. Historical material without a versioned language or terminology marker is
+unknown under that contract; do not infer, translate, backfill, re-embed, re-index, or rewrite it as
+if missing provenance were known.
 
 ## WF-STRUCTURE: Repository structure
 
@@ -221,6 +266,26 @@ Rules:
 - Give each important data set, interface, and module one owner.
 - Put secrets outside version control and record only how they are supplied.
 - Update this map when a new responsibility or runtime category appears.
+
+### Module identity and ownership
+
+Once maintained code exists, give each stable module or pipeline a responsibility-based module ID.
+The current-state document records, at a depth proportionate to the project:
+
+- module ID, responsibility, and owner.
+- entry points and public interfaces.
+- data, schema, and configuration it owns.
+- allowed and forbidden dependency directions.
+- test owner and operating surface.
+- a pointer to a detailed module document when one is justified.
+
+Keep a compact project in one current-state map. Create `docs/modules/MODULE-ID.md` only when a
+module has enough contracts, risks, or operating detail to need its own owner document. The
+current-state map then keeps a summary and pointer instead of copying the detail.
+
+Every non-trivial feature names the modules it changes and whether it introduces a new dependency,
+data owner, runtime boundary, or public contract. A small request that unexpectedly crosses several
+unrelated modules is drift evidence and must be explained before implementation continues.
 
 ### Current and planned state
 
@@ -252,6 +317,31 @@ their own evidence and approval.
 The initial project commit follows successful initialization validation. Git history does not
 replace data backup, artifact retention, or recovery testing.
 
+### Complexity ladder
+
+Use the least complex Git mode supported by current evidence:
+
+| Condition | Normal mode |
+|---|---|
+| One writer and no protected production baseline | Small verified commits on the default branch |
+| Independent review or a protected remote baseline | Short-lived branch and pull request |
+| Concurrent writers | One branch or worktree per writer and one integration owner |
+| Stable production baseline plus long-running next release | Default baseline plus one integration branch |
+
+A branch isolates code; it is not the source of work-item status, phase ownership, or completed-work
+truth. Do not encode mutable phase, priority, status, or assignee in permanent work IDs.
+
+Record an activation condition and a retirement condition for every non-default branch model. When
+the condition disappears, preserve necessary historical receipts, retire the topology deliberately,
+and remove obsolete branch commands and merge sources from live governance documents. Historical
+documents may retain them as history.
+
+When the default branch is also a production worktree, inspect related schedules and running
+processes before editing runtime-sensitive files. Verify schema and runtime changes with temporary
+data, synthetic fixtures, regression checks, and deployment preflight before a scheduler or service
+can observe the new version. Do not stage, overwrite, or clean runtime state merely to prepare a
+code commit.
+
 If Git is deliberately deferred, Project facts and project_profile.yaml must record the reason,
 risk, approval evidence, and activation trigger. The rest of this section remains in force.
 
@@ -271,6 +361,8 @@ Initialization fills the actual paths. Create only documents that have a clear r
 | Why was a decision made? | Decision record |
 | What already happened? | History and version control |
 | What did the latest review find? | Review report, when peer review is active in AGENTS.md |
+| Which engineering terms have exact meanings? | Terminology registry, when ambiguity triggers it |
+| Which maintained sources generate each human view? | View registry, when more than the default overview exists |
 
 One line of work has one detailed owner. Other documents may point to it but must not copy its
 status in full.
@@ -281,6 +373,18 @@ HTML is a human view and not a source of truth.
 project_profile.yaml owns initialization state, approval evidence, module activation summary,
 structure decisions, unresolved decisions, and pointers. It does not own current work status,
 current system behavior, roadmap status, or completed-work history.
+
+### Authoritative documents and derived views
+
+Maintained Markdown is the authoritative layer for project intent, current architecture, plans,
+decisions, work tracking, terminology, and history. Executable code, configuration, schemas, and
+authoritative business data retain their own explicit ownership; do not copy them into Markdown and
+pretend the copy is executable truth.
+
+HTML, dashboards, diagrams, and HTTP responses are derived views. They may combine maintained
+documents with declared runtime evidence, but they may not own approvals, work status, architecture
+facts, business truth, or open decisions. A human correction enters the owning source through the
+normal workflow and is then regenerated into the view.
 
 ### Permanent work identity
 
@@ -320,6 +424,44 @@ The identifier proves continuity of the work, not its current location or status
 - Use history and version control for completed work.
 - Do not use a temporary review report as a permanent backlog.
 
+## WF-VIEWS: Human-readable project views
+
+Every initialized project provides a static `project-overview.html` generated from approved
+sources. `index.html` remains the permanent framework guide. Do not replace either role with the
+other.
+
+Every generated view displays or embeds:
+
+- a stable page role and view ID.
+- authoritative source paths.
+- generation time and source version or commit when available.
+- freshness, stale, incomplete, or generation-error state.
+- visible unresolved decisions relevant to that view.
+- a statement that the view is derived and not an independent source of truth.
+
+Generation fails closed. Missing or conflicting sources produce visible error or discrepancy
+evidence; an old HTML file must not silently stand in for missing current truth.
+
+Additional views activate only when they have real sources and consumers:
+
+| View | Normal sources | Trigger |
+|---|---|---|
+| Architecture | Current-state map, module owner docs, ADRs, phase plans | Several stable modules or dependencies need navigation |
+| Operations | Job manifest, health read model, runbooks, status evidence | A service or unattended job operates |
+| Business | Typed business read model and documented contracts | People must interpret domain evidence or decisions |
+| Decisions | Unresolved decisions and `needs_decision` work items | The overview can no longer present them clearly |
+
+When a second generated view is activated, create one view registry, normally
+`docs/view_registry.md`, that owns view IDs, source lists, generator commands, locale, freshness
+rules, and output paths. It does not own the facts being rendered.
+
+Static HTML is the default. A local HTTP service activates only when live refresh, search, filtering,
+or structured local-AI access is needed. It binds to loopback and remains read-only by default.
+Network exposure, authentication, browser approval, source write-back, or business-data mutation are
+separate capabilities requiring explicit authority, threat analysis, audit evidence, and applicable
+WF-OPS or WF-HIGH-IMPACT controls. Local AI configuration is a consumer, never the sole store for
+open decisions or project truth.
+
 ## WF-DOD: Definition of Done
 
 A change is complete only when every applicable item below is satisfied.
@@ -334,41 +476,52 @@ A change is complete only when every applicable item below is satisfied.
 
    Changed files pass the project's syntax, type, schema, or structural checks.
 
-3. Function
+3. Communication
+
+   Changed identifiers, documents, terms, source evidence, derived content, and translations obey
+   the approved language and terminology contract. Original evidence and typed unknown semantics
+   remain intact.
+
+4. Function
 
    A test or direct check demonstrates that the intended behavior works. A syntax check alone is
    not enough.
 
-4. Test strategy
+5. Test strategy
 
    The agreed risk-based test layers and acceptance evidence have been completed. Negative,
    boundary, failure, and recovery cases are covered where applicable. Untested areas are explicit.
 
-5. Regression
+6. Regression
 
    Relevant regression checks pass. Add a regression case when the change fixes a defect that
    could return.
 
-6. Current state
+7. Current state
 
    Update the current-state document when the change adds or alters a module, interface, data
    contract, schema, schedule, failure mode, or operating behavior.
 
-7. Tracking
+8. Tracking
 
    Remove completed work from the active list. Record the outcome in history. Update the roadmap or
    feature plan when an activated planning section requires it.
 
-8. Documentation checks
+9. Human views
+
+   Regenerate affected HTML or service projections from declared sources. Verify page role, source
+   links, version, freshness, locale, unresolved decisions, and visible failure behavior.
+
+10. Documentation checks
 
    Run the project's documentation and reference checks.
 
-9. Version control
+11. Version control
 
    Commit only intended source, configuration, tests, and maintained documentation. Keep runtime
    output, caches, logs, and unrelated user changes out of the commit.
 
-10. Risk
+12. Risk
 
    Apply any additional evidence required by WF-DATA, WF-OPS, WF-RECOVERY, or WF-HIGH-IMPACT when
    those modules are active.
@@ -388,11 +541,12 @@ A roadmap imagined during initialization is not activation evidence. If only one
 is ready, keep this module inactive and record a trigger for the point at which competing work
 appears.
 
-Use three levels only when each level has a distinct purpose:
+Use up to four levels, and only when each active level has a distinct purpose:
 
 | Level | Purpose |
 |---|---|
 | Roadmap | Major outcomes, releases, and future priority |
+| Phase delivery plan | Ordered dependencies and early-start boundaries inside one release or long work line |
 | Current work list | Work in the current phase or release |
 | Feature plan | Detailed breakdown of one large feature |
 
@@ -401,9 +555,56 @@ Rules:
 - The Product Owner approves movement between phases or major priorities.
 - The current work list contains current unfinished work only.
 - Future work belongs in the roadmap, not the current queue.
+- A phase delivery plan owns within-phase order and dependencies; the roadmap does not copy them.
 - A large feature keeps its detailed status in one feature plan.
 - Other files point to the feature plan instead of copying its details.
 - Completed work moves to history.
+
+### Forward-data timing and gate reachability
+
+When proposing implementation order, dependencies, or early work, check each item for a data clock:
+
+- whether valid evidence can be faithfully reconstructed later.
+- whether collection is prospective or only forward from an activation epoch.
+- how long labels, roots, outcomes, or other evidence require to mature.
+- whether delay permanently loses point-in-time availability, provider latency, market context,
+  cost, or concurrent-condition evidence.
+
+Mark work `data-clock critical` when code may be implemented later but its valid observation window
+cannot be recovered. Record the latest safe activation point, the smallest isolated shadow or
+bounded capture that can begin earlier, and how it avoids canonical write-back and production
+interference. Mark retrospective reconstruction separately; it must not masquerade as prospective
+or point-in-time calibration evidence.
+
+Before adopting an evidence threshold or exit gate, estimate its reachability from the actual or
+expected generation funnel: exclusion reasons, eligible rate, independence, maturity delay, and
+time to threshold. A methodologically attractive gate that can never receive enough valid evidence
+is an unresolved product or methodology decision, not a completed plan.
+
+## WF-DRIFT: Architecture and governance drift control
+
+Activation condition:
+
+- the project has several stable modules, pipelines, or generated views whose ownership or
+  dependency direction must remain consistent
+- a material architecture or documentation drift has been observed
+- a branch strategy, module, interface, or source of truth has been retired or replaced
+
+Ignore the rest of this section until its checkbox is checked.
+
+Define proportionate, repeatable checks for:
+
+- stable work, module, term, view, and decision IDs.
+- pointers and single ownership of mutable status or detailed plans.
+- phase dependency existence, ordering, and cycles.
+- code dependency direction and public interface boundaries.
+- code, schema, job manifest, current-state, and human-view consistency.
+- stale paths, commands, modules, branch markers, and retired operating instructions in live docs.
+- generated-view freshness and source completeness.
+- deprecated or ambiguous terminology.
+
+The project records the commands in Project facts and adds regression cases for drift that has
+already occurred. A drift report is evidence or a work input, not a second current-state source.
 
 ## WF-DATA: Authoritative and non-cleanable data
 
@@ -420,6 +621,10 @@ Ignore the rest of this section until its checkbox is checked.
 - Authoritative data, derived views, caches, and projections have explicit ownership.
 - Schema changes have a migration and recovery plan.
 - Append-only or irreversible rules are enforced where practical.
+- Prospective, forward-only, retrospective, synthetic, and migrated evidence remain explicitly
+  distinguishable.
+- A blocked full feature may use an approved isolated shadow capture only when it cannot alter
+  canonical truth, backfill an old ledger, or interfere with production scheduling.
 
 ## WF-OPS: Unattended operation
 
@@ -435,6 +640,10 @@ Ignore the rest of this section until its checkbox is checked.
 - Make repeated execution safe.
 - Define locks, timeouts, retries, health checks, and human takeover conditions.
 - Record failure evidence instead of silently treating failure as no data.
+- Before runtime-sensitive edits in a production worktree, inspect related schedules and running
+  processes and avoid leaving entry points in a readable intermediate state.
+- A local HTTP project portal binds to loopback and stays read-only unless separately approved;
+  non-loopback exposure and write-back require explicit security and authority controls.
 
 ## WF-RECOVERY: Backup and recovery
 
@@ -499,6 +708,20 @@ Work ID registry or allocation source:
 
 Primary runtime:
 
+Conversation language:
+
+Engineering language of record:
+
+Code identifier and typed-value language:
+
+Human-view locales:
+
+Source-evidence language policy:
+
+Translation and derived-content policy:
+
+Terminology registry and activation trigger:
+
 Supported operating systems:
 
 Application source:
@@ -519,6 +742,8 @@ Setup and deployment:
 
 Selected structure profile:
 
+Module ID and ownership source:
+
 Structure tailoring decisions:
 
 Deferred structure triggers:
@@ -527,6 +752,12 @@ Local structure extensions and reasons:
 
 Planning and tracking artifact paths:
 
+Human-interface mode and bind scope:
+
+Human-view registry and generator commands:
+
+Human-view write-back authority:
+
 Syntax and structural check commands:
 
 Functional test commands:
@@ -534,6 +765,8 @@ Functional test commands:
 Regression commands:
 
 Documentation check commands:
+
+Drift and dependency check commands:
 
 Current-state document:
 
@@ -552,4 +785,6 @@ Scheduled jobs:
 Generated or runtime-only paths:
 
 Known environment constraints:
+
+Git complexity level, activation condition, and retirement condition:
 <!-- END PROJECT CONFIG: PROJECT FACTS -->

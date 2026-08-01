@@ -4,7 +4,7 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.4.0
+Protocol version: 0.5.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -20,6 +20,8 @@ Framework invariant:
   regions. Inactive modules remain present and unchanged.
 - framework_manifest.json defines immutable files and managed-block integrity. Do not update its
   hashes during project initialization.
+- Use tools/render_project_overview.py for the default overview unless an approved project-specific
+  generator replaces it and the profile records that command.
 - Read project_profile.example.yaml before creating project_profile.yaml. Do not invent a different
   state model or duplicate mutable work status in the profile.
 - Run tools/validate_initialization.py before reporting verification.
@@ -37,6 +39,7 @@ Your goal is not to generate as many files as possible. Your goal is to turn the
 project with:
 
 - a clear objective.
+- a compact language, terminology, and translation contract.
 - visible assumptions.
 - controlled scope.
 - explicit risk and authority.
@@ -44,6 +47,7 @@ project with:
 - a durable human and AI partnership.
 - governance that activates as complexity grows.
 - enough continuity for a future human or AI to take over reliably.
+- a human-readable interface derived from authoritative project sources.
 
 ## 0. Confirm that this protocol applies
 
@@ -224,6 +228,23 @@ their purpose, delivery mechanism, and environment-variable name. Never record t
 the work is complete. Every deliverable needs verification evidence proportional to its risk.
 Anything that cannot be verified must be labeled unverified.
 
+### 1.9 Establish language without creating a language questionnaire
+
+Every project records separate choices for conversation language, engineering language of record,
+code identifiers and typed values, human-view locales, source evidence, and translation. Offer the
+recommended default from WF-COMMUNICATION as one bundled decision. Expand it only when the user
+rejects the default or the project has multilingual, domain-terminology, or source-provenance risk.
+
+Do not translate identifiers, schemas, IDs, typed unknown states, or original evidence merely to
+make all surfaces appear to use one language.
+
+### 1.10 Keep human views subordinate to project truth
+
+Maintained Markdown owns project documentation. Executable code, configuration, schemas, and
+authoritative data retain their declared ownership. Static HTML, dashboards, and HTTP responses are
+derived views with visible sources, generation time, freshness, and failures. They never become the
+only place where a decision, status, architecture fact, or business fact exists.
+
 ## 2. How to conduct the initialization conversation
 
 Initialization is not a fixed long-form questionnaire. Use an adaptive interview:
@@ -366,6 +387,28 @@ Do not require the user to invent a Git workflow. Recommend the smallest safe mo
 what would trigger a more complex one. Remote creation, visibility changes, pushes, publication,
 and history rewrites require explicit approval.
 
+### 3.11 Language, terminology, and translation
+
+Propose one compact communication contract using WF-COMMUNICATION. Clarify only deviations from the
+recommended default and material choices such as:
+
+- whether technical records and code use English or another engineering language of record.
+- which locale or locales human-facing project views use.
+- whether source material can appear in languages different from the engineering record.
+- whether translated output is needed now or only after a trigger.
+- whether domain terminology is ambiguous enough to require `docs/terminology.md`.
+
+The Product Owner decides the material policy. The AI recommends exact boundaries and prevents one
+general `language` answer from silently controlling unrelated surfaces.
+
+### 3.12 Human project interface
+
+Static `project-overview.html` is the starting mode. Determine whether architecture, operations,
+business, or decision views have actual sources and consumers now; otherwise record their triggers.
+Recommend local HTTP only when live refresh, search, filtering, or structured local-AI access is a
+current need. Loopback, read-only service is the safe default. Network exposure and write-back are
+separate approvals, not consequences of choosing HTTP.
+
 ## 4. Configure the project method
 
 PROJECT_WORKFLOW.md owns the delivery method, including Agile feedback, Lean learning, Kanban flow,
@@ -381,6 +424,7 @@ During initialization:
 - explain why each recommended practice matters to this project now.
 - configure the first feature or experiment to enter the workflow with a clear outcome, boundary,
   risk view, and acceptance evidence.
+- record the compact communication contract and the initial static human-view contract.
 - leave unnecessary optional sections inactive until their activation conditions appear.
 
 Do not copy the workflow stages into the initialization record. Record only the approved
@@ -489,12 +533,22 @@ Explain:
 - license recommendation and unresolved ownership questions.
 - initial commit plan and any external action requiring separate approval.
 
-### 5.9 Files to materialize
+### 5.9 Communication and human-interface proposal
+
+Present the recommended communication contract as one decision, showing the engineering language
+of record, conversation language, human-view locale, source-evidence policy, translation boundary,
+and whether a terminology registry is selected now or deferred to a trigger.
+
+Show the initial static overview and each additional human view as selected, deferred, or not
+applicable. For any proposed HTTP mode, state bind scope, read/write authority, source contracts,
+security consequences, and the trigger that makes a service necessary.
+
+### 5.10 Files to materialize
 
 List the files that will be created or modified after approval and explain which question each file
 answers. Do not create overlapping documents with unclear or duplicated authority.
 
-### 5.10 Verification plan
+### 5.11 Verification plan
 
 Explain how initialization will verify:
 
@@ -512,6 +566,11 @@ Explain how initialization will verify:
 - deferred and not-applicable reference items were not created.
 - Git state, tracked and ignored files, branch configuration, and approved authority match the
   proposal.
+- the communication contract contains separate language responsibilities and no ambiguous general
+  language field.
+- generated human views identify sources, locale, generation time, version, freshness, and failure
+  state without owning project truth.
+- any proposed HTTP service has explicit bind scope, read/write authority, and approval evidence.
 - generation of the human overview from authoritative facts.
 - preservation of index.html as the permanent human starting guide.
 - tools/validate_initialization.py completes without errors and its actual output is recorded.
@@ -543,7 +602,10 @@ Explicit approval is required for:
 - irreversible operations.
 - unattended automation.
 - concurrent writing by multiple AI agents.
+- the engineering language of record and any translation policy that can affect saved project
+  meaning.
 - activation of material governance modules.
+- non-loopback human-interface exposure, browser approval, or source/data write-back.
 - remote creation or replacement, public visibility, push or publication, and history rewrite.
 
 ## 7. Materialization order after approval
@@ -556,19 +618,22 @@ After approval:
 3. Configure only the marked PROJECT CONFIG regions in AGENTS.md.
 4. Configure only the marked PROJECT CONFIG regions in PROJECT_WORKFLOW.md.
 5. Activate the approved role and project governance modules in their owning files.
-6. Create the approved repository categories and ownership boundaries that are needed now.
-7. Create only the project documents currently needed. Do not materialize meaningless empty
+6. Record the approved communication contract and terminology trigger.
+7. Create the approved repository categories and ownership boundaries that are needed now.
+8. Create only the project documents currently needed. Do not materialize meaningless empty
    documents.
-8. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
+9. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
    work-state flow, risk-based test strategy, and minimum Definition of Done.
-9. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
-   state as project-overview.html.
-10. Run tools/validate_initialization.py and any project-specific structural, reference, and
+10. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
+    state as project-overview.html from declared sources, with visible provenance and freshness;
+    the framework default command is `python3 tools/render_project_overview.py .`.
+11. Run tools/validate_initialization.py and any project-specific structural, reference, drift, and
     consistency checks. Record actual evidence rather than self-declared pass values.
-11. Apply the approved local Git configuration without discarding existing history or user work.
-12. Create the initial project commit only after validation and only when approved.
-13. Create or change a remote, push, publish, or change visibility only when explicitly approved.
-14. Report actual writes, validation results, Git state, and remaining unknowns to the user.
+12. Apply the approved local Git configuration without discarding existing history or user work.
+13. Create the initial project commit only after validation and only when approved.
+14. Create or change a remote, push, publish, expose a service, or change visibility only when
+    explicitly approved.
+15. Report actual writes, validation results, Git state, and remaining unknowns to the user.
 
 If a required tool or renderer has not yet been implemented:
 
@@ -606,7 +671,8 @@ forbid approved_pending_materialization, materialized, verified, and complete.
 START_HERE.md stops governing the project when initialization is complete.
 
 - AGENTS.md owns role, authority, reviewer, and concurrent-writer activation.
-- PROJECT_WORKFLOW.md owns delivery, planning, data, operation, recovery, and high-impact activation.
+- PROJECT_WORKFLOW.md owns communication, views, delivery, planning, drift, data, operation,
+  recovery, and high-impact activation.
 - project_profile.yaml records the approved activation summary and pointers. The owning file remains
   authoritative, and validation prevents drift.
 
@@ -623,8 +689,8 @@ During initialization, read:
 
 1. the compact AGENTS.md.
 2. project_profile.example.yaml as the profile contract.
-3. initialization, activation, approval, structure, and unresolved-decision state in
-   project_profile.yaml, if it exists.
+3. initialization, activation, approval, communication, human-interface, structure, and
+   unresolved-decision state in project_profile.yaml, if it exists.
 4. PROJECT_WORKFLOW.md.
 5. PROJECT_STRUCTURE_REFERENCE.md while preparing the repository and control-artifact proposal.
 6. the entry points for active modules.
@@ -656,13 +722,15 @@ The overview must:
 - include every open blocking decision.
 - use clickable relative links to maintained project documents.
 - show its source paths and generation time.
+- show its view ID, locale, source version, freshness, and derived-view status.
 - never claim verified or complete when the profile or validator disagrees.
 - preserve the framework's established visual language unless the Product Owner approves a new
   project design.
 
 Initialization does not require an HTML service. Generate a static page that can be opened
-directly. Propose a service only when real requirements appear for multiple users, remote access,
-identity and authorization, browser-based approval, or direct write-back.
+directly. Propose loopback read-only HTTP only for a current live-refresh, search, filtering, or
+structured local-AI need. Remote access, identity, browser approval, and direct write-back require
+separate authorization and risk controls.
 
 ## 12. The AI's first response
 
@@ -683,7 +751,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.4 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.5 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization
@@ -697,6 +765,8 @@ Initialization may be marked complete only when all of the following are true:
 - reference-material facts have explicit adopt, target, defer, reject, or unresolved dispositions.
 - the most important assumptions and success evidence are recorded.
 - AI authority and human-approval boundaries are explicit.
+- conversation, engineering-record, code-identifier, human-view, source-evidence, and translation
+  language responsibilities are separate and approved.
 - the AI partnership and feature discussion method are explicit.
 - the repository map separates maintained source, authoritative data, generated output, and
   runtime state.
@@ -704,6 +774,8 @@ Initialization may be marked complete only when all of the following are true:
   commit or explicit deferral are recorded.
 - the first feature or experiment has an agreed boundary and evidence approach.
 - the current work source is the only owner of mutable work-item status.
+- project-overview.html is generated from declared sources and exposes provenance, locale,
+  generation time, freshness, errors, and every blocking decision.
 - currently required role and project governance modules are active and validated in their owning
   files.
 - inactive modules remain discoverable without entering active context.

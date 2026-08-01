@@ -1,15 +1,15 @@
 # project_profile.example.yaml
 #
-# Exact project_profile.yaml contract for AIPartner protocol 0.4.
+# Exact project_profile.yaml contract for AIPartner protocol 0.5.
 # Copy this structure after proposal approval. Replace example values; do not remove required keys.
 # Mutable work-item status belongs only in current_work_source and must not be copied here.
 
-schema_version: "0.4.0"
+schema_version: "0.5.0"
 
 template:
   name: "AIPartner"
   protocol_id: "BOOTSTRAP-001"
-  protocol_version: "0.4.0"
+  protocol_version: "0.5.0"
   source: "repository URL, release, or commit used"
 
 input:
@@ -34,12 +34,31 @@ initialization:
 
 project:
   name: ""
-  primary_language_of_record: "en"
   product_brief_path: "docs/product_brief.md"
   current_state_path: ""
   current_work_source: "docs/current_work.md"
   roadmap_path: ""
   history_path: ""
+
+communication:
+  conversation_language: "user preferred language or BCP 47 tag"
+  engineering_language_of_record: "en"
+  code_identifier_language: "en"
+  human_view_locales:
+    - "en"
+  source_evidence_policy: "preserve_original"
+  # Allowed: preserve_original, project_defined, no_external_source
+  derived_content_language: "en"
+  translation:
+    mode: "presentation_only"
+    # Allowed: none, presentation_only, versioned_derived, project_defined
+    preserves_typed_values: true
+    may_replace_source_evidence: false
+  terminology:
+    mode: "deferred"
+    # Allowed: inline_conventions, registry, deferred
+    source: ""
+    trigger: "Domain ambiguity, multiple locales, or an external terminology contract appears"
 
 reference_adoptions:
   # Repeat one entry for every material characteristic taken from reference material.
@@ -71,6 +90,9 @@ workflow_modules:
   WF-CORE:
     state: "active"
     evidence: "Required framework baseline"
+  WF-COMMUNICATION:
+    state: "active"
+    evidence: "Required framework baseline"
   WF-STRUCTURE:
     state: "active"
     evidence: "Required framework baseline"
@@ -80,6 +102,9 @@ workflow_modules:
   WF-DOCS:
     state: "active"
     evidence: "Required framework baseline"
+  WF-VIEWS:
+    state: "active"
+    evidence: "Required framework baseline"
   WF-DOD:
     state: "active"
     evidence: "Required framework baseline"
@@ -87,6 +112,10 @@ workflow_modules:
     state: "inactive"
     evidence: ""
     trigger: "At least two current long-running work lines need separate priority or dependency control"
+  WF-DRIFT:
+    state: "inactive"
+    evidence: ""
+    trigger: "Several modules, pipelines, views, or retired contracts need repeatable consistency checks"
   WF-DATA:
     state: "inactive"
     evidence: ""
@@ -116,6 +145,9 @@ version_control:
   ignore_policy: ".gitignore"
   license_policy: "LICENSE"
   initial_checkpoint: "pending validation"
+  complexity_level: "single_writer_default_branch"
+  complexity_activation_condition: ""
+  complexity_retirement_condition: ""
   deferral:
     reason: ""
     accepted_risk: ""
@@ -131,6 +163,8 @@ authority:
   merge_authority: ""
   repository_administration_authority: ""
   visibility_and_history_rewrite_authority: ""
+  human_interface_exposure_authority: ""
+  human_interface_writeback_authority: ""
 
 work_identity:
   format: "WORK-NNN"
@@ -155,6 +189,7 @@ structure:
     - path: "LICENSE"
     - path: "framework_manifest.json"
     - path: "tools/validate_initialization.py"
+    - path: "tools/render_project_overview.py"
     - path: "introduction/"
   selected_now:
     - path: "project_profile.yaml"
@@ -187,8 +222,18 @@ structure:
       trigger: "Maintained code, executable configuration, schema, or operating behavior exists"
     - path: "docs/phase_roadmap.md"
       trigger: "WF-PLANNING activates"
+    - path: "docs/phase_plans/"
+      trigger: "A phase or release needs an owned dependency and early-start plan"
     - path: "docs/feature_plans/"
       trigger: "A feature crosses the durable-plan threshold in PROJECT_WORKFLOW.md"
+    - path: "docs/modules/"
+      trigger: "A stable module outgrows the compact current-state map"
+    - path: "docs/terminology.md"
+      trigger: "Terminology mode changes to registry"
+    - path: "docs/view_registry.md"
+      trigger: "A second generated human view activates"
+    - path: "project_views/"
+      trigger: "Architecture, operations, business, or decisions view activates"
   not_applicable: []
   local_extensions: []
 
@@ -202,14 +247,26 @@ unresolved_decisions:
     resolution: ""
     evidence_ref: ""
 
-human_overview:
-  path: "project-overview.html"
-  page_role: "project-overview"
-  sources:
-    - "project_profile.yaml"
-    - "docs/product_brief.md"
-    - "docs/current_work.md"
-  generated_on: ""
+human_interface:
+  mode: "static_html"
+  # Allowed: static_html, local_http, hybrid
+  bind_scope: "none"
+  # Allowed: none, loopback, approved_network
+  exposure_approval_ref: ""
+  writeback: "disabled"
+  # Allowed: disabled, proposal_only, approved_writeback
+  writeback_approval_ref: ""
+  view_registry_path: ""
+  overview:
+    path: "project-overview.html"
+    view_id: "project-overview"
+    page_role: "project-overview"
+    locale: "en"
+    generator_command: "python3 tools/render_project_overview.py ."
+    sources:
+      - "project_profile.yaml"
+      - "docs/product_brief.md"
+      - "docs/current_work.md"
 
 verification:
   validator: "python3 tools/validate_initialization.py ."

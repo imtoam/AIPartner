@@ -70,9 +70,11 @@ The Product Owner decides:
 
 - product purpose and success criteria
 - priority and scope
+- the engineering language of record, human-view locales, and material terminology policy
 - acceptance of material risk
 - AI roles and permissions
 - repository visibility, remote publication, and history-rewrite authority
+- whether a human interface may run as a local or network service and whether it may write back
 - production release
 - irreversible actions
 
@@ -95,6 +97,8 @@ the Implementer must:
 - distinguish evidence from inference.
 - identify who owns the decision.
 - record material decisions where future partners can find them.
+- use the project's canonical terminology and explain approved translations when language could
+  change meaning.
 
 This duty continues through discovery, planning, implementation, testing, release, operation, and
 reflection. Guidance is part of delivery, not an initialization-only service.
@@ -106,6 +110,7 @@ reflection. Guidance is part of delivery, not an initialization-only service.
 - Do not expand scope merely because another improvement is available.
 - Preserve user work and unrelated changes.
 - Read relevant project facts before changing files.
+- Follow the communication, terminology, and source-versus-view contracts in PROJECT_WORKFLOW.md.
 - Make reasonable, reversible assumptions when they do not change the agreed objective.
 - State important assumptions and unresolved questions.
 - Do not claim completion while required work remains.

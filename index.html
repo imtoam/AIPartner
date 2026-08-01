@@ -710,7 +710,7 @@
     <div class="masthead-inner">
       <div class="topline">
         <span>AIPartner</span>
-        <span>Human entry point</span>
+        <span>Protocol 0.5 / Human entry point</span>
       </div>
       <div class="hero">
         <p class="eyebrow">Start with the idea, not the paperwork</p>
@@ -821,8 +821,8 @@
             <p>
               <strong>Prepare the proposal</strong>
               The AI explains the first product scope, learning priorities, authority boundaries,
-              repository categories, Git mode, governance needs, test strategy, intended files,
-              and verification plan.
+              language and terminology contract, repository categories, Git mode, human-view
+              interface, governance needs, test strategy, intended files, and verification plan.
             </p>
           </li>
           <li>
@@ -866,7 +866,9 @@
             <ul>
               <li>the problem, intended outcome, and success evidence</li>
               <li>priority, scope, and acceptable risk</li>
+              <li>engineering language, presentation locales, and material terminology</li>
               <li>AI roles, permissions, and external actions</li>
+              <li>network exposure and whether a human interface may write back</li>
               <li>repository visibility, remote publication, and history rewrites</li>
               <li>production release and irreversible decisions</li>
               <li>activation of governance that changes how the project is controlled</li>
@@ -934,8 +936,9 @@
             <h3 class="file-name">PROJECT_WORKFLOW.md</h3>
             <p>
               The canonical method throughout the project for shaping features, managing risk,
-              defining boundaries and tests, organizing the repository, tracking work, verifying
-              completion, and checking results against the original idea.
+              defining language and source boundaries, organizing modules and Git, generating
+              human views, tracking work, verifying completion, and checking results against the
+              original idea.
             </p>
           </article>
           <article class="file-card">
@@ -988,11 +991,22 @@
             <p>The unfinished work that is active now, with priority and visible blockers.</p>
           </article>
           <article class="artifact">
-            <h3>Decisions, history, and overview</h3>
+            <h3>Language and terminology</h3>
             <p>
-              Why durable decisions were made, what was completed, and a readable HTML view of
-              current truth. The overview is project-overview.html; index.html stays unchanged.
+              One engineering language of record, exact typed terms, presentation locales, and a
+              translation boundary that preserves original evidence.
             </p>
+          </article>
+          <article class="artifact">
+            <h3>Generated human views</h3>
+            <p>
+              A readable HTML projection of approved sources. Architecture, operations, business,
+              and decision pages appear only when the project has real sources and consumers.
+            </p>
+          </article>
+          <article class="artifact">
+            <h3>Decisions and history</h3>
+            <p>Why durable decisions were made and what verified work was completed.</p>
           </article>
         </div>
       </section>
@@ -1027,11 +1041,23 @@
           </article>
           <article class="trigger">
             <h3>Several long efforts compete</h3>
-            <p>Separate the roadmap, current work list, and detailed feature plans.</p>
+            <p>Add a roadmap, phase delivery plans, current work, and detailed feature plans only where each owns distinct detail.</p>
           </article>
           <article class="trigger">
             <h3>Impact or risk increases</h3>
             <p>Require stronger evidence, explicit authority, independent checks, and recovery.</p>
+          </article>
+          <article class="trigger">
+            <h3>Language becomes ambiguous</h3>
+            <p>Activate a term registry with canonical engineering terms and approved translations.</p>
+          </article>
+          <article class="trigger">
+            <h3>Modules begin to drift</h3>
+            <p>Add stable module ownership, dependency checks, and stale-governance detection.</p>
+          </article>
+          <article class="trigger">
+            <h3>Static pages are no longer enough</h3>
+            <p>Consider a loopback, read-only local portal for live status, search, or local-AI access.</p>
           </article>
         </div>
       </section>
@@ -1046,6 +1072,7 @@
           <li>Initialization is verified by the included validator, not by an AI writing “pass.”</li>
           <li>Passwords, API keys, and private credentials must not enter project documents.</li>
           <li>Generated HTML is a human view, not an independent source of project truth.</li>
+          <li>Local HTTP is loopback and read-only by default; exposure and write-back require separate approval.</li>
           <li>The framework is open to testing, criticism, and improvement.</li>
         </ul>
       </section>

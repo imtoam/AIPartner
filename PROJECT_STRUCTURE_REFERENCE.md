@@ -32,6 +32,10 @@ task.
 - Separate maintained source, authoritative data, derived output, and disposable runtime state.
 - Give each important module, interface, data set, and document one owner.
 - Do not copy the same detailed status into several planning files. Use pointers.
+- Keep maintained Markdown authoritative over generated human views; every view declares its
+  sources, locale, generation time, version, and freshness.
+- Keep engineering language, source evidence, presentation locale, and translation responsibilities
+  separate.
 - Keep generated and runtime-only content out of version control unless an explicit evidence policy
   requires it.
 - Record the selected paths and exceptions in PROJECT_WORKFLOW.md under Project facts.
@@ -153,6 +157,8 @@ Re-evaluate the tailored structure when any of these occurs:
 - backup, restore, migration, audit, or incident response becomes necessary.
 - an existing directory accumulates unrelated responsibilities or unclear ownership.
 - a tool requires a stable path or machine-readable document contract.
+- a second human view, presentation locale, or local HTTP consumer appears.
+- terminology ambiguity or translation begins affecting code, schemas, decisions, or business meaning.
 
 The trigger starts a proposal. It does not authorize silent restructuring.
 
@@ -173,6 +179,11 @@ The trigger starts a proposal. It does not authorize silent restructuring.
 | framework_manifest.json | Integrity contract for retained rules and managed configuration boundaries | Always |
 | .gitignore | Exclusion policy for secrets, generated output, runtime state, and local tools | Version-controlled repository |
 | tools/validate_initialization.py | Deterministic framework and initialization validator | Retained framework tool |
+| tools/render_project_overview.py | Atomic default renderer from declared project sources to the derived overview | Retained framework tool |
+
+`project-overview.html` is the only generated project page in the minimal starting set. Additional
+pages normally live under `project_views/` and activate through one view registry when real sources
+and consumers exist.
 
 ## 4. Git and version-control reference
 
@@ -238,6 +249,10 @@ commits do.
 Do not create branches for ceremony. Activate branch or worktree rules when review, concurrency,
 release isolation, or production stability creates the need.
 
+Every non-default model records both its activation condition and its retirement condition. Branch
+topology is not a work-status source. When topology is retired, preserve historical receipts and
+remove old branch commands, merge sources, and worktree paths from current governance documents.
+
 Invest-derived integration lessons:
 
 - keep the production baseline stable and integrate small fixes independently.
@@ -247,6 +262,8 @@ Invest-derived integration lessons:
 - do not rebase or otherwise rewrite shared baseline and integration history.
 - inspect repository status before and after merges, commits, and worktree integration.
 - never carry runtime output or unrelated user changes across branches accidentally.
+- when the default branch is also a production worktree, inspect schedules and running processes
+  before runtime-sensitive edits and keep entry points out of readable intermediate states.
 
 ### 4.5 Commit contract
 
@@ -350,7 +367,7 @@ infrastructure implementing ports. Application and domain do not import entrypoi
 | Path | Responsibility | Version-control policy |
 |---|---|---|
 | config/ | Non-secret configuration, registries, policy files, and schemas | Include maintained configuration |
-| dashboard/ or web/ | Human-facing control, status, or observation interface | Include maintained source |
+| dashboard/ or web/ | Maintained generators and optional human-facing control, status, or observation service | Include maintained source; generated HTML remains derived |
 | db/schema/ | Canonical database schema definitions | Include |
 | db/migrations/ | Ordered, reversible where practical, schema and data migrations | Include |
 | db/fixtures/ | Small synthetic or development-only fixtures | Include when safe |
@@ -360,6 +377,11 @@ infrastructure implementing ports. Application and domain do not import entrypoi
 
 Live database files do not become source merely because they are stored under db/. Their authority,
 backup, recovery, sensitivity, and version-control policy must be explicit.
+
+A local project service is not selected merely because `dashboard/` or `web/` exists. Static HTML
+remains the default. When HTTP is justified, bind to loopback and expose read-only projections unless
+the Product Owner separately approves network exposure or a write control plane with security,
+identity, audit, and recovery evidence.
 
 ## 6. Test structure
 
@@ -408,7 +430,9 @@ may be generated from these sources, but generated HTML is not an independent so
 |---|---|---|
 | docs/product_brief.md | Why does the project exist, for whom, and what proves value? | Maintained baseline; update only through product decision |
 | docs/module_structure.md | What is true about the system now? | Current-state source; update with lasting system changes |
+| docs/modules/ | Which detailed contracts and operating boundaries belong to one stable module? | Create only when a module outgrows the compact current-state map |
 | docs/phase_roadmap.md | Which major outcomes, releases, or phases are planned? | Activate only for multi-level planning |
+| docs/phase_plans/ | What order, dependency, and early-start boundary governs one phase? | Activate only when roadmap and current queue cannot own this detail cleanly |
 | docs/current_work.md | What unfinished work is active now? | Active queue only; remove completed items |
 | docs/feature_plans/ | What durable scope, boundary, risk, and verification agreement governs one feature? | One file for a large, multi-session, boundary-crossing, or high-risk feature |
 | docs/adr/ | Why was a durable architecture or data decision made? | Immutable decision history with explicit supersession |
@@ -418,6 +442,8 @@ may be generated from these sources, but generated HTML is not an independent so
 | docs/runbooks/ | How are deployment, operation, incident response, backup, and recovery performed? | Maintain with operating behavior |
 | docs/archives/ | Which superseded maintained documents must be retained for reference? | Never use as current truth |
 | docs/risk_register.md | Which enduring material risks need owners and treatment? | Optional when risks outlive one feature plan |
+| docs/terminology.md | Which terms, definitions, code forms, and translations are canonical? | Create when ambiguity, domain language, or multiple locales trigger it |
+| docs/view_registry.md | Which sources, generators, locales, and freshness rules own human views? | Create when a second generated view activates |
 
 If a machine-readable dashboard already depends on docs/plan.txt, that path may replace
 docs/current_work.md. Record the choice in Project facts and keep one active queue only.
@@ -472,7 +498,25 @@ Minimum content:
 The roadmap does not contain task-level implementation detail. Only the Product Owner changes major
 priority or moves work between phases.
 
-### 9.4 Current work list
+### 9.4 Phase delivery plan
+
+Default path pattern: `docs/phase_plans/PHASE-ID.md`
+
+Create only when a phase or long-running release needs an internal order or dependency graph that
+does not belong in the roadmap or active queue.
+
+Minimum content:
+
+- phase or release ID and intended outcome.
+- ordered feature IDs and resolvable dependencies.
+- entry, early-start, and exit conditions.
+- data-clock-critical items, latest activation points, maturity delays, and isolated shadow options.
+- pointers to detailed feature plans without copying their milestone status.
+
+The phase plan owns within-phase order and dependencies. The roadmap owns phase priority; the
+current work list owns active status; feature plans own detailed milestones.
+
+### 9.5 Current work list
 
 Default path: docs/current_work.md
 
@@ -491,7 +535,7 @@ Minimum content for every item:
 Keep unfinished work only. Before removing a completed item, update current state when necessary and
 record the outcome in history under the same permanent work ID.
 
-### 9.5 Feature plan
+### 9.6 Feature plan
 
 Default path pattern: docs/feature_plans/WORK-ID_short_name.md
 
@@ -505,6 +549,7 @@ Minimum content:
 - scope, non-goals, boundaries, contracts, assumptions, and risks.
 - ordered milestones with phase ownership where relevant.
 - test strategy, acceptance evidence, rollback, and observability.
+- evidence-generation funnel, maturity delay, and gate reachability when thresholds depend on data.
 - done and pending status maintained only in this file.
 - history and commit references for completed milestones.
 
@@ -512,7 +557,7 @@ The current work list remains the only source of the feature's current queue sta
 plan owns milestone detail and evidence state. The roadmap and current work list point to this file;
 they do not reproduce its checklist.
 
-### 9.6 Architecture Decision Record
+### 9.7 Architecture Decision Record
 
 Default path pattern: docs/adr/ADR-NNN_short_name.md
 
@@ -528,7 +573,7 @@ Minimum content:
 Do not reopen an accepted decision without new evidence. Supersede it with a new ADR rather than
 rewriting history.
 
-### 9.7 Engineering history
+### 9.8 Engineering history
 
 Default path pattern: docs/history/YYYY-MM_engineering_log.md
 
@@ -544,7 +589,7 @@ Minimum content:
 
 History records completed work. It does not remain in the active queue.
 
-### 9.8 Review scope
+### 9.9 Review scope
 
 Default path: docs/review_scope.md
 
@@ -556,7 +601,7 @@ Minimum content:
 - files or data the reviewer must not modify.
 - output path and severity definitions.
 
-### 9.9 Latest review report
+### 9.10 Latest review report
 
 Default path: docs/review.md
 
@@ -569,7 +614,31 @@ Minimum content:
 This file represents the latest complete review and may be replaced. Once accepted, a finding links
 to a permanent work ID outside this temporary report.
 
-### 9.10 Runbooks
+### 9.11 Terminology registry
+
+Default path: `docs/terminology.md`
+
+Minimum content for each governed term:
+
+- stable term ID and canonical engineering term.
+- exact definition and code, schema, or typed-value form.
+- approved human-view translations.
+- deprecated, ambiguous, or forbidden aliases.
+- version or supersession relationship when meaning changes.
+
+Translation is presentation. It does not replace source evidence or alter identifiers, IDs, enum
+values, unknown semantics, or stored lineage.
+
+### 9.12 Human-view registry
+
+Default path: `docs/view_registry.md`
+
+Create when more than `project-overview.html` exists. Record view ID, output path, page role,
+authoritative sources, runtime-evidence inputs, generator command, locale, source version,
+freshness rule, failure behavior, bind scope, and write-back authority. The registry owns view
+configuration, not rendered facts.
+
+### 9.13 Runbooks
 
 Default path pattern: docs/runbooks/operation_name.md
 
@@ -581,6 +650,7 @@ prerequisites, authority, commands, evidence, failure handling, rollback, and co
 
 - Product brief owns purpose and success.
 - Roadmap owns future major priority.
+- A phase delivery plan owns order and dependencies inside one phase when that layer is active.
 - Current work owns the active queue.
 - One feature plan owns the detailed status of one large feature.
 - Current state owns what the system is now.
@@ -588,6 +658,9 @@ prerequisites, authority, commands, evidence, failure handling, rollback, and co
 - Review report owns only the latest review findings.
 - History and version control own completed-work evidence.
 - Runbooks own repeatable operations.
+- Terminology registry owns canonical project vocabulary when activated.
+- View registry owns generation contracts; Markdown, executable sources, and authoritative data own
+  the facts being rendered.
 - Every feature and bug fix keeps the same permanent work ID across all applicable artifacts.
 
 When two files answer the same question, choose one owner and replace the other detail with a
@@ -606,6 +679,8 @@ contains:
 - docs/product_brief.md.
 - docs/current_work.md with the first permanent work ID.
 - project-overview.html generated from approved facts and unresolved decisions.
+- a compact communication contract in project_profile.yaml, using the recommended language default
+  unless the Product Owner approves a different boundary.
 
 Create docs/module_structure.md only when maintained code, executable configuration, schema, or
 operating behavior exists. It must describe present reality, never planned architecture.
@@ -613,8 +688,9 @@ operating behavior exists. It must describe present reality, never planned archi
 Create the first application source path and the first required test layer when the first work item
 is ready to materialize code. Do not create empty directories for appearance.
 
-Create config/, dashboard/, db/, logs/, reports/, state/, setup/, roadmap, feature plans, ADRs,
-review files, and runbooks only when they have an immediate consumer and meaningful current content.
+Create config/, dashboard/, db/, logs/, reports/, state/, setup/, roadmap, phase plans, feature
+plans, module owner docs, terminology, view registry, additional HTML views, ADRs, review files, and
+runbooks only when they have an immediate consumer and meaningful current content.
 A planned future responsibility normally receives a deferred trigger. A high-risk first feature is
 an exception only for its durable feature brief and required safety controls.
 
