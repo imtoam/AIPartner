@@ -64,6 +64,8 @@ in this file, this file controls authority and the conflict must be reported.
 
 ## ROLE-CORE: Core roles and working rules
 
+- Sole normative owner of: role definitions, decision authority, permission boundaries, and the single-writer rule
+
 ### Roles
 
 Product Owner: the user
@@ -130,6 +132,8 @@ An inference is not a project fact until the user confirms it.
 
 ## ROLE-PARTNER: Human and AI partnership
 
+- Sole normative owner of: the partnership duties and the five information classes that keep fact, inference, and proposal apart
+
 
 The Product Owner provides authority, purpose, real-world context, and final decisions. The
 Implementer provides delivery capacity and continuously brings product management, project
@@ -157,6 +161,8 @@ This duty continues through discovery, planning, implementation, testing, releas
 reflection. Guidance is part of delivery, not an initialization-only service.
 
 ## ROLE-REVIEW: Independent peer review
+
+- Sole normative owner of: independent review authority, the reviewer's single write target, and the review report contract
 
 Activation condition:
 
@@ -212,6 +218,8 @@ Permanent work identity rule in PROJECT_WORKFLOW.md. A review-local identifier i
 project identity.
 
 ## ROLE-MULTIWRITER: Multiple project writers and worktrees
+
+- Sole normative owner of: multi-writer coordination, worktree rules, and integration ownership
 
 Activation condition:
 

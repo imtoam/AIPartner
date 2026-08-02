@@ -5,7 +5,7 @@ AIPartner framework role module. Module ID: `ROLE-DELEGATION` (stable).
 
 - Charter, activation checkbox, and role routing: [AGENTS.md](../../AGENTS.md)
 - Optional module: active only when its checkbox is checked in the charter; its activation condition is stated below.
-- Sole normative owner of: the two delegation modes, the mode-selection interview, the delegation charter contract, the delegable/non-delegable boundary, the traceability rule, the plain-language reporting requirement imposed on the control surface while this module is active, the restatement ritual, and the mode-revisit triggers.
+- Sole normative owner of: the two delegation modes, the mode-selection interview, the delegation charter, the delegable/non-delegable boundary, the traceability rule, plain-language reporting while active, and the mode-revisit triggers
 
 Framework invariant: this module file is retained framework content. Tailoring changes only its activation checkbox in the charter; it never edits, renames, or deletes this file.
 

@@ -27,6 +27,11 @@ except ModuleNotFoundError:
         evaluate_delivery_receipt,
     )
 
+try:
+    import render_framework_scope
+except ModuleNotFoundError:
+    from tools import render_framework_scope
+
 
 ALLOWED_STATES = {
     "uninitialized",
@@ -66,7 +71,6 @@ PROTOCOL_SERIES = "0.11"
 FRAMEWORK_DETAIL_VIEW = "introduction/framework-detail.html"
 FRAMEWORK_SCOPE_VIEW = "introduction/framework-scope.html"
 MD_HREF_PATTERN = re.compile(r'href="([^"#?]+\.md)(?:#[^"]*)?"')
-ASPECT_CARD_PATTERN = re.compile(r'href="framework-detail\.html#aspect-(\d+)"')
 ASPECT_TOC_PATTERN = re.compile(r'<li><a href="#aspect-(\d+)">')
 ASPECT_SECTION_PATTERN = re.compile(r'<section class="aspect" id="aspect-(\d+)">')
 VERSION_CLAIM_PATTERN = re.compile(
@@ -261,6 +265,14 @@ FRAMEWORK_FILES = {
         '"schema_version": 1',
         '"protocol_version": "0.11.0"',
         '"files"',
+    ),
+    "tools/render_framework_scope.py": (
+        "Render introduction/framework-scope.html from the framework's own Markdown",
+        "def collect_modules(",
+        "def build_html(",
+        "Sole normative owner of",
+        "Activation condition",
+        "os.replace",
     ),
     "tools/render_project_overview.py": (
         "Render project-overview.html from declared AIPartner project sources",
@@ -605,30 +617,41 @@ def validate_derived_views(root: Path, report: Report) -> None:
         else:
             report.ok(f"{FRAMEWORK_DETAIL_VIEW} presents every framework module file")
 
-    # 3. The scope map, its table of contents, and the detail sections describe the same aspects.
+    # 3. The scope map is generated, so it must equal what its renderer produces from the Markdown
+    #    right now. This is the strongest available form of the derived-view rule: the page cannot
+    #    disagree with the modules, because any disagreement is a byte difference.
     scope = root / FRAMEWORK_SCOPE_VIEW
-    if scope.is_file() and detail.is_file():
-        scope_text = scope.read_text(encoding="utf-8")
+    if scope.is_file():
+        try:
+            expected = render_framework_scope.build_html(root)
+        except Exception as error:  # noqa: BLE001 - reported, never raised through the validator
+            report.error(f"{FRAMEWORK_SCOPE_VIEW} cannot be regenerated from Markdown: {error}")
+        else:
+            if scope.read_text(encoding="utf-8") != expected:
+                report.error(
+                    f"{FRAMEWORK_SCOPE_VIEW} is stale or hand-edited; "
+                    "re-run tools/render_framework_scope.py"
+                )
+            else:
+                report.ok(f"{FRAMEWORK_SCOPE_VIEW} matches its renderer output")
+
+    # 4. The detail view's own table of contents and sections describe the same aspects.
+    if detail.is_file():
         detail_text = detail.read_text(encoding="utf-8")
-        counts = {
-            f"{FRAMEWORK_SCOPE_VIEW} cards": len(ASPECT_CARD_PATTERN.findall(scope_text)),
-            f"{FRAMEWORK_DETAIL_VIEW} contents entries": len(
-                ASPECT_TOC_PATTERN.findall(detail_text)
-            ),
-            f"{FRAMEWORK_DETAIL_VIEW} sections": len(ASPECT_SECTION_PATTERN.findall(detail_text)),
-        }
-        if len(set(counts.values())) != 1:
+        toc_entries = ASPECT_TOC_PATTERN.findall(detail_text)
+        sections = ASPECT_SECTION_PATTERN.findall(detail_text)
+        if toc_entries != sections:
             report.error(
-                "Framework aspect counts disagree: "
-                + ", ".join(f"{name}={value}" for name, value in counts.items())
+                f"{FRAMEWORK_DETAIL_VIEW} contents and sections disagree: "
+                f"contents={toc_entries}, sections={sections}"
             )
         else:
             report.ok(
-                f"Framework scope map, contents, and sections all describe "
-                f"{next(iter(counts.values()))} aspects"
+                f"{FRAMEWORK_DETAIL_VIEW} contents and sections describe "
+                f"the same {len(sections)} aspects"
             )
 
-    # 4. Every version claim in a derived view matches the protocol constant.
+    # 5. Every version claim in a derived view matches the protocol constant.
     accepted = {PROTOCOL_VERSION, PROTOCOL_SERIES}
     stale = []
     for page in pages:
@@ -1113,6 +1136,7 @@ def validate_profile(root: Path, report: Report) -> None:
         "tools/validate_initialization.py",
         "tools/delivery_receipt.py",
         "tools/render_project_overview.py",
+        "tools/render_framework_scope.py",
         "framework_manifest.json",
         "introduction/",
         "framework/workflow/",

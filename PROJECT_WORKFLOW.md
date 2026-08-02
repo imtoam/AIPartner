@@ -133,6 +133,8 @@ framework defect.
 
 ## WF-CORE: Core feature delivery
 
+- Sole normative owner of: the delivery loop every change follows, the readiness and alignment gate, and the discrepancy protocol
+
 Use this loop for every non-trivial feature, defect, or operational change. A mechanical edit may
 use a shorter version, but it still needs a stated intent and proportionate verification.
 
@@ -272,6 +274,8 @@ This is the project's practical use of Agile feedback, Lean learning, Kanban flo
 Delivery evidence, and risk management.
 
 ## WF-DOD: Definition of Done
+
+- Sole normative owner of: the completion criteria that decide whether a change is finished
 
 A change is complete only when every applicable item below is satisfied.
 

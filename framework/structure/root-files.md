@@ -30,6 +30,7 @@ Original section numbering is preserved so existing references remain valid.
 | tools/validate_initialization.py | Deterministic framework and initialization validator | Retained framework tool |
 | tools/delivery_receipt.py | Shared evaluator for current, failed, invalid, and stale delivery receipts | Retained framework tool |
 | tools/render_project_overview.py | Atomic default renderer from declared project sources to the derived overview | Retained framework tool |
+| tools/render_framework_scope.py | Atomic renderer of the framework scope map from the module activation blocks and module files | Retained framework tool |
 
 `project-overview.html` is the only generated project page in the minimal starting set. It contains
 management, business, system-operations, and architecture/delivery perspectives from day one.

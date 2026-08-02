@@ -7,6 +7,7 @@
   <meta name="aipartner-source" content="AIPartner 0.11.0" />
   <meta name="aipartner-source-url" content="https://github.com/imtoam/AIPartner" />
   <meta name="aipartner-licence" content="CC BY-SA 4.0" />
+  <meta name="aipartner-generated-by" content="tools/render_framework_scope.py" />
   <title>AIPartner — Framework Scope Map</title>
   <style>
     :root {
@@ -27,13 +28,8 @@
       --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -44,19 +40,11 @@
       text-rendering: optimizeLegibility;
     }
 
-    a {
-      color: var(--forest);
-      text-decoration-color: rgba(24, 77, 73, 0.38);
-      text-underline-offset: 0.18em;
-    }
-
-    a:hover {
-      text-decoration-color: var(--forest);
-    }
+    a { color: var(--forest); text-underline-offset: 0.18em; }
 
     .masthead {
-      min-height: 360px;
-      padding: 28px 32px 78px;
+      min-height: 320px;
+      padding: 28px 32px 72px;
       position: relative;
       overflow: hidden;
       background:
@@ -91,37 +79,23 @@
       will-change: transform, opacity;
     }
 
-    .masthead::after {
-      animation-delay: 3.2s;
-    }
+    .masthead::after { animation-delay: 3.2s; }
 
     @keyframes radiating-glow {
-      0% {
-        opacity: 0;
-        transform: scale(0.28);
-      }
+      0% { opacity: 0; transform: scale(0.28); }
+      14% { opacity: 0.3; }
+      58% { opacity: 0.13; }
+      100% { opacity: 0; transform: scale(4); }
+    }
 
-      14% {
-        opacity: 0.3;
-      }
-
-      58% {
-        opacity: 0.13;
-      }
-
-      100% {
-        opacity: 0;
-        transform: scale(4);
-      }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .masthead::before,
+      .masthead::after { opacity: 0.18; transform: scale(2.3); animation: none; }
     }
 
     .masthead-inner,
-    .page {
-      width: min(1120px, 100%);
-      margin: 0 auto;
-      position: relative;
-      z-index: 1;
-    }
+    .page { width: min(1120px, 100%); margin: 0 auto; position: relative; z-index: 1; }
 
     .topline {
       display: flex;
@@ -135,10 +109,7 @@
       text-transform: uppercase;
     }
 
-    .hero {
-      max-width: 900px;
-      margin-top: 58px;
-    }
+    .hero { max-width: 900px; margin-top: 52px; }
 
     .eyebrow,
     .section-label {
@@ -154,68 +125,53 @@
     h1 {
       max-width: 880px;
       margin: 0;
-      font-size: clamp(2.5rem, 5.6vw, 4.6rem);
+      font-size: clamp(2.4rem, 5.2vw, 4.2rem);
       font-weight: 500;
       letter-spacing: -0.05em;
-      line-height: 0.95;
+      line-height: 0.97;
     }
 
     .dek {
       max-width: 720px;
-      margin: 26px 0 0;
+      margin: 24px 0 0;
       color: rgba(255, 253, 248, 0.8);
-      font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+      font-size: clamp(1.02rem, 1.6vw, 1.24rem);
       line-height: 1.52;
     }
 
-    .masthead a {
-      color: var(--accent-soft);
-    }
+    .masthead a { color: var(--accent-soft); }
 
-    .page {
-      width: min(1120px, calc(100% - 48px));
-      margin-top: -45px;
-      margin-bottom: 80px;
-    }
+    .page { width: min(1120px, calc(100% - 48px)); margin-top: -42px; margin-bottom: 80px; }
 
     .content-panel {
       border: 1px solid var(--line);
       background: var(--white);
       box-shadow: var(--shadow);
-      padding: clamp(30px, 5vw, 54px);
+      padding: clamp(28px, 4.4vw, 50px);
     }
 
-    .section-label {
-      color: var(--accent);
-    }
+    .content-panel + .content-panel { margin-top: 22px; }
+
+    .section-label { color: var(--accent); }
 
     h2 {
       max-width: 760px;
       margin: 0;
-      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      font-size: clamp(1.7rem, 3.4vw, 2.7rem);
       font-weight: 500;
       letter-spacing: -0.035em;
-      line-height: 1.02;
+      line-height: 1.04;
     }
 
-    .lede {
-      max-width: 760px;
-      margin: 18px 0 0;
-      color: #44504e;
-      font-size: 1.08rem;
-    }
+    .lede { max-width: 760px; margin: 16px 0 0; color: #44504e; font-size: 1.06rem; }
 
-    .lede .fine {
-      color: var(--muted);
-      font-family: var(--sans);
-      font-size: 0.85rem;
-    }
+    .lede .fine { color: var(--muted); font-family: var(--sans); font-size: 0.85rem; }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 14px;
-      margin-top: 34px;
+      margin-top: 30px;
     }
 
     .card {
@@ -241,10 +197,9 @@
 
     .card .num {
       font-family: var(--sans);
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
+      letter-spacing: 0.08em;
       color: var(--accent);
     }
 
@@ -257,18 +212,22 @@
       color: var(--forest-dark);
     }
 
-    .card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.5;
+    .card p { margin: 0; color: var(--muted); font-size: 0.93rem; line-height: 1.5; }
+
+    .card .condition {
+      margin-top: 4px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--line);
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      color: var(--forest);
     }
 
     .card .more {
       margin-top: auto;
       padding-top: 8px;
       font-family: var(--sans);
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       letter-spacing: 0.06em;
       text-transform: uppercase;
@@ -277,9 +236,7 @@
     }
 
     .card:hover .more,
-    .card:focus-visible .more {
-      color: var(--accent);
-    }
+    .card:focus-visible .more { color: var(--accent); }
 
     .footer {
       border-top: 1px solid var(--line);
@@ -299,22 +256,7 @@
       gap: 10px;
     }
 
-    .footer a {
-      margin-left: 14px;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      .masthead::before,
-      .masthead::after {
-        opacity: 0.18;
-        transform: scale(2.3);
-        animation: none;
-      }
-    }
+    .footer a { margin-left: 14px; }
   </style>
 </head>
 <body>
@@ -325,11 +267,12 @@
         <span>Protocol 0.11 / Framework scope map</span>
       </div>
       <div class="hero">
-        <p class="eyebrow">Fourteen governed aspects</p>
-        <h1>What the framework governs, at a glance.</h1>
+        <p class="eyebrow">9 always on · 11 on condition</p>
+        <h1>What you always get, and what waits until you need it.</h1>
         <p class="dek">
-          One sentence per aspect. Click any card for the full explanation and the Markdown files
-          that own its rules.
+          Every rule in the framework belongs to one module. This page lists them all, in the only
+          two groups that matter to a new project: the baseline that every project receives, and
+          the modules that stay dormant until a stated condition becomes true.
         </p>
       </div>
     </div>
@@ -337,98 +280,174 @@
 
   <main class="page">
     <div class="content-panel">
-      <p class="section-label">Coverage</p>
-      <h2>A menu, not a mandate</h2>
+      <p class="section-label">Baseline</p>
+      <h2>Every project receives these 9</h2>
       <p class="lede">
-        Only aspects supported by current evidence become active in a project; inactive rules stay
-        present and protected.
-        <span class="fine">Derived view — the linked Markdown is authoritative. Protocol 0.11.0.</span>
+        These are not selected, and tailoring cannot remove them. It can only make them lighter:
+        a one-person weekend project and a regulated system run the same modules at different
+        depths of evidence. Behind them sit the framework's own mechanisms — the initialization
+        protocol, the tailoring protocol with its decision states, the machine-readable profile,
+        the hash manifest and the validators — which are described in the
+        <a href="framework-detail.html">scope details</a> rather than listed as choices, because
+        nobody chooses them.
+        <span class="fine">Derived view generated from the Markdown. Protocol 0.11.0.</span>
       </p>
 
       <div class="grid">
-        <a class="card" href="framework-detail.html#aspect-01">
-          <span class="num">01</span>
-          <h3>Roles, authority &amp; partnership</h3>
-          <p>Defines who decides, who writes, and how much of the technical choosing the Product Owner delegates.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../AGENTS.md">
+          <span class="num">ROLE-CORE</span>
+          <h3>Core roles and working rules</h3>
+          <p>Role definitions, decision authority, permission boundaries, and the single-writer rule.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-02">
-          <span class="num">02</span>
-          <h3>Greenfield initialization</h3>
-          <p>Turns a raw idea into an approved, verifiable project start — with no shortcut past human approval.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../AGENTS.md">
+          <span class="num">ROLE-PARTNER</span>
+          <h3>Human and AI partnership</h3>
+          <p>The partnership duties and the five information classes that keep fact, inference, and proposal apart.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-03">
-          <span class="num">03</span>
+        <a class="card" href="../PROJECT_WORKFLOW.md">
+          <span class="num">WF-CORE</span>
           <h3>Core feature delivery</h3>
-          <p>The loop every change follows, from reconnecting to purpose through an evidence-based Definition of Done.</p>
-          <span class="more">Details →</span>
+          <p>The delivery loop every change follows, the readiness and alignment gate, and the discrepancy protocol.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-04">
-          <span class="num">04</span>
-          <h3>Planning &amp; delivery gates</h3>
-          <p>Coordinates phased work with permanent IDs, delivery groups, and machine-verified sequencing receipts.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../framework/workflow/WF-COMMUNICATION.md">
+          <span class="num">WF-COMMUNICATION</span>
+          <h3>Language, terminology, and translation</h3>
+          <p>The communication contract, six language responsibilities, terminology registry rules, and translation boundaries.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-05">
-          <span class="num">05</span>
-          <h3>Documentation management</h3>
-          <p>Gives every fact one owning document; every other file points to it and never copies its status.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../framework/workflow/WF-STRUCTURE.md">
+          <span class="num">WF-STRUCTURE</span>
+          <h3>Repository structure</h3>
+          <p>Repository organization rules, module identity/ownership, and current-vs-planned state separation.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-06">
-          <span class="num">06</span>
-          <h3>Language &amp; terminology</h3>
-          <p>Keeps meaning exact across six separate language responsibilities; translation presents, never redefines.</p>
-          <span class="more">Details →</span>
-        </a>
-        <a class="card" href="framework-detail.html#aspect-07">
-          <span class="num">07</span>
-          <h3>Markdown truth, HTML views</h3>
-          <p>Markdown owns project truth; HTML is honest derived presentation with four mandatory human perspectives.</p>
-          <span class="more">Details →</span>
-        </a>
-        <a class="card" href="framework-detail.html#aspect-08">
-          <span class="num">08</span>
-          <h3>Anti-drift defenses</h3>
-          <p>Hash manifests, deterministic validators, and stable IDs keep AI output anchored to the approved rules.</p>
-          <span class="more">Details →</span>
-        </a>
-        <a class="card" href="framework-detail.html#aspect-09">
-          <span class="num">09</span>
-          <h3>Structure &amp; tailoring</h3>
-          <p>A complete structure menu selected by evidence: create only what the project needs now, defer the rest.</p>
-          <span class="more">Details →</span>
-        </a>
-        <a class="card" href="framework-detail.html#aspect-10">
-          <span class="num">10</span>
+        <a class="card" href="../framework/workflow/WF-VCS.md">
+          <span class="num">WF-VCS</span>
           <h3>Version control</h3>
-          <p>A Git complexity ladder that grows with evidence, and a commit contract tied to permanent work IDs.</p>
-          <span class="more">Details →</span>
+          <p>Version-control rules, the Git complexity ladder, and branch activation/retirement discipline.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-11">
-          <span class="num">11</span>
-          <h3>Data, persistence, ops &amp; recovery</h3>
-          <p>Where state lives and how long it is kept, plus the discipline that activates when production data, unattended operation, or high-impact stakes appear.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../framework/workflow/WF-DOCS.md">
+          <span class="num">WF-DOCS</span>
+          <h3>Documentation and work tracking</h3>
+          <p>The document map, authoritative-vs-derived layers, permanent work identity, current work list, decisions and history rules.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-12">
-          <span class="num">12</span>
-          <h3>Machine contracts &amp; tools</h3>
-          <p>The machine-readable profile, SHA-bound delivery receipts, and three retained validator tools.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../framework/workflow/WF-VIEWS.md">
+          <span class="num">WF-VIEWS</span>
+          <h3>Human-readable project views</h3>
+          <p>The four mandatory perspectives, derived-view markers, fail-closed generation, and view-split/HTTP triggers.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-13">
-          <span class="num">13</span>
-          <h3>Machine learning &amp; model output</h3>
-          <p>Context of use, a menu of model classes and layers, frozen artifacts, and re-validation before a learned number is trusted.</p>
-          <span class="more">Details →</span>
+        <a class="card" href="../PROJECT_WORKFLOW.md">
+          <span class="num">WF-DOD</span>
+          <h3>Definition of Done</h3>
+          <p>The completion criteria that decide whether a change is finished.</p>
+          <p class="condition">Always active</p>
+          <span class="more">Open the Markdown →</span>
         </a>
-        <a class="card" href="framework-detail.html#aspect-14">
-          <span class="num">14</span>
-          <h3>Boundaries &amp; non-goals</h3>
-          <p>What it deliberately does not do: greenfield only, no secrets, no ceremony above human authority.</p>
-          <span class="more">Details →</span>
+      </div>
+    </div>
+
+    <div class="content-panel">
+      <p class="section-label">On condition</p>
+      <h2>These 11 activate when the project earns them</h2>
+      <p class="lede">
+        Each card states its own trigger, taken from the module itself. A condition that is true
+        today activates the module now; a condition that is merely foreseeable is recorded as a
+        deferred trigger instead. An artifact produced by activating a module is never evidence
+        that the module was needed, and no module is ever activated silently — the Product Owner
+        approves each one.
+      </p>
+
+      <div class="grid">
+        <a class="card" href="../AGENTS.md">
+          <span class="num">ROLE-REVIEW</span>
+          <h3>Independent peer review</h3>
+          <p>Independent review authority, the reviewer&#x27;s single write target, and the review report contract.</p>
+          <p class="condition">Activates when a second AI or human is asked to perform independent review</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../AGENTS.md">
+          <span class="num">ROLE-MULTIWRITER</span>
+          <h3>Multiple project writers and worktrees</h3>
+          <p>Multi-writer coordination, worktree rules, and integration ownership.</p>
+          <p class="condition">Activates when more than one human or AI may write application source, project-control files, or version history at the same time</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/roles/ROLE-DELEGATION.md">
+          <span class="num">ROLE-DELEGATION</span>
+          <h3>Decision delegation modes</h3>
+          <p>The two delegation modes, the mode-selection interview, the delegation charter, the delegable/non-delegable boundary, the traceability rule, plain-language reporting while active, and the mode-revisit triggers.</p>
+          <p class="condition">Activates when the Product Owner chooses guided delegation during initialization, or later asks to switch to it</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-PLANNING.md">
+          <span class="num">WF-PLANNING</span>
+          <h3>Multi-level planning</h3>
+          <p>The planning tiers, delivery-group ownership, the mandatory sequencing gate order, and forward-data/gate-reachability checks.</p>
+          <p class="condition">Activates when the target project currently has at least two phases, releases, or long-running work lines whose priority or dependency must be managed separately</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-DRIFT.md">
+          <span class="num">WF-DRIFT</span>
+          <h3>Architecture and governance drift control</h3>
+          <p>Drift-check categories and drift-report semantics.</p>
+          <p class="condition">Activates when the project has several stable modules, pipelines, or generated views whose ownership or dependency direction must remain consistent; a material architecture or documentation drift has been observed; a branch strategy, module, interface, or source of truth has been retired or replaced</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-DATA.md">
+          <span class="num">WF-DATA</span>
+          <h3>Authoritative and non-cleanable data</h3>
+          <p>Authoritative-data discipline for tests, diagnostics, migrations, and shadow capture.</p>
+          <p class="condition">Activates when the current or next approved increment creates, reads, changes, or depends on production, append-only, sensitive, authoritative, or otherwise non-cleanable data</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-PERSISTENCE.md">
+          <span class="num">WF-PERSISTENCE</span>
+          <h3>Where project state lives</h3>
+          <p>The decision to persist at all, storage mechanism selection, schema ownership and evolution, write semantics, and retention periods.</p>
+          <p class="condition">Activates when the project keeps any state that must survive a restart, beyond source files and generated views; an existing store changes its shape, its owner, or how long it keeps what it holds</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-ML.md">
+          <span class="num">WF-ML</span>
+          <h3>Machine learning and model-derived output</h3>
+          <p>Context of use, model-class and layer selection, model risk rating, learned-artifact freezing, re-validation triggers, effective challenge, and decay monitoring.</p>
+          <p class="condition">Activates when the project fits, trains, fine-tunes, or calibrates parameters from data; the project uses a pretrained or third-party model as a component of what it produces</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-OPS.md">
+          <span class="num">WF-OPS</span>
+          <h3>Unattended operation</h3>
+          <p>Scheduled/unattended operation rules, locks, health, and human takeover.</p>
+          <p class="condition">Activates when the current or next approved increment runs on a schedule or without a person present</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-RECOVERY.md">
+          <span class="num">WF-RECOVERY</span>
+          <h3>Backup and recovery</h3>
+          <p>Backup verification and tested recovery paths.</p>
+          <p class="condition">Activates when authoritative state would be costly or impossible to reconstruct; a migration, release, retention rule, or incident requires a tested recovery path</p>
+          <span class="more">Open the Markdown →</span>
+        </a>
+        <a class="card" href="../framework/workflow/WF-HIGH-IMPACT.md">
+          <span class="num">WF-HIGH-IMPACT</span>
+          <h3>High-impact changes</h3>
+          <p>High-impact boundaries, human approval for risk-increasing actions, and independent verification.</p>
+          <p class="condition">Activates when system output can materially affect money, health, safety, legal rights, privacy, or security; a change affects concurrency, critical data contracts, or another difficult-to-detect failure mode</p>
+          <span class="more">Open the Markdown →</span>
         </a>
       </div>
     </div>
@@ -436,9 +455,9 @@
 
   <footer class="footer">
     <div class="footer-inner">
-      <span>AIPartner framework scope map — derived view</span>
+      <span>Generated by tools/render_framework_scope.py — the linked Markdown is authoritative</span>
       <nav aria-label="Footer links">
-        <a href="framework-detail.html">Details</a>
+        <a href="framework-detail.html">Scope details</a>
         <a href="../index.html">Human guide</a>
         <a href="https://github.com/imtoam/AIPartner">GitHub repository</a>
       </nav>

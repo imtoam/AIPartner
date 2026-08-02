@@ -253,6 +253,7 @@ structure:
     - path: "tools/validate_initialization.py"
     - path: "tools/delivery_receipt.py"
     - path: "tools/render_project_overview.py"
+    - path: "tools/render_framework_scope.py"
     - path: "introduction/"
   selected_now:
     - path: "project_profile.yaml"

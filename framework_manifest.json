@@ -6,11 +6,11 @@
   "files": {
     "AGENTS.md": {
       "mode": "managed_blocks",
-      "sha256": "bc2d68d330e3ea5d57b23c875c01591d7b66ce619175942083891ac6c8015353"
+      "sha256": "c4214b90efbe92ffe04aee928f0106ca824a942d3d25a7d7e6036b44dfe2f39b"
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "6620e395300422a1b5b25b81d5575665630c0e1db70f0553dc6ad1ce56be7ecd"
+      "sha256": "8b4de77e7aa3afc4d6a7fd2226815f43cff76cb80e3c1f38cb6c1eb75267b4a7"
     },
     "START_HERE.md": {
       "mode": "immutable",
@@ -22,11 +22,11 @@
     },
     "project_profile.example.yaml": {
       "mode": "immutable",
-      "sha256": "7a87f4636d5387e48ba2e934cad3d9921cc78b74098ae2561f98e711b4d39bf0"
+      "sha256": "a4995b50d851900aaacb78a1940782abe5332df4324e07713bf5348bbc815a02"
     },
     "index.html": {
       "mode": "immutable",
-      "sha256": "625117729165ece56fe1c5edb3e3479d69103c6a27ee27c4cc71d9e08232904d"
+      "sha256": "7696fbba8d0b40dbc101c4d32f68d53339175531455aaa6c5bcf58d6e75bee6b"
     },
     "README.md": {
       "mode": "immutable",
@@ -38,11 +38,15 @@
     },
     "tools/validate_initialization.py": {
       "mode": "immutable",
-      "sha256": "3a40605c388adddb22de2ef8b056d210da51983b126f32bfc4758a09dd51ed10"
+      "sha256": "bf03a9481b779ddc137dd75726eeede78f61d77b28cfa63a045db5fb58505a1b"
     },
     "tools/render_project_overview.py": {
       "mode": "immutable",
       "sha256": "b45e87533578f0fda014eb6df485c45136a68ec35822ace6bf6c76ec27380b81"
+    },
+    "tools/render_framework_scope.py": {
+      "mode": "immutable",
+      "sha256": "01fdb1f7453f6c11278b2ab8ffc00f6a2cb1c8592f065ac868cc232b69f96887"
     },
     "tools/delivery_receipt.py": {
       "mode": "immutable",
@@ -66,15 +70,15 @@
     },
     "introduction/framework-scope.html": {
       "mode": "immutable",
-      "sha256": "1a6db417a00999f9887561f9ed480e7726457d8d3a63f1e3d498e47223243c40"
+      "sha256": "1a0f9d333d234b8365ce882a3706d3a8fd70eb33e3a5b3bbcb47a9f949e54dc3"
     },
     "introduction/framework-detail.html": {
       "mode": "immutable",
-      "sha256": "81fa606c51453610ef2e7fda98997152bc17b9c3c7423c2809dc588e54ee51ed"
+      "sha256": "45a53d8ab27a6b133a9ff4da273ecf9d6756903b2cb550a142357146a6ba9d12"
     },
     "framework/roles/ROLE-DELEGATION.md": {
       "mode": "immutable",
-      "sha256": "568dcef92fe6327914f38166e7d61bd53227bc6176c775e6404a37447b24a43f"
+      "sha256": "58c4333c1781978bcf522e61d75c0f80c822f8d91345e39a0cd42386a82ae074"
     },
     "framework/structure/directory-catalog.md": {
       "mode": "immutable",
@@ -94,7 +98,7 @@
     },
     "framework/structure/root-files.md": {
       "mode": "immutable",
-      "sha256": "b98c4869ee83f4b595f0ae9024021d8d756b77f7872e4a653a6dafb6118fc85c"
+      "sha256": "a0533227e65515f881e5d954730923f98c052ff70b7beaa0c8ce428ce18cd474"
     },
     "framework/workflow/WF-COMMUNICATION.md": {
       "mode": "immutable",

@@ -503,13 +503,15 @@
         invalidates the receipt automatically.
       </p>
       <p>
-        Three retained tools enforce the contracts: tools/validate_initialization.py (framework
+        Four retained tools enforce the contracts: tools/validate_initialization.py (framework
         integrity, profile validation, and derived-view consistency — every Markdown link in these
         HTML pages must resolve, every framework module must be presented here, the scope map and
         this page must describe the same aspects, and every version claim must equal the protocol
         constant, so a view cannot quietly go stale while its hash stays valid), tools/delivery_receipt.py (receipt evaluation and the
-        machine constant of the gate order), and tools/render_project_overview.py (atomic
-        generation of the overview from declared sources).
+        machine constant of the gate order), tools/render_project_overview.py (atomic
+        generation of the overview from declared sources), and tools/render_framework_scope.py,
+        which generates the scope map from the module activation blocks and the module files, so
+        that page cannot describe a framework other than the one that exists.
       </p>
       <p class="sources"><strong>Sources:</strong>
         <a href="../project_profile.example.yaml">project_profile.example.yaml</a>
