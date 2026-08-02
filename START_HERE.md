@@ -4,7 +4,7 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.8.0
+Protocol version: 0.9.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -64,8 +64,9 @@ by themselves make the repository brownfield. Do not remove or rewrite that hist
 
 This version supports greenfield initialization only.
 
-After confirming that the greenfield protocol applies, read PROJECT_WORKFLOW.md in full and read
-PROJECT_STRUCTURE_REFERENCE.md for the repository and project-control proposal. The workflow is the
+After confirming that the greenfield protocol applies, read PROJECT_WORKFLOW.md in full together with the
+`framework/workflow/` module files it routes to, and read PROJECT_STRUCTURE_REFERENCE.md with its
+`framework/structure/` catalog files for the repository and project-control proposal. The workflow is the
 canonical project method. The structure reference is a menu, not a requirement to create every
 entry. Use initialization to configure them for this project, not to restate or replace their rules.
 
@@ -551,9 +552,8 @@ agreement to one acceptance sentence in the active queue.
 When grouped delivery is active, include a delivery-sequence table in the proposal. For every work
 ID, show `delivery_group`, group outcome, `group_order`, dependencies, exact-scope owner, scope
 revision, approval state, and approval evidence reference. State that implementation readiness is
-checked only in this order:
-
-`delivery_group -> group_order -> dependencies -> approval/exact scope`
+checked only in the mandatory order of the delivery sequencing gate owned by
+framework/workflow/WF-PLANNING.md
 
 If dependencies contradict the declared order, revise `group_order` and repeat the remaining
 checks. If scope changes after approval, create a new scope revision and return to the sequencing
@@ -679,8 +679,9 @@ After approval:
 9. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
    work-state flow, risk-based test strategy, and minimum Definition of Done.
 10. When grouped delivery is active, materialize the phase delivery plan and exact-scope owners,
-    then run the project-specific validator in order: `delivery_group -> group_order -> dependencies
-    -> approval/exact scope`. It must atomically write the standard delivery receipt. Run the core
+    then run the project-specific validator in the mandatory order of the delivery sequencing gate
+    owned by framework/workflow/WF-PLANNING.md. It must atomically write the standard delivery
+    receipt. Run the core
     initialization validator afterwards; do not begin implementation unless both checks pass and
     the receipt is current.
 11. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
@@ -751,8 +752,9 @@ During initialization, read:
 2. project_profile.example.yaml as the profile contract.
 3. initialization, activation, approval, communication, delivery-control, human-interface,
    structure, and unresolved-decision state in project_profile.yaml, if it exists.
-4. PROJECT_WORKFLOW.md.
-5. PROJECT_STRUCTURE_REFERENCE.md while preparing the repository and control-artifact proposal.
+4. PROJECT_WORKFLOW.md and the routed framework/workflow/ module files relevant to initialization.
+5. PROJECT_STRUCTURE_REFERENCE.md and its framework/structure/ catalog files while preparing the
+   repository and control-artifact proposal.
 6. the entry points for active modules.
 7. the sources of truth directly relevant to the current task.
 8. ADRs or history only when a decision must be traced.
@@ -825,7 +827,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.8 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.9 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization

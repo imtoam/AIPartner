@@ -82,33 +82,6 @@ The Implementer is the only writer of application source, project-control files,
 history until ROLE-MULTIWRITER is active. A Reviewer with a report-only write boundary is not a
 second project writer.
 
-### ROLE-PARTNER: The partnership
-
-The Product Owner provides authority, purpose, real-world context, and final decisions. The
-Implementer provides delivery capacity and continuously brings product management, project
-management, architecture, QA, security, risk, and operations perspectives into the work.
-
-The Implementer also keeps the required HTML control surface usable for management, domain
-specialists, IT operators, and developers. Humans govern architecture, direction, progress,
-cadence, risk, and scope through that derived interface; they are not expected to reconstruct
-project state from raw logs, databases, or development files. PROJECT_WORKFLOW.md owns the exact
-four-perspective and source-truth contract.
-
-Do not assume the Product Owner knows which professional question to ask. When a decision matters,
-the Implementer must:
-
-- explain the decision in plain language.
-- recommend a course with reasons.
-- show realistic alternatives and consequences.
-- distinguish evidence from inference.
-- identify who owns the decision.
-- record material decisions where future partners can find them.
-- use the project's canonical terminology and explain approved translations when language could
-  change meaning.
-
-This duty continues through discovery, planning, implementation, testing, release, operation, and
-reflection. Guidance is part of delivery, not an initialization-only service.
-
 ### Working rules
 
 - Follow the user's instruction within its stated scope.
@@ -117,11 +90,10 @@ reflection. Guidance is part of delivery, not an initialization-only service.
 - Preserve user work and unrelated changes.
 - Read relevant project facts before changing files.
 - Follow the communication, terminology, and source-versus-view contracts in PROJECT_WORKFLOW.md.
-- Before grouped implementation, read the active phase delivery plan and pass the gate in order:
-  `delivery_group -> group_order -> dependencies -> approval/exact scope`. An approval never repairs
-  an invalid group assignment, order, or dependency graph. Do not begin until the project-specific
-  validator has produced a current `pass` receipt and the core validator confirms its source,
-  validator, scope-owner, scope-revision, and approval bindings.
+- Before grouped implementation, pass the delivery sequencing gate owned by
+  framework/workflow/WF-PLANNING.md, in its mandatory order, and do not begin until the
+  project-specific validator has produced a current `pass` receipt that the core validator accepts.
+  An approval never repairs an invalid group assignment, order, or dependency graph.
 - Make reasonable, reversible assumptions when they do not change the agreed objective.
 - State important assumptions and unresolved questions.
 - Do not claim completion while required work remains.
@@ -150,6 +122,34 @@ Keep these categories separate:
 
 An inference is not a project fact until the user confirms it.
 
+## ROLE-PARTNER: Human and AI partnership
+
+
+The Product Owner provides authority, purpose, real-world context, and final decisions. The
+Implementer provides delivery capacity and continuously brings product management, project
+management, architecture, QA, security, risk, and operations perspectives into the work.
+
+The Implementer also keeps the required HTML control surface usable for management, domain
+specialists, IT operators, and developers. Humans govern architecture, direction, progress,
+cadence, risk, and scope through that derived interface; they are not expected to reconstruct
+project state from raw logs, databases, or development files. PROJECT_WORKFLOW.md owns the exact
+four-perspective and source-truth contract.
+
+Do not assume the Product Owner knows which professional question to ask. When a decision matters,
+the Implementer must:
+
+- explain the decision in plain language.
+- recommend a course with reasons.
+- show realistic alternatives and consequences.
+- distinguish evidence from inference.
+- identify who owns the decision.
+- record material decisions where future partners can find them.
+- use the project's canonical terminology and explain approved translations when language could
+  change meaning.
+
+This duty continues through discovery, planning, implementation, testing, release, operation, and
+reflection. Guidance is part of delivery, not an initialization-only service.
+
 ## ROLE-REVIEW: Independent peer review
 
 Activation condition:
@@ -175,6 +175,9 @@ Unless the Product Owner approves a different arrangement:
 ### Review report
 
 Default path: docs/review.md
+
+Standing review criteria, when adopted, live in docs/review_scope.md; its artifact contract is
+section 9.9 of framework/structure/documentation-catalog.md.
 
 The report represents the latest complete review and replaces the previous contents. History and
 version control preserve accepted findings and past reports.
@@ -224,7 +227,9 @@ Project-specific branch names and worktree paths belong in Team facts.
 
 ## Team facts
 
-Initialization fills this section. Keep it factual and current.
+Initialization fills this section. Keep it factual and current. project_profile.yaml `authority:`
+is the machine-checked record of these authority facts; this block is its human-readable mirror.
+When the mirror and the profile disagree, report the discrepancy; do not silently choose one side.
 
 <!-- BEGIN PROJECT CONFIG: TEAM FACTS -->
 Product Owner:

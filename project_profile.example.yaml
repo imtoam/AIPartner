@@ -1,15 +1,15 @@
 # project_profile.example.yaml
 #
-# Exact project_profile.yaml contract for AIPartner protocol 0.8.
+# Exact project_profile.yaml contract for AIPartner protocol 0.9.
 # Copy this structure after proposal approval. Replace example values; do not remove required keys.
 # Mutable work-item status belongs only in current_work_source and must not be copied here.
 
-schema_version: "0.8.0"
+schema_version: "0.9.0"
 
 template:
   name: "AIPartner"
   protocol_id: "BOOTSTRAP-001"
-  protocol_version: "0.8.0"
+  protocol_version: "0.9.0"
   source: "repository URL, release, or commit used"
 
 input:
@@ -183,6 +183,8 @@ structure:
     - path: "START_HERE.md"
     - path: "PROJECT_WORKFLOW.md"
     - path: "PROJECT_STRUCTURE_REFERENCE.md"
+    - path: "framework/workflow/"
+    - path: "framework/structure/"
     - path: "project_profile.example.yaml"
     - path: "index.html"
     - path: "README.md"

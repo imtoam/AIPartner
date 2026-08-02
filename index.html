@@ -710,7 +710,7 @@
     <div class="masthead-inner">
       <div class="topline">
         <span>AIPartner</span>
-        <span>Protocol 0.8 / Human entry point</span>
+        <span>Protocol 0.9 / Human entry point</span>
       </div>
       <div class="hero">
         <p class="eyebrow">Start with the idea, not the paperwork</p>
@@ -721,8 +721,8 @@
           risk, and approval.
         </p>
         <div class="hero-actions">
-          <a class="button primary" href="#begin">Begin in three steps</a>
           <a class="button" href="introduction/ai-native-project.html">Read the design origin</a>
+          <a class="button" href="https://github.com/imtoam/AIPartner">View on GitHub</a>
         </div>
       </div>
     </div>
@@ -736,8 +736,9 @@
         You do not need to understand the template files or complete a long questionnaire. The AI
         reads the detailed protocol and leads the conversation using product, delivery,
         architecture, QA, and risk perspectives. A short description of your idea is enough to
-        start. Tailoring is the first rule: the complete framework is a menu, and only elements
-        supported by current evidence enter the project. One exception is foundational: every
+        start. Tailoring is the first rule: the complete framework is
+        <a href="introduction/framework-scope.html">a menu of thirteen governed aspects</a>, and
+        only elements supported by current evidence enter the project. One exception is foundational: every
         initialized project receives a human HTML control surface for governing direction,
         architecture, progress, cadence, scope, risk, business health, and system health.
       </p>
@@ -911,9 +912,10 @@
               <span class="tag">After approval</span>
               <h3 class="file-name">project-overview.html</h3>
               <p>
-                Generated from project truth. It gives management, business specialists, IT
-                operators, and developers their own perspectives, with current state, evidence,
-                health, risks, plans, and every blocking decision.
+                Generated from project truth. It does not exist in this template; the AI creates
+                it during initialization after your approval. It gives management, business
+                specialists, IT operators, and developers their own perspectives, with current
+                state, evidence, health, risks, plans, and every blocking decision.
               </p>
             </div>
           </article>
@@ -941,16 +943,18 @@
               The canonical method throughout the project for shaping features, managing risk,
               defining language and source boundaries, organizing modules and Git, generating
               human views, tracking work, verifying completion, and checking results against the
-              original idea.
+              original idea. It is a spine: topic modules live in one file each under
+              framework/workflow/, loaded only when a change touches their topic.
             </p>
           </article>
           <article class="file-card">
             <span class="tag ai">AI structure reference</span>
             <h3 class="file-name">PROJECT_STRUCTURE_REFERENCE.md</h3>
             <p>
-              A complete Invest-derived menu of directory boundaries, planning and tracking
+              A complete real case derived menu of directory boundaries, planning and tracking
               documents, filenames, ownership, lifecycle, activation conditions, and a tailoring
-              process for selecting or extending only what the project needs.
+              process for selecting or extending only what the project needs. The spine owns the
+              tailoring protocol; the catalogs live under framework/structure/.
             </p>
           </article>
         </div>

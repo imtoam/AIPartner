@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="AI 已經能承擔大部分開發工作，為什麼交付可靠的軟體仍然少不了人？——以及這段夥伴關係如何改變工程師的角色。" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://imtoam.github.io/AIPartner/introduction/ai-native-project-cn.html" />
+  <meta property="og:site_name" content="Human and AI Software Development" />
+  <meta property="og:locale" content="zh_TW" />
+  <meta property="og:locale:alternate" content="en_US" />
+  <meta property="og:locale:alternate" content="fr_FR" />
+  <meta property="og:title" content="為什麼 AI 寫軟體，仍然少不了人" />
+  <meta property="og:description" content="大部分活兒 AI 確實能幹，可是上下文有限、輸出不保證正確、記憶無法延續——人的參與依然是開發與交付繞不開的一環。" />
+  <meta property="og:image" content="https://imtoam.github.io/AIPartner/introduction/facebook-share-card.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="為什麼 AI 寫軟體，仍然少不了人" />
+  <link rel="canonical" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-cn.html" />
+  <link rel="alternate" hreflang="en" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project.html" />
+  <link rel="alternate" hreflang="fr" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-fr.html" />
+  <link rel="alternate" hreflang="zh-Hant" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-cn.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@300;400;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet" />
+  <title>為什麼 AI 寫軟體，仍然少不了人</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d3;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --white: #fffdf8;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.4);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-color: var(--forest);
+    }
+
+    .masthead {
+      background:
+        radial-gradient(
+          circle at calc(100% - 110px) calc(100% - 25px),
+          rgba(233, 184, 164, 0.14) 0,
+          rgba(255, 253, 248, 0.045) 78px,
+          transparent 170px
+        ),
+        var(--forest-dark);
+      color: var(--white);
+      min-height: 530px;
+      padding: 30px 32px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 20px;
+      bottom: -65px;
+      opacity: 0;
+      box-shadow:
+        0 0 16px rgba(233, 184, 164, 0.24),
+        inset 0 0 12px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes radiating-glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.28);
+      }
+
+      14% {
+        opacity: 0.3;
+      }
+
+      58% {
+        opacity: 0.13;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--sans);
+      font-size: 0.77rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .topline span:last-child {
+      text-align: right;
+    }
+
+    .hero-copy {
+      max-width: 880px;
+      margin-top: 108px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.7rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+    }
+
+    .dek {
+      max-width: 680px;
+      margin: 34px 0 0;
+      color: rgba(255, 253, 248, 0.78);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 48px));
+      margin: -42px auto 80px;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 54px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contents {
+      position: sticky;
+      top: 28px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      font-family: var(--sans);
+    }
+
+    .contents h2 {
+      margin: 0 0 15px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .contents ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: nav;
+    }
+
+    .contents li {
+      counter-increment: nav;
+      border-top: 1px solid #e6ded1;
+    }
+
+    .contents a {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 6px;
+      padding: 10px 0;
+      color: var(--ink);
+      font-size: 0.79rem;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .contents a::before {
+      content: counter(nav, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    .article {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: clamp(38px, 7vw, 86px);
+      box-shadow: var(--shadow);
+    }
+
+    .article-header {
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 58px;
+    }
+
+    .article-header p {
+      max-width: 680px;
+      margin: 0;
+      font-size: 1.32rem;
+      color: #3f4b49;
+    }
+
+    .article section {
+      scroll-margin-top: 28px;
+      margin: 0 0 66px;
+    }
+
+    .article section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .article h2 {
+      max-width: 720px;
+      margin: 0 0 26px;
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .article h3 {
+      margin: 38px 0 12px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article p {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font-size: 1.08rem;
+    }
+
+    .article ul,
+    .article ol {
+      max-width: 700px;
+      margin: 24px 0 30px;
+      padding-left: 1.3rem;
+    }
+
+    .article li {
+      padding-left: 0.35rem;
+      margin: 0 0 10px;
+      font-size: 1.03rem;
+    }
+
+    .pull-quote {
+      max-width: 720px;
+      margin: 38px 0;
+      padding: 28px 30px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-soft);
+      color: #512b1f;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0;
+    }
+
+    .framework-card {
+      border: 1px solid var(--line);
+      background: #faf7f1;
+      padding: 22px;
+    }
+
+    .framework-card h3 {
+      margin: 0 0 9px;
+      color: var(--accent);
+    }
+
+    .framework-card p {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .loop {
+      margin: 18px 0;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      background: #f8f5ee;
+    }
+
+    .loop strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .loop p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .principle {
+      max-width: 720px;
+      margin: 34px 0;
+      padding: 25px 28px;
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .principle span {
+      display: block;
+      margin-bottom: 8px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.45;
+    }
+
+    .source-list {
+      border-top: 1px solid var(--line);
+      margin-top: 35px;
+      padding-top: 22px;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+    }
+
+    .source-list h3 {
+      margin-top: 0;
+    }
+
+    .closing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 720px;
+      margin: 32px 0 40px;
+      font-family: var(--sans);
+    }
+
+    .closing-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid var(--forest);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .closing-action.primary {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .closing-action.secondary {
+      background: transparent;
+      color: var(--forest);
+    }
+
+    .closing-action:hover,
+    .closing-action:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--white);
+      outline: none;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto 52px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .masthead {
+        min-height: 480px;
+      }
+
+      .hero-copy {
+        margin-top: 82px;
+      }
+
+      .page-shell {
+        display: block;
+        margin-top: -30px;
+      }
+
+      .contents {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+      }
+
+      .contents ol {
+        columns: 2;
+        column-gap: 28px;
+      }
+
+      .contents li {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .masthead {
+        min-height: 440px;
+        padding: 22px 20px 58px;
+      }
+
+      .topline {
+        align-items: flex-start;
+        font-size: 0.63rem;
+      }
+
+      .hero-copy {
+        margin-top: 70px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+      }
+
+      .dek {
+        font-size: 1.05rem;
+      }
+
+      .page-shell {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .contents {
+        padding: 19px;
+      }
+
+      .contents ol {
+        columns: 1;
+      }
+
+      .article {
+        padding: 34px 24px;
+      }
+
+      .article h2 {
+        font-size: 2.15rem;
+      }
+
+      .article p {
+        font-size: 1rem;
+      }
+
+      .framework-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pull-quote {
+        padding: 22px;
+      }
+
+      .closing-actions {
+        flex-direction: column;
+      }
+
+      .closing-action {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .masthead::before {
+        animation: none;
+        opacity: 0.12;
+        transform: scale(2.5);
+      }
+
+      .masthead::after {
+        display: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .masthead {
+        min-height: auto;
+        padding: 30px;
+        color: #000;
+        background: #fff;
+        border-bottom: 2px solid #000;
+      }
+
+      .masthead::before,
+      .masthead::after,
+      .contents {
+        display: none;
+      }
+
+      .hero-copy {
+        margin-top: 45px;
+      }
+
+      .dek,
+      .eyebrow,
+      .topline {
+        color: #222;
+      }
+
+      .page-shell {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .article {
+        border: 0;
+        box-shadow: none;
+        padding: 32px 0;
+      }
+
+      .article section {
+        break-inside: avoid;
+      }
+    }
+
+    /* Traditional Chinese typography */
+    :root {
+      --serif: "Iowan Old Style", "LXGW WenKai TC", "Kaiti TC", "Songti TC", Baskerville, serif;
+      --sans: Inter, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", ui-sans-serif, -apple-system, sans-serif;
+    }
+    body {
+      font-family: var(--serif);
+      line-height: 1.95;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+    }
+    h1 {
+      letter-spacing: 0.02em;
+      line-height: 1.18;
+      font-size: clamp(2.3rem, 7vw, 4.6rem);
+      font-weight: 700;
+    }
+    .article h2 {
+      letter-spacing: 0.01em;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+    .framework-card h3 {
+      font-weight: 700;
+    }
+    .dek,
+    .article-header p {
+      line-height: 1.8;
+    }
+    .pull-quote,
+    .principle p {
+      letter-spacing: 0.02em;
+      line-height: 1.65;
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>AI協同的軟體開發</span>
+        <span>侷限・角色・初步嘗試</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">當「全自動化」的熱潮退去</p>
+        <h1>為什麼要協同寫軟體</h1>
+        <p class="dek">
+          AI 已經強大到讓人懷疑：軟體工程師是不是快被淘汰了？可是真正做過一個中等複雜的專案就會發現，未來是另一回事——大部分活兒
+          AI 確實能幹，但上下文有限、輸出不保證正確、記憶無法延續，人的參與依然是開發與交付繞不開的一環。
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <nav class="contents" aria-label="文章目錄">
+      <h2>目錄</h2>
+      <ol>
+        <li><a href="#before-ai">從前的瓶頸</a></li>
+        <li><a href="#replacement">AI「取代論」</a></li>
+        <li><a href="#limits">結構性短板</a></li>
+        <li><a href="#partner">全新的分工</a></li>
+        <li><a href="#roles">工程師的出路</a></li>
+        <li><a href="#discipline">從角色到制度</a></li>
+        <li><a href="#foundations">現成的經驗</a></li>
+        <li><a href="#attempt">初步嘗試</a></li>
+      </ol>
+    </nav>
+
+    <main class="article">
+      <div class="article-header">
+        <p>
+          如今真正值得問的，早已不是「AI 會不會寫程式」——它會。值得問的是：會寫程式，為什麼不等於能交出一個完整、可靠、拿得出手的產品？
+        </p>
+      </div>
+
+      <article>
+        <section id="before-ai">
+          <span class="section-number">01 / 簡短的前史</span>
+          <h2>軟體，曾經是被人力卡住的</h2>
+          <p>
+            過去，軟體的產能就是人的時間。想做更大的東西，就得招更多工程師、更多專家，再搭上更多協調。《人月神話》（<em>The
+            Mythical Man-Month</em>）早就點破了這個模式的內在矛盾：加人確實能加產能，但溝通、磨合與分歧的成本也跟著成倍增長。
+          </p>
+          <p>
+            敏捷開發（Agile）用小團隊、短迭代、能跑起來的軟體，把協調成本壓到可以忍受。但循環裡的每一步——分析、實作、檢查、解釋、交接——還是得等人來做。AI
+            一出現，這道產能的閘門幾乎一夜之間被拆掉了。
+          </p>
+        </section>
+
+        <section id="replacement">
+          <span class="section-number">02 / AI「取代論」</span>
+          <h2>「徹底取代」看起來近在眼前</h2>
+          <p>
+            AI 可以讀懂整個程式碼庫、跟你討論需求、給出設計、寫功能、寫測試、查故障、補文件。過去要花掉工程師好幾天的工作，如今幾小時、甚至幾分鐘就有產出。
+          </p>
+          <p>
+            於是第一個結論顯得順理成章：既然軟體開發就是分析、寫碼、測試、文件這一條鏈，而每一環 AI
+            都做得來，那軟體工程豈不是一個快要消失的職業？很多人相信，等模型再強一點、上下文窗口（context
+            window）再大一點，取代只是時間問題。
+          </p>
+          <p>
+            小專案和演示更是火上澆油——一段對話就能生出一個完整的應用。可是真實世界的軟體很少停在「能跑」這一步。它會長成一個運行多年的專案，背著歷史包袱、生產資料（production
+            data）、彼此打架的優先順序、營運風險，還有多到任何一次會話（session）都裝不下的知識。
+          </p>
+          <p class="pull-quote">
+            生成程式碼是一回事，扛起一個軟體專案是另一回事。
+          </p>
+        </section>
+
+        <section id="limits">
+          <span class="section-number">03 / 結構性短板</span>
+          <h2>能力越強，暴露的短板反而越根本</h2>
+          <p>
+            這些短板，不是「等下一代模型出來就會補齊的功能清單」。它們來自更根本的地方：算力有限、注意力有界、生成靠機率、會話用完即棄、對真實世界沒有權責。模型當然會進步，但一個活著的專案也在不停長大——永遠可以長到超出任何固定的容量。
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>上下文有限</h3>
+              <p>
+                完整的專案包括程式碼、產品初衷、被否掉的方案、優先順序、線上環境、權限設定，還有踩過的坑。沒有哪次會話能把這些全裝下、一直記住；更麻煩的是，「漏掉的上下文」和「不相關的上下文」，看起來一模一樣。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>記憶接不上</h3>
+              <p>
+                會話會結束，對話會被壓縮，模型會更新換代，每個代理（agent）起步時拿到的資訊都不一樣。團隊裡那個「一直在專案裡、記得昨天為什麼那樣決定」的人，AI
+                沒有對應物。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>對，靠的是機率</h3>
+              <p>
+                一段通順的回答，可能正在漂亮地解決一個錯的問題；一個亮綠燈的測試，可能正在驗證一個錯的命題。AI
+                最擅長的，就是把自信和實作一起生成——哪怕前提本身是錯的。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>局部很強，全局很弱</h3>
+              <p>
+                只要任務和證據裝得進當前上下文，AI 就強得驚人。但大專案要的是橫跨無數任務、檔案、時間段和營運後果的一致決策。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>人手多了，沒人管事</h3>
+              <p>
+                多開幾個代理能提高吞吐量，卻生不出共同的目標、明確的歸屬、獨立的審查、安全的整合，以及一個大家都認的「什麼叫做完」。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>沒人負責到底</h3>
+              <p>
+                AI 可以在嘴上替你定優先順序、替你拍板冒險，但資料丟了不是它丟，用戶罵了不是它挨，公司也不是它開的——會話一關，它就下班了。
+              </p>
+            </div>
+          </div>
+          <div class="principle">
+            <span>後果</span>
+            <p>程式碼長出來的速度，第一次超過了理解、驗證和控制跟上的速度。</p>
+          </div>
+        </section>
+
+        <section id="partner">
+          <span class="section-number">04 / 全新的分工</span>
+          <h2>AI 需要的是夥伴，不是速記員</h2>
+          <p>
+            認清這些短板，不等於退回從前。例行的實作、分析、測試、文件，AI 依然做得又快又好，沒必要讓人慢吞吞地重做一遍。
+          </p>
+          <p>
+            人的價值挪到了另一層：把一件件散落的任務，連成同一個產品。總得有人守住初衷、判定哪個說法算數、看出哪個需求的前提根本是錯的、調停局部方案之間的衝突、開口要證據，最後把剩下的風險簽收下來。
+          </p>
+          <p>
+            所以軟體功底依然是硬要求——這位夥伴得懂系統是怎麼壞的。但這個角色比傳統的工程師寬得多：更像一位能在產品、交付、架構、品質、運維（operations）之間切換自如，再把執行交給
+            AI 的主事者。
+          </p>
+          <p class="pull-quote">
+            局部的活兒交給 AI；人負責讓每一份局部，始終拼在同一個完整、有價值、有人負責的系統裡。
+          </p>
+        </section>
+
+        <section id="roles">
+          <span class="section-number">05 / 工程師的出路</span>
+          <h2>出路不是轉行，是把所有權做大</h2>
+          <p>
+            例行寫碼的職位也許會變少，但「有人得對軟體結果負責」這件事不會消失。機會不在於一個人硬演六個部門，而在於練出足夠的廣度——當專案碰上
+            AI 扛不了的決定時，能切進對的專業視角。
+          </p>
+          <ul>
+            <li>判斷這件事為誰而做、值不值得做——用產品經理的腦子。</li>
+            <li>管住範圍、節奏、分工和收尾——用專案經理的腦子。</li>
+            <li>局部的取巧要動搖全局的一致性時——用架構師的腦子。</li>
+            <li>結果看著像對、證據卻不夠硬時——用品質保證（QA）的腦子。</li>
+            <li>程式開始碰生產資料、影響真實用戶時——用運維的腦子。</li>
+          </ul>
+          <p>
+            把這些視角串起來的，是人的問責：AI 能拿多大的權限、什麼風險可以接受、東西什麼時候能上線見人，都由人來定。有
+            AI 承擔了大部分實作勞動，一位有經驗的工程師，就能扛起這份更寬的責任，做成從前要一個小團隊才做得動的事。
+          </p>
+        </section>
+
+        <section id="discipline">
+          <span class="section-number">06 / 從角色到制度</span>
+          <h2>讓夥伴關係落在紙面上，而不是繫在某個人身上</h2>
+          <p>
+            前面說的是人要補上的角色。但光有角色，還算不上一段能運轉的夥伴關係。人做的決定，得留下往後的會話和代理都找得到、用得上、驗得了的痕跡；AI
+            幹活，得有一個清楚到「放得開手、又收得回來」的邊界。
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>意圖白紙黑字</h3>
+              <p>
+                用戶是誰、要解什麼問題、想要什麼結果、優先順序、限制條件、還沒想清楚的部分、已經拍板的決定——都寫下來。這樣
+                AI 的猜測才不會神不知鬼不覺地變成產品方向。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>記憶放進專案裡</h3>
+              <p>
+                當前狀態、手上的活、依賴、分工、決定、來龍去脈，都維護在固定的地方。新開一個會話，應該直接翻到重點，而不是靠翻聊天記錄考古。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>邊界先劃清</h3>
+              <p>
+                系統結構、介面契約、重要的設計決定和背後的理由，寫成文件。邊界之內，局部實作放手去寫；邊界本身，保護的是整體。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>憑證據說話</h3>
+              <p>
+                驗收標準、測試、審查要求、完成定義（Definition of
+                Done），事先講好。在證據證明行為符合約定之前，生成的程式碼一律只算提案。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>護欄提前裝</h3>
+              <p>
+                環境的實情、生產資料的紅線、部署流程、監控、恢復、人工接管的通道，都留在案上。測試和自動化壞掉的時候，要壞得安全。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>權限講清楚</h3>
+              <p>
+                每個參與者是什麼角色、能改哪裡，說清楚。產品方向、重大風險、隱私、金錢、線上影響、覆水難收的操作——一律留給人明確批准。
+              </p>
+            </div>
+          </div>
+          <p>
+            這一套機制，把原本繫在一個人身上的把關，變成專案自己的記憶和控制。反覆叮囑的事情，也就能從嘴上的話，沉澱成結構化的狀態、自動化的檢查、硬性的技術約束。目標從來不是把提示詞（prompt）越寫越長，而是讓專案不必被誰——不管是人還是模型——整個裝進腦子，也照樣走得下去。
+          </p>
+          <p>
+            當然，制度要跟需要成正比。一個人加一個 AI，用不著繁文縟節；等第二個 AI
+            來當審查者，才需要審查邊界；等第二個寫入者出現，才有所有權和整合的問題；生產資料、無人值守的排程、高風險的決策，同樣是到了那一步，才值得上更重的防護。
+          </p>
+          <p class="pull-quote">
+            在專案的尺度上，人盯不完 AI 生成的每一行碼，AI 也管不了整個專案。能運轉的夥伴關係，必須同時補上這兩頭。
+          </p>
+          <p>
+            合在一起，這就是兩位夥伴之間的工作協定：AI
+            拿到足夠的上下文和權限，在明確邊界裡放手做事；人把有限的注意力，集中在初衷、衝突、證據、重大風險和最終責任上；雙方共用一份對話結束之後依然存在的專案記憶。
+          </p>
+          <p>
+            夥伴關係定義清楚了，下一個問題是怎麼落地——而不是再發明一套大而全的方法論。搭檔是新的，但回饋、學習、流動、交付、風險、協調，這些底層問題一個都不新。
+          </p>
+        </section>
+
+        <section id="foundations">
+          <span class="section-number">07 / 現成的經驗</span>
+          <h2>夥伴關係是新的，紀律是現成的</h2>
+          <p>
+            上面六個機制，不必從抽象原則做起。幾十年累積下來的軟體與治理實踐，早就給出了現成的做法——正好拿來當人機協作的建材。
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>敏捷（Agile）</h3>
+              <p>
+                短回饋、能跑的軟體、跟客戶一起做、隨變化調頭——趕在 AI
+                的高速輸出跑偏太遠之前，讓明確的意圖對上看得見的結果。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>精實創業（Lean Startup）</h3>
+              <p>
+                把假設擺上檯面、用小實驗驗證、讓學習說了算——趕在快速實作變成沉沒成本之前，先確認產品方向是不是真的。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>看板（Kanban）</h3>
+              <p>
+                工作狀態看得見、在製品（WIP）有上限、流轉規則講明白——守住專案的連續性，別讓代理開出來的活，多過專案驗得完、收得了的量。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>持續交付（Continuous Delivery）</h3>
+              <p>
+                版本控制、自動化測試、小步快跑、可觀測、能回復——把證據和護欄組裝成一條交付流水線。生成的程式碼要隨時能發布、能恢復，而不是「在對話裡看起來寫完了」。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>風險治理</h3>
+              <p>
+                權限劃清、風險按場景評估、能度量、能緩解、能回滾（rollback）——AI
+                可以自主到什麼程度，永遠和出錯的代價成正比。
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>用得上，再用 Scrum</h3>
+              <p>
+                團隊穩定、協調問題真到了那個量級，明確角色、共同目標、固定節奏、完成定義自然有價值。一個人加一個
+                AI，犯不著提前把整套儀式搬進來。
+              </p>
+            </div>
+          </div>
+          <p>
+            這些實踐不是繞遠路——解法的零件，它們一件件都造好了。它們缺的，是一個專門圍繞「模型上下文有限、代理用完即棄、AI
+            該有多大權限、控制只在能力和風險出現時才啟用」來設計的整體結構。這道剩下的整合題，就是這個模板動工的地方。
+          </p>
+        </section>
+
+        <section id="attempt">
+          <span class="section-number">08 / 一次初步嘗試</span>
+          <h2>一次早期探索，濃縮成一個模板</h2>
+          <p>
+            和這篇文章擺在一起的，是一個模板。它濃縮了和 AI
+            一起做真實專案攢下的經驗，記錄了一次讓人機協作更明確、更持久、更可複製的早期嘗試——是拿出來給大家檢驗、挑毛病的樣本，不是標準答案。
+          </p>
+          <p>
+            在這個嘗試裡，人帶著想法來，AI
+            主持最初的討論。產品意圖、決定、當前狀態、手上的活、證據、權限，統統落成持久的專案上下文，而不是散在對話裡。實驗從全新的專案做起，因為起步階段最難、變數也最多。
+          </p>
+          <p>
+            給 AI 看的指令放在 Markdown；給人看的，是一份易讀的 HTML
+            總覽。一份精簡的團隊章程定角色，一套獨立的工作流程管交付，一份按需取用的結構參考，幫每個專案搭自己的骨架。每個專案只啟用當下的協作、營運和風險撐得起的那部分控制。
+          </p>
+          <p>
+            這份 HTML
+            總覽，從第一天起就是必備的控制面板。它分成四個視角——管理諮詢、業務與領域營運、系統運維、架構與交付——讓人治理方向、範圍、進度、節奏、風險和健康狀況，而不用鑽進原始日誌、資料庫、開發檔案裡拼湊真相。證據還沒有的地方，介面照實說「還沒有」，並寫明什麼條件下會補上。
+          </p>
+          <p>
+            目前的版本還做了幾件事：把工程語言和對話語言、呈現語言分開；把原始證據和譯文分開；人類視圖一律從宣告的來源生成。專案長大之後，穩定的模組身分、依賴檢查、視圖的新鮮度、Git
+            機制明確的啟用和退場條件，都是在局部變更侵蝕整體之前，把漂移（drift）揪出來的手段。多個工作單元需要協調時，先查交付分組，再查組間順序、依賴，最後對照批准所綁定的精確範圍版本——順序不對，不准開工；一份用雜湊（hash）綁定的驗證回執，把「控制配好了」和「這一版真的通過了」分成兩件事。
+          </p>
+          <p>
+            模板保存的是到目前為止學到的東西，拿出來當進一步實驗的起點。希望有更多人用真實的專案來磨它，磨出它缺的部分，一起把它改好。
+          </p>
+          <p class="pull-quote">
+            這個模板不是 AI 協作開發的答案。它是一塊白板，讓我們把此刻的答案寫上去，一起擦、一起改。
+          </p>
+          <div class="source-list">
+            <h3>參考基礎</h3>
+            <p>
+              Fred Brooks
+              <a href="https://www.cs.cmu.edu/~15712/papers/mythicalmanmonth00fred.pdf">《人月神話》（<em>The Mythical Man-Month</em>）</a>、
+              <a href="https://agilemanifesto.org/">敏捷軟體開發宣言</a>、
+              <a href="https://agilemanifesto.org/principles">敏捷宣言背後的原則</a>、
+              <a href="https://leanstartup.co/about/principles/">精實創業（Lean Startup）原則</a>、
+              <a href="https://kanbanguides.org/">看板（Kanban）指南</a>、
+              <a href="https://dora.dev/capabilities/continuous-delivery/">DORA 持續交付</a>，以及
+              <a href="https://airc.nist.gov/airmf-resources/airmf/5-sec-core/">NIST AI 風險管理框架</a>。
+            </p>
+          </div>
+
+          <div class="closing-actions" aria-label="繼續使用 AIPartner">
+            <a class="closing-action primary" href="https://imtoam.github.io/AIPartner/">開始使用 AIPartner</a>
+            <a class="closing-action secondary" href="https://github.com/imtoam/AIPartner">到 GitHub 看原始碼</a>
+          </div>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    人與 AI 的軟體開發 / 版本 0.9 /
+    <a href="ai-native-project.html" lang="en">English</a> /
+    <a href="ai-native-project-fr.html" lang="fr">Français</a>
+  </footer>
+</body>
+</html>

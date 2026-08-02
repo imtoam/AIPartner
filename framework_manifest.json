@@ -1,58 +1,134 @@
 {
   "schema_version": 1,
-  "protocol_version": "0.8.0",
+  "protocol_version": "0.9.0",
   "files": {
     "AGENTS.md": {
       "mode": "managed_blocks",
-      "sha256": "ad6333913ecc953f8c0201f804e487ce0aa3ff638034194c2a79d22d66067310"
+      "sha256": "40f6cc869ea9304f89293e45739f14eb6ef16d2ba7e998b4d4794fe7ab639c78"
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "cfa6240d7813c55d3a4efbc5528040ef03ac67f79ee64f30a49376ebfdb38262"
+      "sha256": "99ceb9686c01951c0c4085e2f41910035130cf3b822769ca4be7c06723480480"
     },
     "START_HERE.md": {
       "mode": "immutable",
-      "sha256": "6b6630708653ac5486c45f9868d03c0483e567baac86606d985d3bf954259ad5"
+      "sha256": "86e512a208ea9e55749acda90bf11016af6d13dc3e90116776c8a850d6bf5487"
     },
     "PROJECT_STRUCTURE_REFERENCE.md": {
       "mode": "immutable",
-      "sha256": "e5346479d81c867fd6643b3d2a2f6ca1762bb05ca6ec81054d9547efde0416da"
+      "sha256": "f58ae1d2e28ba2aca2614b23326145b128cf9ccf9d01cc12cb4433930a2c9a87"
     },
     "project_profile.example.yaml": {
       "mode": "immutable",
-      "sha256": "b0112122801c0db73130a2c7d07ade9a483a03ef9d3a1730de7adc20737d845c"
+      "sha256": "f057f941df1869b56e46de509a8f1eaad432f3d2b440942437cb91545486b6af"
     },
     "index.html": {
       "mode": "immutable",
-      "sha256": "4266dfb6b5282e09c8fdb977be1e5125e173254eeff0fc0e8d96a3a63cb03f8e"
+      "sha256": "a8d0d70e026798556dc06b0bd52ce0cc023c64aa97130b516df1939e9e37359d"
+    },
+    "README.md": {
+      "mode": "immutable",
+      "sha256": "84a12e51d6842b859af91a61c0c8adde00138de9f4c54b5c853010fc5f07c9b4"
+    },
+    "LICENSE": {
+      "mode": "immutable",
+      "sha256": "a2d9100f756b0690a123ee9fbd1ac45b95f8cc00177788e11f8ba08ba2414025"
     },
     "tools/validate_initialization.py": {
       "mode": "immutable",
-      "sha256": "f0490d03b21262d3be315a633827722064d869983137a8f382f478c0e3fec673"
+      "sha256": "4e644675a8b4042bc5e4b1c9c76b45575eac65338b0dfcbe0d852c95b52a4967"
     },
     "tools/render_project_overview.py": {
       "mode": "immutable",
       "sha256": "947fde1510f8d0a8a31d4a49f71e00cc13529487d36c71e4336b790163e0ff2e"
     },
-    "README.md": {
-      "mode": "immutable",
-      "sha256": "9e9ccce4e54e9c2748b82656de609eef785d0d9083f5e9d7d69ed318a13e7a2e"
-    },
-    "introduction/ai-native-project.html": {
-      "mode": "immutable",
-      "sha256": "79ad49ab42a0807dd0e69d561d981f841e8a146a14afe3571ad35ba4393a14fd"
-    },
-    "introduction/ai-native-project-fr.html": {
-      "mode": "immutable",
-      "sha256": "5ecf2e32b4174d10573560b4ec1bde1a1d9de18e9599cf7d50af2189909cd94a"
-    },
     "tools/delivery_receipt.py": {
       "mode": "immutable",
       "sha256": "3d47bfc030a0c7501183ac934701d0829cb5e0a0a97eb5f935dd887849b2fc11"
     },
+    "introduction/ai-native-project.html": {
+      "mode": "immutable",
+      "sha256": "09eb64ce286fe3e4d307124a77f96eda7ceab3d2526c7364c8c9d68afb74290f"
+    },
+    "introduction/ai-native-project-fr.html": {
+      "mode": "immutable",
+      "sha256": "01d6fcb0c78c699728ec37cd88f32119aa52fd90bc9e92b6ae815364bccf73e7"
+    },
     "introduction/framework-scope.html": {
       "mode": "immutable",
-      "sha256": "f103f1d08172391a5b54335c155f3e9d4941c2c30b847ce4be8be1fb692627c0"
+      "sha256": "c9227df548960487e003083423f3e1cca43094f8a5b9380a418bf60900e2d3ee"
+    },
+    "framework/structure/directory-catalog.md": {
+      "mode": "immutable",
+      "sha256": "51d355caaa9c7ad5842b1d66fd7a8ceb69d1a61a0e86447761ec78f70cdd7f78"
+    },
+    "framework/structure/documentation-catalog.md": {
+      "mode": "immutable",
+      "sha256": "cff12e01a7056100afe8a895cf902d2b2bd5f003eac9c5983ed6df79b669c003"
+    },
+    "framework/structure/git-reference.md": {
+      "mode": "immutable",
+      "sha256": "c660f0d25b857fdd8279c230ee5d681bd5123de270b9a4833b05694a27ffabc2"
+    },
+    "framework/structure/minimal-start.md": {
+      "mode": "immutable",
+      "sha256": "7e9d5a86dbbeec2550ebe868398f40699f53e766826816544b1c6b58b7704d41"
+    },
+    "framework/structure/root-files.md": {
+      "mode": "immutable",
+      "sha256": "b08b46c59e8e8e008ae218afa859481e4688e3ea3b2eca6d1c43ede07afb4ce1"
+    },
+    "framework/workflow/WF-COMMUNICATION.md": {
+      "mode": "immutable",
+      "sha256": "b80e5ab5301a9e1bcc7ad43dcf56ab7f6fbdc459d847b260c6c64e5609704cd7"
+    },
+    "framework/workflow/WF-DATA.md": {
+      "mode": "immutable",
+      "sha256": "1474711bb6171cd80f76f493a1bc2f56c5f9737a01fe9d2e1e149a7522d449fb"
+    },
+    "framework/workflow/WF-DOCS.md": {
+      "mode": "immutable",
+      "sha256": "e2fdf1aae6cf66c76e8bfa2ae2245b8d8767dfbc5097b54ab738633e2ec7abf2"
+    },
+    "framework/workflow/WF-DRIFT.md": {
+      "mode": "immutable",
+      "sha256": "b4acab5dcddcad7ffa3ac1bb6a43a0e389949b98a1fc74c605ddddf5cf0cffa4"
+    },
+    "framework/workflow/WF-HIGH-IMPACT.md": {
+      "mode": "immutable",
+      "sha256": "1bd1494e44ee1ad2b5518ba55c5554d37622bef7d70e095c2aa774fd919f2046"
+    },
+    "framework/workflow/WF-OPS.md": {
+      "mode": "immutable",
+      "sha256": "eb3683d971d765c4a87792311e58b88a61c0bebabdc7e34e1a603edbe16cc876"
+    },
+    "framework/workflow/WF-PLANNING.md": {
+      "mode": "immutable",
+      "sha256": "d8fe0843f7590aa2e19c273cd7ac568cc2eaa03b383266cfc13cc7b6d8775fd5"
+    },
+    "framework/workflow/WF-RECOVERY.md": {
+      "mode": "immutable",
+      "sha256": "f0fef483d10001ddd9df7dbb46019b8476d157813b317f188877d275678bb029"
+    },
+    "framework/workflow/WF-STRUCTURE.md": {
+      "mode": "immutable",
+      "sha256": "318561a8b89b426aef06f9fccc50000c85b59833d682ea3646eab19fbba1580a"
+    },
+    "framework/workflow/WF-VCS.md": {
+      "mode": "immutable",
+      "sha256": "fb5d73d1c7fdd10e26ccf27bd5f6a4c6bd398f3e29c081ec92b590533625df8a"
+    },
+    "framework/workflow/WF-VIEWS.md": {
+      "mode": "immutable",
+      "sha256": "01e631ee98d8049f524d2685b134c1e3f6a8521822d622b9cd25ae9c2037a730"
+    },
+    "introduction/framework-detail.html": {
+      "mode": "immutable",
+      "sha256": "71f8fd45ed45f4500a7b9e3fa0d78c958c33e42b39290ca47d2c93f296765bbd"
+    },
+    "introduction/ai-native-project-cn.html": {
+      "mode": "immutable",
+      "sha256": "bc419df46a88eb562a9956aeed5d5f5089e0e0053f46135113a3f83bd97ee315"
     }
   }
 }

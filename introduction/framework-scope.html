@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="aipartner-page-role" content="framework-scope-map">
   <title>AIPartner — Framework Scope Map</title>
   <style>
     :root {
@@ -17,80 +18,300 @@
       --forest-dark: #123a37;
       --accent: #a44d2f;
       --accent-soft: #f0d9cc;
+      --glow: #e9b8a4;
       --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
       --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
     }
-    * { box-sizing: border-box; }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
       background: var(--paper);
       color: var(--ink);
       font-family: var(--serif);
-      line-height: 1.6;
+      line-height: 1.68;
+      text-rendering: optimizeLegibility;
     }
-    a { color: var(--forest); }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.38);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-color: var(--forest);
+    }
+
     .masthead {
-      background: var(--forest);
+      min-height: 360px;
+      padding: 28px 32px 78px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at calc(100% - 90px) calc(100% - 15px),
+          rgba(233, 184, 164, 0.15) 0,
+          rgba(255, 253, 248, 0.04) 90px,
+          transparent 190px
+        ),
+        var(--forest-dark);
       color: var(--white);
-      padding: 48px 24px 42px;
     }
-    .masthead-inner { max-width: 1020px; margin: 0 auto; }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 15px;
+      bottom: -70px;
+      opacity: 0;
+      box-shadow:
+        0 0 18px rgba(233, 184, 164, 0.24),
+        inset 0 0 13px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes radiating-glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.28);
+      }
+
+      14% {
+        opacity: 0.3;
+      }
+
+      58% {
+        opacity: 0.13;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner,
+    .page {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
     .topline {
-      display: flex; justify-content: space-between; gap: 12px;
-      font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em;
-      text-transform: uppercase; opacity: 0.85;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      color: rgba(255, 253, 248, 0.72);
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
     }
-    .masthead h1 { font-size: clamp(30px, 5vw, 44px); margin: 18px 0 10px; }
-    .masthead .dek { max-width: 640px; opacity: 0.92; margin: 0; }
-    .masthead a { color: var(--accent-soft); }
-    .provenance {
-      max-width: 1020px; margin: -22px auto 0; position: relative;
-      background: var(--white); border: 1px solid var(--line); border-radius: 12px;
-      box-shadow: var(--shadow); padding: 16px 22px;
-      font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+
+    .hero {
+      max-width: 900px;
+      margin-top: 58px;
     }
-    .provenance strong { color: var(--ink); }
-    .page { max-width: 1020px; margin: 0 auto; padding: 34px 24px 70px; }
-    .lede { max-width: 760px; }
+
+    .eyebrow,
+    .section-label {
+      margin: 0 0 17px;
+      color: var(--glow);
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 880px;
+      margin: 0;
+      font-size: clamp(2.5rem, 5.6vw, 4.6rem);
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      line-height: 0.95;
+    }
+
+    .dek {
+      max-width: 720px;
+      margin: 26px 0 0;
+      color: rgba(255, 253, 248, 0.8);
+      font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+      line-height: 1.52;
+    }
+
+    .masthead a {
+      color: var(--accent-soft);
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 48px));
+      margin-top: -45px;
+      margin-bottom: 80px;
+    }
+
+    .content-panel {
+      border: 1px solid var(--line);
+      background: var(--white);
+      box-shadow: var(--shadow);
+      padding: clamp(30px, 5vw, 54px);
+    }
+
+    .section-label {
+      color: var(--accent);
+    }
+
+    h2 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(1.9rem, 4vw, 3.2rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.02;
+    }
+
+    .lede {
+      max-width: 760px;
+      margin: 18px 0 0;
+      color: #44504e;
+      font-size: 1.08rem;
+    }
+
+    .lede .fine {
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+    }
+
     .grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 18px; margin-top: 26px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 14px;
+      margin-top: 34px;
     }
+
     .card {
-      background: var(--white); border: 1px solid var(--line); border-radius: 14px;
-      padding: 20px 22px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: #faf7f0;
+      border: 1px solid var(--line);
+      padding: 20px 22px;
+      color: inherit;
+      text-decoration: none;
+      overflow-wrap: anywhere;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
     }
+
+    .card:hover,
+    .card:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--accent);
+      box-shadow: var(--shadow);
+      background: var(--white);
+    }
+
+    .card .num {
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
     .card h3 {
-      margin: 0 0 8px; font-size: 18px;
+      margin: 0;
+      font-family: var(--sans);
+      font-size: 1rem;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
       color: var(--forest-dark);
     }
-    .card .num {
-      font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px;
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+      line-height: 1.5;
     }
-    .card p { margin: 0 0 10px; font-size: 15px; }
-    .card ul { margin: 0 0 10px; padding-left: 18px; font-size: 14.5px; }
-    .card li { margin-bottom: 4px; }
-    .src {
-      font-family: var(--sans); font-size: 12.5px; color: var(--muted);
-      border-top: 1px dashed var(--line); padding-top: 8px; margin-top: 4px;
+
+    .card .more {
+      margin-top: auto;
+      padding-top: 8px;
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: transparent;
+      transition: color 0.15s ease;
     }
-    .src a { margin-right: 10px; white-space: nowrap; }
-    .section-label {
-      font-family: var(--sans); font-size: 13px; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent); margin: 40px 0 6px;
+
+    .card:hover .more,
+    .card:focus-visible .more {
+      color: var(--accent);
     }
-    h2 { margin: 0 0 10px; font-size: 26px; }
+
     .footer {
-      border-top: 1px solid var(--line); background: var(--paper-deep);
-      padding: 22px 24px; font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: var(--paper-deep);
+      padding: 22px 32px;
+      font-family: var(--sans);
+      font-size: 0.84rem;
+      color: var(--muted);
     }
+
     .footer-inner {
-      max-width: 1020px; margin: 0 auto;
-      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-    .footer a { margin-left: 14px; }
+
+    .footer a {
+      margin-left: 14px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .masthead::before,
+      .masthead::after {
+        opacity: 0.18;
+        transform: scale(2.3);
+        animation: none;
+      }
+    }
   </style>
 </head>
 <body>
@@ -98,199 +319,118 @@
     <div class="masthead-inner">
       <div class="topline">
         <span>AIPartner</span>
-        <span>Protocol 0.8 / Framework scope map</span>
+        <span>Protocol 0.9 / Framework scope map</span>
       </div>
-      <h1>Everything the framework governs, on one page</h1>
-      <p class="dek">
-        A reader's map of the rules distilled from the Invest project experience: who decides, how
-        work is delivered in a closed loop, how documents stay authoritative, and how AI drift is
-        kept out. Each card links to the Markdown file that owns the rules it summarizes.
-      </p>
+      <div class="hero">
+        <p class="eyebrow">Thirteen governed aspects</p>
+        <h1>What the framework governs, at a glance.</h1>
+        <p class="dek">
+          One sentence per aspect. Click any card for the full explanation and the Markdown files
+          that own its rules.
+        </p>
+      </div>
     </div>
   </header>
 
-  <div class="provenance">
-    <strong>Derived view.</strong> This page is a human-readable translation of the maintained
-    Markdown sources listed on each card. The Markdown is authoritative; if this page and a source
-    disagree, the source wins. Sources: README.md, AGENTS.md, START_HERE.md, PROJECT_WORKFLOW.md,
-    PROJECT_STRUCTURE_REFERENCE.md, project_profile.example.yaml, framework_manifest.json.
-    Generated 2026-08-02 for protocol 0.8.0.
-  </div>
-
   <main class="page">
-    <p class="section-label">Coverage</p>
-    <h2>Thirteen governed aspects</h2>
-    <p class="lede">
-      The framework is a menu, not a mandate: tailoring is the first rule, and only modules
-      supported by current evidence become active in a project. Inactive rules remain present,
-      discoverable, and protected from deletion.
-    </p>
+    <div class="content-panel">
+      <p class="section-label">Coverage</p>
+      <h2>A menu, not a mandate</h2>
+      <p class="lede">
+        Only aspects supported by current evidence become active in a project; inactive rules stay
+        present and protected.
+        <span class="fine">Derived view — the linked Markdown is authoritative. Protocol 0.9.0.</span>
+      </p>
 
-    <div class="grid">
-      <article class="card">
-        <span class="num">01 · Who decides</span>
-        <h3>Roles, authority &amp; partnership</h3>
-        <ul>
-          <li>Product Owner / Implementer / Reviewer / multi-writer role modules with activation conditions</li>
-          <li>Human keeps final authority: scope, risk, release, irreversible actions</li>
-          <li>Continuous plain-language guidance duty; five-class information discipline (user statement / observed / inference / proposal / unresolved)</li>
-        </ul>
-        <p class="src"><a href="../AGENTS.md">AGENTS.md</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">02 · Day one</span>
-        <h3>Greenfield initialization protocol</h3>
-        <ul>
-          <li>Adaptive interview, not a questionnaire; propose before writing</li>
-          <li>Eleven-state machine with no shortcut to "approved"; silence is not approval</li>
-          <li>Deterministic validation and honest evidence before completion</li>
-        </ul>
-        <p class="src"><a href="../START_HERE.md">START_HERE.md</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">03 · The loop</span>
-        <h3>Core feature delivery</h3>
-        <ul>
-          <li>Reconnect to purpose → shape together → agree test strategy → readiness gate → small increments → verify → close the learning loop</li>
-          <li>Discrepancy protocol: stop and report expected / observed / impact / options</li>
-          <li>Twelve-point Definition of Done, evidence-based completion</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">PROJECT_WORKFLOW.md § WF-CORE, WF-DOD</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">04 · Closed-loop control</span>
-        <h3>Phased planning &amp; delivery gates</h3>
-        <ul>
-          <li>Four planning tiers: roadmap → phase plan → current work → feature plan, each with one owner</li>
-          <li>Permanent work IDs that never encode mutable status</li>
-          <li>Delivery groups with a mandatory gate order and SHA-bound machine receipts; an approval never repairs an invalid order</li>
-          <li>Forward-data clock and gate-reachability checks so evidence thresholds stay achievable</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-PLANNING</a> <a href="../PROJECT_STRUCTURE_REFERENCE.md">Structure ref §9</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">05 · One owner per fact</span>
-        <h3>Documentation management</h3>
-        <ul>
-          <li>Document map: brief, current state, work list, feature plans, ADRs, history, runbooks</li>
-          <li>One line of work has one detailed owner; other files hold pointers, never copies</li>
-          <li>History is not current state; a roadmap is not the active queue</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-DOCS</a> <a href="../PROJECT_STRUCTURE_REFERENCE.md">Structure ref §8–10</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">06 · Meaning stays exact</span>
-        <h3>Language, terminology &amp; translation</h3>
-        <ul>
-          <li>Six separate language responsibilities — never one vague "language" field</li>
-          <li>Engineering language of record; source evidence preserved in its original language</li>
-          <li>Terminology registry with stable term IDs and approved translations; translation is presentation, never new evidence</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-COMMUNICATION</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">07 · Truth vs. views</span>
-        <h3>Markdown truth, HTML translation</h3>
-        <ul>
-          <li>Maintained Markdown is authoritative; HTML and dashboards are derived, fail-closed views</li>
-          <li>Mandatory four-perspective control surface: management, business, operations, architecture/delivery</li>
-          <li>Missing evidence renders as an honest unavailable state, never as healthy</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-VIEWS</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">08 · Keeping AI honest</span>
-        <h3>Anti-drift defenses</h3>
-        <ul>
-          <li>Integrity manifest with hashes; immutable and managed-block file modes</li>
-          <li>Deterministic validators instead of self-declared success</li>
-          <li>Stable IDs for work, modules, terms, and views; context-loading rules so AI reads only what the task needs</li>
-          <li>WF-DRIFT: repeatable consistency checks once several modules or views exist</li>
-        </ul>
-        <p class="src"><a href="../framework_manifest.json">framework_manifest.json</a> <a href="../PROJECT_WORKFLOW.md">WF-DRIFT</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">09 · Shape of the repo</span>
-        <h3>Structure &amp; evidence-based tailoring</h3>
-        <ul>
-          <li>Complete directory and artifact catalog as a menu, never a mandate</li>
-          <li>Five decision states: selected_now, deferred_until_trigger, not_applicable, local_extension, framework_retained</li>
-          <li>Minimal greenfield starting set; source, data, derived output, and runtime state kept apart</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_STRUCTURE_REFERENCE.md">PROJECT_STRUCTURE_REFERENCE.md</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">10 · Recoverable history</span>
-        <h3>Version control</h3>
-        <ul>
-          <li>Complexity ladder from local Git to integration branches — activated by evidence, retired deliberately</li>
-          <li>Commit contract tied to permanent work IDs; secrets and runtime output stay out</li>
-          <li>Remote creation, visibility, push, and history rewrite are explicit human approvals</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-VCS</a> <a href="../PROJECT_STRUCTURE_REFERENCE.md">Structure ref §4</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">11 · When stakes rise</span>
-        <h3>Data, operations, recovery &amp; high impact</h3>
-        <ul>
-          <li>WF-DATA: authoritative and non-cleanable data discipline; tests never touch production</li>
-          <li>WF-OPS: unattended operation, locks, health, human takeover</li>
-          <li>WF-RECOVERY: verified backups and tested restore paths</li>
-          <li>WF-HIGH-IMPACT: human approval, independent verification, safe failure for consequential systems</li>
-        </ul>
-        <p class="src"><a href="../PROJECT_WORKFLOW.md">WF-DATA / OPS / RECOVERY / HIGH-IMPACT</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">12 · Machine contracts</span>
-        <h3>Profile, receipts &amp; tools</h3>
-        <ul>
-          <li>project_profile.yaml: exact machine-readable record of approvals, activation, and unresolved decisions</li>
-          <li>Delivery receipts bound by SHA-256 to plans, validators, and approved scope revisions</li>
-          <li>Retained tools: initialization validator, receipt evaluator, atomic overview renderer</li>
-        </ul>
-        <p class="src"><a href="../project_profile.example.yaml">profile contract</a> <a href="../tools/validate_initialization.py">tools/</a></p>
-      </article>
-
-      <article class="card">
-        <span class="num">13 · Honest edges</span>
-        <h3>Boundaries &amp; non-goals</h3>
-        <ul>
-          <li>Greenfield projects only in 0.8; brownfield, import, and re-initialization are reserved, not improvised</li>
-          <li>No secrets in conversations, documents, or version control</li>
-          <li>Tailoring can remove ceremony, never human authority, honesty, or safety boundaries</li>
-        </ul>
-        <p class="src"><a href="../START_HERE.md">START_HERE.md §0–1</a> <a href="../README.md">README.md</a></p>
-      </article>
+      <div class="grid">
+        <a class="card" href="framework-detail.html#aspect-01">
+          <span class="num">01</span>
+          <h3>Roles, authority &amp; partnership</h3>
+          <p>Defines who decides and who writes: human authority, one AI implementer, optional reviewer and multi-writer roles.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-02">
+          <span class="num">02</span>
+          <h3>Greenfield initialization</h3>
+          <p>Turns a raw idea into an approved, verifiable project start — with no shortcut past human approval.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-03">
+          <span class="num">03</span>
+          <h3>Core feature delivery</h3>
+          <p>The loop every change follows, from reconnecting to purpose through an evidence-based Definition of Done.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-04">
+          <span class="num">04</span>
+          <h3>Planning &amp; delivery gates</h3>
+          <p>Coordinates phased work with permanent IDs, delivery groups, and machine-verified sequencing receipts.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-05">
+          <span class="num">05</span>
+          <h3>Documentation management</h3>
+          <p>Gives every fact one owning document; every other file points to it and never copies its status.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-06">
+          <span class="num">06</span>
+          <h3>Language &amp; terminology</h3>
+          <p>Keeps meaning exact across six separate language responsibilities; translation presents, never redefines.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-07">
+          <span class="num">07</span>
+          <h3>Markdown truth, HTML views</h3>
+          <p>Markdown owns project truth; HTML is honest derived presentation with four mandatory human perspectives.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-08">
+          <span class="num">08</span>
+          <h3>Anti-drift defenses</h3>
+          <p>Hash manifests, deterministic validators, and stable IDs keep AI output anchored to the approved rules.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-09">
+          <span class="num">09</span>
+          <h3>Structure &amp; tailoring</h3>
+          <p>A complete structure menu selected by evidence: create only what the project needs now, defer the rest.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-10">
+          <span class="num">10</span>
+          <h3>Version control</h3>
+          <p>A Git complexity ladder that grows with evidence, and a commit contract tied to permanent work IDs.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-11">
+          <span class="num">11</span>
+          <h3>Data, ops, recovery, high impact</h3>
+          <p>Extra discipline that activates when production data, unattended operation, or high-impact stakes appear.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-12">
+          <span class="num">12</span>
+          <h3>Machine contracts &amp; tools</h3>
+          <p>The machine-readable profile, SHA-bound delivery receipts, and three retained validator tools.</p>
+          <span class="more">Details →</span>
+        </a>
+        <a class="card" href="framework-detail.html#aspect-13">
+          <span class="num">13</span>
+          <h3>Boundaries &amp; non-goals</h3>
+          <p>What it deliberately does not do: greenfield only, no secrets, no ceremony above human authority.</p>
+          <span class="more">Details →</span>
+        </a>
+      </div>
     </div>
-
-    <p class="section-label">Where it came from</p>
-    <h2>Distilled, not invented</h2>
-    <p class="lede">
-      Every rule above earned its place in a real build: the Invest project's review rounds,
-      drift incidents, gate-reachability lessons, and document-ownership corrections. The design
-      story is told in
-      <a href="ai-native-project.html">Why AI Still Needs a Human to Build Software</a>
-      (<a href="ai-native-project-fr.html">version française</a>).
-    </p>
   </main>
 
   <footer class="footer">
     <div class="footer-inner">
       <span>AIPartner framework scope map — derived view</span>
       <nav aria-label="Footer links">
+        <a href="framework-detail.html">Details</a>
         <a href="../index.html">Human guide</a>
-        <a href="../START_HERE.md">AI entry point</a>
         <a href="https://github.com/imtoam/AIPartner">GitHub repository</a>
       </nav>
     </div>

@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AIPartner — Framework Scope Details</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d3;
+      --white: #fffdf8;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --glow: #e9b8a4;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.65;
+    }
+    a { color: var(--forest); }
+    code {
+      font-size: 0.9em;
+      background: var(--paper-deep);
+      padding: 1px 5px;
+      border-radius: 4px;
+      overflow-wrap: anywhere;
+    }
+    .masthead {
+      min-height: 300px;
+      padding: 28px 32px 66px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(
+          circle at calc(100% - 90px) calc(100% - 15px),
+          rgba(233, 184, 164, 0.15) 0,
+          rgba(255, 253, 248, 0.04) 90px,
+          transparent 190px
+        ),
+        var(--forest-dark);
+      color: var(--white);
+    }
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 190px;
+      height: 190px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 15px;
+      bottom: -70px;
+      opacity: 0;
+      box-shadow:
+        0 0 18px rgba(233, 184, 164, 0.24),
+        inset 0 0 13px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+    .masthead::after { animation-delay: 3.2s; }
+    @keyframes radiating-glow {
+      0% { opacity: 0; transform: scale(0.28); }
+      14% { opacity: 0.3; }
+      58% { opacity: 0.13; }
+      100% { opacity: 0; transform: scale(4); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .masthead::before,
+      .masthead::after { opacity: 0.18; transform: scale(2.3); animation: none; }
+    }
+    .masthead-inner { max-width: 880px; margin: 0 auto; position: relative; z-index: 1; }
+    .eyebrow {
+      margin: 44px 0 14px;
+      color: var(--glow);
+      font-family: var(--sans);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .topline {
+      display: flex; justify-content: space-between; gap: 12px;
+      font-family: var(--sans); font-size: 13px; letter-spacing: 0.08em;
+      text-transform: uppercase; opacity: 0.85;
+    }
+    .masthead h1 { margin: 0; font-size: clamp(2.2rem, 5vw, 3.8rem); font-weight: 500; letter-spacing: -0.05em; line-height: 0.98; }
+    .masthead .dek { max-width: 640px; margin: 22px 0 0; color: rgba(255, 253, 248, 0.8); font-size: clamp(1rem, 1.6vw, 1.2rem); line-height: 1.52; }
+    .masthead a { color: var(--accent-soft); }
+    .provenance {
+      max-width: 880px; margin: -20px auto 0; position: relative;
+      background: var(--white); border: 1px solid var(--line); border-radius: 12px;
+      box-shadow: var(--shadow); padding: 14px 20px;
+      font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+      overflow-wrap: anywhere;
+    }
+    .provenance strong { color: var(--ink); }
+    .page { max-width: 880px; margin: 0 auto; padding: 30px 24px 70px; }
+    .toc {
+      font-family: var(--sans); font-size: 14px;
+      columns: 2; column-gap: 28px;
+      padding: 0 0 8px; margin: 14px 0 4px; list-style: none;
+    }
+    .toc li { margin-bottom: 7px; break-inside: avoid; }
+    .aspect {
+      background: var(--white); border: 1px solid var(--line); border-radius: 14px;
+      padding: 26px 28px 20px; margin-top: 26px;
+      scroll-margin-top: 20px;
+    }
+    .aspect .num {
+      font-family: var(--sans); font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 6px;
+    }
+    .aspect h2 { margin: 0 0 12px; font-size: 24px; color: var(--forest-dark); }
+    .aspect p { margin: 0 0 12px; font-size: 15.5px; }
+    .aspect ul { margin: 0 0 12px; padding-left: 20px; font-size: 15px; }
+    .aspect li { margin-bottom: 5px; }
+    .sources {
+      font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+      border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 6px;
+      overflow-wrap: anywhere;
+    }
+    .sources strong { color: var(--ink); }
+    .sources a { margin-right: 14px; }
+    .backtop {
+      display: inline-block; margin-top: 10px;
+      font-family: var(--sans); font-size: 13px;
+    }
+    .note {
+      font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+      margin-top: 10px;
+    }
+    .footer {
+      border-top: 1px solid var(--line); background: var(--paper-deep);
+      padding: 22px 24px; font-family: var(--sans); font-size: 13.5px; color: var(--muted);
+    }
+    .footer-inner {
+      max-width: 880px; margin: 0 auto;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+    .footer a { margin-left: 14px; }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>AIPartner</span>
+        <span>Protocol 0.9 / Scope details</span>
+      </div>
+      <p class="eyebrow">Scope details</p>
+      <h1>The thirteen governed aspects, in detail.</h1>
+      <p class="dek">
+        Expanded notes and authoritative sources for every card on the
+        <a href="framework-scope.html">framework scope map</a>. Source links open the maintained
+        Markdown files themselves.
+      </p>
+    </div>
+  </header>
+
+  <div class="provenance">
+    <strong>Derived view.</strong> The Markdown files linked under each section are authoritative;
+    if this page and a source disagree, the source wins. Generated 2026-08-02 for protocol 0.9.0.
+  </div>
+
+  <main class="page">
+    <ul class="toc">
+      <li><a href="#aspect-01">01 Roles, authority &amp; partnership</a></li>
+      <li><a href="#aspect-02">02 Greenfield initialization</a></li>
+      <li><a href="#aspect-03">03 Core feature delivery</a></li>
+      <li><a href="#aspect-04">04 Planning &amp; delivery gates</a></li>
+      <li><a href="#aspect-05">05 Documentation management</a></li>
+      <li><a href="#aspect-06">06 Language &amp; terminology</a></li>
+      <li><a href="#aspect-07">07 Markdown truth, HTML views</a></li>
+      <li><a href="#aspect-08">08 Anti-drift defenses</a></li>
+      <li><a href="#aspect-09">09 Structure &amp; tailoring</a></li>
+      <li><a href="#aspect-10">10 Version control</a></li>
+      <li><a href="#aspect-11">11 Data, ops, recovery, high impact</a></li>
+      <li><a href="#aspect-12">12 Machine contracts &amp; tools</a></li>
+      <li><a href="#aspect-13">13 Boundaries &amp; non-goals</a></li>
+    </ul>
+
+    <section class="aspect" id="aspect-01">
+      <span class="num">01 · Who decides</span>
+      <h2>Roles, authority &amp; partnership</h2>
+      <p>
+        AGENTS.md is the team charter: the Product Owner holds final authority over purpose, scope,
+        priority, risk acceptance, release, and every irreversible action; the Implementer is the
+        single writer of source, control files, and history until the multi-writer module is
+        activated. Optional modules add an independent read-only Reviewer (whose only write target
+        is the review report) and multi-writer worktree rules with one integration owner.
+      </p>
+      <p>
+        The partnership duty is continuous: the AI must explain decisions in plain language,
+        recommend with reasons, show alternatives, and keep the five information classes separate —
+        user statement, observed fact, AI inference, AI proposal, unresolved. An inference never
+        becomes a project fact without confirmation.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../AGENTS.md">AGENTS.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-02">
+      <span class="num">02 · Day one</span>
+      <h2>Greenfield initialization protocol</h2>
+      <p>
+        START_HERE.md governs exactly one thing: turning an idea into an approved, verifiable
+        starting structure. The AI facilitates an adaptive interview instead of handing the user a
+        questionnaire, proposes before writing anything, and materializes files only after explicit
+        approval — silence is never approval.
+      </p>
+      <p>
+        An eleven-state machine (uninitialized → interviewing → draft → proposed →
+        needs_user_decision → approved_pending_materialization → materialized →
+        verification_failed / blocked_by_environment → verified → complete) has deliberately no
+        shortcut state called "approved". Completion requires deterministic validation with
+        recorded evidence, and the protocol retires itself once initialization is complete.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../START_HERE.md">START_HERE.md</a>
+        <a href="../project_profile.example.yaml">project_profile.example.yaml</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-03">
+      <span class="num">03 · The loop</span>
+      <h2>Core feature delivery</h2>
+      <p>
+        WF-CORE, kept in the workflow spine because every change needs it, runs an eight-step loop:
+        reconnect to purpose, shape the feature together, agree the test strategy before
+        implementation, pass the readiness and alignment gate, implement in small controlled
+        increments, verify and check back, apply the discrepancy protocol when reality disagrees
+        with the plan, and close the learning loop.
+      </p>
+      <p>
+        The discrepancy protocol forces a stop-and-report in six parts — expected, observed,
+        impact, options, recommendation, decision needed — so an AI never silently picks which
+        source of truth to ignore. WF-DOD defines twelve completion criteria from alignment through
+        version control; passing tests does not excuse a product mismatch, and product alignment
+        does not excuse missing verification.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../PROJECT_WORKFLOW.md">PROJECT_WORKFLOW.md (spine: WF-CORE, WF-DOD)</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-04">
+      <span class="num">04 · Closed-loop control</span>
+      <h2>Phased planning &amp; delivery gates</h2>
+      <p>
+        WF-PLANNING activates when two or more work lines compete. Planning has up to four tiers —
+        roadmap, phase delivery plan, current work list, feature plan — and each fact has exactly
+        one owner; other files hold pointers. Every feature and bug fix receives a permanent work
+        ID before implementation, allocated from one registry, never reused, and never encoding
+        mutable status.
+      </p>
+      <p>
+        When several work units need coordinated delivery, the phase plan owns delivery groups,
+        group order, and dependencies. Implementation readiness is checked in one mandatory order
+        (<code>delivery_group → group_order → dependencies → approval/exact scope</code>), and a
+        project-specific validator must write a machine receipt whose SHA-256 digests bind the
+        phase plan, validator, and every exact-scope revision. An approval never repairs an invalid
+        order. Forward-data timing rules mark work whose evidence window cannot be recovered later,
+        and every evidence threshold must be checked for reachability against its real generation
+        funnel.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-PLANNING.md">framework/workflow/WF-PLANNING.md</a>
+        <a href="../framework/structure/documentation-catalog.md">documentation-catalog.md (§9.4 receipt contract)</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-05">
+      <span class="num">05 · One owner per fact</span>
+      <h2>Documentation management</h2>
+      <p>
+        WF-DOCS assigns every recurring question one owning document: why the project exists
+        (product brief), what is true now (current-state document), what is active (current work
+        list), what was agreed (feature brief), why decisions were made (ADRs), what happened
+        (history). One line of work has one detailed owner; other documents point to it and must
+        not copy its status.
+      </p>
+      <p>
+        History is not current state, a roadmap is not the active queue, and a temporary review
+        report is never a permanent backlog — accepted findings move to permanent work IDs. The
+        machine-readable record of approved paths, commands, and authority lives in
+        project_profile.yaml; the human-readable facts blocks mirror it and disagreements must be
+        reported, not silently resolved.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-DOCS.md">framework/workflow/WF-DOCS.md</a>
+        <a href="../framework/structure/documentation-catalog.md">documentation-catalog.md (§8–10)</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-06">
+      <span class="num">06 · Meaning stays exact</span>
+      <h2>Language, terminology &amp; translation</h2>
+      <p>
+        WF-COMMUNICATION replaces the vague single "language" setting with six separate
+        responsibilities: conversation language, engineering language of record, code identifiers
+        and typed values, human-view locales, source-evidence treatment, and translation policy.
+        Externally sourced evidence keeps its original text, language, time, URL, hash, and
+        lineage.
+      </p>
+      <p>
+        Translation is a presentation artifact: it never replaces source evidence, adds claims,
+        changes typed values, or upgrades unknown/stale/insufficient data into a conclusion. A
+        terminology registry with stable term IDs and approved translations activates when domain
+        ambiguity or multiple locales justify it; a semantic change gets a new version instead of a
+        silent redefinition.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-COMMUNICATION.md">framework/workflow/WF-COMMUNICATION.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-07">
+      <span class="num">07 · Truth vs. views</span>
+      <h2>Markdown truth, HTML translation</h2>
+      <p>
+        Maintained Markdown is the authoritative document layer; HTML pages, dashboards, and HTTP
+        responses are derived views that declare their sources, generation time, freshness, and
+        failure state. A view never becomes the only place a decision or fact exists, and
+        generation fails closed — an old page must not silently stand in for missing truth.
+      </p>
+      <p>
+        Every initialized project ships one control surface, project-overview.html, with four
+        mandatory perspectives from day one: management, business/domain operations, system
+        operations, and architecture/delivery. A perspective without evidence shows an honest
+        unavailable state with its reason, owner, and activation trigger — never a healthy-looking
+        blank. Static HTML is the default; local HTTP, network exposure, and write-back are each
+        separate approvals.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-VIEWS.md">framework/workflow/WF-VIEWS.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-08">
+      <span class="num">08 · Keeping AI honest</span>
+      <h2>Anti-drift defenses</h2>
+      <p>
+        Drift is fought with machinery, not promises: framework_manifest.json pins every retained
+        rule file with a SHA-256 hash (immutable mode) or a config-region-normalized hash
+        (managed-blocks mode); tools/validate_initialization.py verifies integrity, profile
+        contracts, activation consistency, and delivery receipts deterministically instead of
+        trusting self-declared success.
+      </p>
+      <p>
+        Stable IDs for work items, modules, terms, and views keep references alive across
+        rewrites. Context-loading rules stop an AI from re-reading the whole methodology for every
+        task — and from treating history, roadmaps, or generated HTML as current truth. WF-DRIFT
+        adds repeatable consistency checks once several modules or views exist, and the concept
+        ownership registry in the workflow spine names the single normative owner of every
+        cross-cutting concept so restatements cannot fork.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework_manifest.json">framework_manifest.json</a>
+        <a href="../framework/workflow/WF-DRIFT.md">framework/workflow/WF-DRIFT.md</a>
+        <a href="../PROJECT_WORKFLOW.md">PROJECT_WORKFLOW.md (concept ownership registry)</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-09">
+      <span class="num">09 · Shape of the repo</span>
+      <h2>Structure &amp; evidence-based tailoring</h2>
+      <p>
+        The structure reference is a complete menu distilled from the Invest build — root files,
+        source profiles, test layers, runtime directories, documentation artifacts — but presence
+        in the catalog is never evidence a project needs the item. Every candidate gets one of five
+        decision states: selected_now, deferred_until_trigger, not_applicable, local_extension, or
+        framework_retained, each with evidence.
+      </p>
+      <p>
+        The minimal greenfield starting set is deliberately small: local Git, the profile, a
+        product brief, a current work list with the first permanent work ID, and the generated
+        overview. Everything else appears when a real consumer exists, and deferred needs record
+        their trigger instead of materializing early.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../PROJECT_STRUCTURE_REFERENCE.md">PROJECT_STRUCTURE_REFERENCE.md (spine)</a>
+        <a href="../framework/structure/root-files.md">root-files.md</a>
+        <a href="../framework/structure/directory-catalog.md">directory-catalog.md</a>
+        <a href="../framework/structure/minimal-start.md">minimal-start.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-10">
+      <span class="num">10 · Recoverable history</span>
+      <h2>Version control</h2>
+      <p>
+        WF-VCS and the Git reference catalog define a complexity ladder — local Git, remote single
+        writer, protected collaboration, integration branch — where each step up requires evidence
+        and each non-default model records both an activation and a retirement condition. A branch
+        isolates code; it is never the source of work status.
+      </p>
+      <p>
+        The commit contract ties every commit to a permanent work ID with one coherent verified
+        change; secrets, production data, and runtime output stay out. Remote creation, visibility
+        changes, pushes, publication, and history rewrites are external actions that always require
+        explicit human approval.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-VCS.md">framework/workflow/WF-VCS.md</a>
+        <a href="../framework/structure/git-reference.md">framework/structure/git-reference.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-11">
+      <span class="num">11 · When stakes rise</span>
+      <h2>Data, operations, recovery &amp; high impact</h2>
+      <p>
+        Four optional risk modules activate when their conditions become real. WF-DATA: tests use
+        temporary or synthetic data, diagnostics use read-only connections, append-only rules are
+        enforced, and prospective, retrospective, synthetic, and migrated evidence stay
+        distinguishable. WF-OPS: scheduled operation records its real runtime, uses locks and
+        timeouts, makes repetition safe, and records failure evidence instead of treating failure
+        as no data.
+      </p>
+      <p>
+        WF-RECOVERY verifies backups instead of trusting file presence and demands a tested
+        recovery path. WF-HIGH-IMPACT draws the boundary between analysis and real-world action:
+        risk-increasing actions require explicit human approval, critical logic gets independent
+        verification, and learned or generated output never gains authority silently.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-DATA.md">WF-DATA.md</a>
+        <a href="../framework/workflow/WF-OPS.md">WF-OPS.md</a>
+        <a href="../framework/workflow/WF-RECOVERY.md">WF-RECOVERY.md</a>
+        <a href="../framework/workflow/WF-HIGH-IMPACT.md">WF-HIGH-IMPACT.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-12">
+      <span class="num">12 · Machine contracts</span>
+      <h2>Profile, receipts &amp; tools</h2>
+      <p>
+        project_profile.yaml is the exact machine-readable record of approvals, module activation,
+        structure decisions, unresolved decisions, and approved paths and commands — the contract
+        is frozen in project_profile.example.yaml. Delivery receipts bind a pass result to SHA-256
+        digests of the phase plan, validator, and scope revisions, so a stale or edited file
+        invalidates the receipt automatically.
+      </p>
+      <p>
+        Three retained tools enforce the contracts: tools/validate_initialization.py (framework
+        integrity plus profile validation), tools/delivery_receipt.py (receipt evaluation and the
+        machine constant of the gate order), and tools/render_project_overview.py (atomic
+        generation of the overview from declared sources).
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../project_profile.example.yaml">project_profile.example.yaml</a>
+        <a href="../tools/validate_initialization.py">validate_initialization.py</a>
+        <a href="../tools/delivery_receipt.py">delivery_receipt.py</a>
+        <a href="../tools/render_project_overview.py">render_project_overview.py</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-13">
+      <span class="num">13 · Honest edges</span>
+      <h2>Boundaries &amp; non-goals</h2>
+      <p>
+        Version 0.9 initializes greenfield projects only; brownfield adoption, import, and
+        re-initialization are reserved modes, not permission to improvise. The framework never
+        collects or stores secrets — only their purpose, delivery mechanism, and variable names.
+      </p>
+      <p>
+        Tailoring can remove ceremony but can never remove human authority, information honesty,
+        permanent work identity, evidence-based completion, or the duty to stop on a material
+        discrepancy. The generated overview and this page are derived views; the Markdown remains
+        the project's truth.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../START_HERE.md">START_HERE.md (§0–1)</a>
+        <a href="../README.md">README.md</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <span>AIPartner framework scope details — derived view</span>
+      <nav aria-label="Footer links">
+        <a href="framework-scope.html">Scope map</a>
+        <a href="../index.html">Human guide</a>
+        <a href="https://github.com/imtoam/AIPartner">GitHub repository</a>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

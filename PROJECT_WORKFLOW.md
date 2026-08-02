@@ -9,7 +9,8 @@ paths and commands belong in the final section of this file.
 
 Framework invariant:
 
-- Keep every workflow module in this file.
+- Keep every workflow module in the framework: WF-CORE and WF-DOD in this spine, every other
+  module in its own retained file under `framework/workflow/`.
 - Tailoring changes module activation inside the marked configuration region. It never deletes,
   renames, reorders, or rewrites an inactive module.
 - Initialization may edit only the two regions marked BEGIN PROJECT CONFIG and END PROJECT CONFIG.
@@ -22,8 +23,9 @@ Framework invariant:
 Do not duplicate this methodology in AGENTS.md or START_HERE.md. Those files may route to it,
 configure it, or record approvals without redefining its rules.
 
-Read this file before shaping, planning, implementing, testing, reviewing, releasing, or operating
-a project change. A factual answer or a small mechanical edit may not require the complete file.
+Read this spine, plus the routed module files whose topics the change touches, before shaping,
+planning, implementing, testing, reviewing, releasing, or operating a project change. A factual
+answer or a small mechanical edit may not require the complete method.
 
 Read PROJECT_STRUCTURE_REFERENCE.md only when initializing or restructuring the repository,
 selecting a new directory category, or creating a new planning or tracking artifact. It is a menu of
@@ -78,6 +80,49 @@ approves the selection.
 After initialization, if an activation condition becomes true, the AI explains why the section is
 needed and asks the Product Owner before checking it. Record the change in project history. Do not
 activate project governance silently.
+
+## Workflow module routing
+
+WF-CORE and WF-DOD apply to every change and remain in this spine. Every other module lives in one
+file under `framework/workflow/`; its checkbox above controls activation, and the module file is the
+sole normative owner of its rules. Load a module file only when the task touches its topic.
+
+| Module | File | Load when |
+|---|---|---|
+| WF-COMMUNICATION | [framework/workflow/WF-COMMUNICATION.md](framework/workflow/WF-COMMUNICATION.md) | Language, terminology, source evidence, or translation is affected |
+| WF-STRUCTURE | [framework/workflow/WF-STRUCTURE.md](framework/workflow/WF-STRUCTURE.md) | Repository layout, module ownership, or current-state mapping changes |
+| WF-VCS | [framework/workflow/WF-VCS.md](framework/workflow/WF-VCS.md) | Commits, branches, remotes, history, or repository policy is involved |
+| WF-DOCS | [framework/workflow/WF-DOCS.md](framework/workflow/WF-DOCS.md) | Documents, work tracking, work IDs, decisions, or history are touched |
+| WF-VIEWS | [framework/workflow/WF-VIEWS.md](framework/workflow/WF-VIEWS.md) | A human view, control surface, or generated page is created or changed |
+| WF-PLANNING | [framework/workflow/WF-PLANNING.md](framework/workflow/WF-PLANNING.md) | Phases, delivery groups, sequencing, or evidence gates are involved |
+| WF-DRIFT | [framework/workflow/WF-DRIFT.md](framework/workflow/WF-DRIFT.md) | Consistency checks or drift control are involved |
+| WF-DATA | [framework/workflow/WF-DATA.md](framework/workflow/WF-DATA.md) | Authoritative, production, or non-cleanable data is crossed |
+| WF-OPS | [framework/workflow/WF-OPS.md](framework/workflow/WF-OPS.md) | Scheduled or unattended operation is involved |
+| WF-RECOVERY | [framework/workflow/WF-RECOVERY.md](framework/workflow/WF-RECOVERY.md) | Backup, restore, or recovery paths are involved |
+| WF-HIGH-IMPACT | [framework/workflow/WF-HIGH-IMPACT.md](framework/workflow/WF-HIGH-IMPACT.md) | Output can materially affect money, health, safety, rights, privacy, or security |
+
+## Concept ownership registry
+
+Each cross-cutting concept has exactly one normative owner. Other framework files may summarize it
+in one sentence and link here; they must not restate its details. A conflicting restatement is a
+framework defect.
+
+| Concept | Sole normative owner |
+|---|---|
+| Core delivery loop and discrepancy protocol | This spine (WF-CORE) |
+| Definition of Done | This spine (WF-DOD) |
+| Delivery sequencing gate, its mandatory order, and gate reachability | framework/workflow/WF-PLANNING.md |
+| Machine constant of the gate order | tools/delivery_receipt.py (`DELIVERY_CHECK_ORDER`) |
+| Delivery validation receipt JSON contract | framework/structure/documentation-catalog.md (section 9.4) |
+| Four mandatory perspectives and derived-view rules | framework/workflow/WF-VIEWS.md |
+| Language, terminology, and translation contract | framework/workflow/WF-COMMUNICATION.md |
+| Permanent work identity | framework/workflow/WF-DOCS.md |
+| Git complexity ladder and commit contract | framework/workflow/WF-VCS.md and framework/structure/git-reference.md |
+| Tailoring decision states and protocol | PROJECT_STRUCTURE_REFERENCE.md |
+| Directory and artifact catalogs | framework/structure/ catalog files |
+| Roles, authority, and information discipline | AGENTS.md |
+| One-time initialization protocol and its state machine | START_HERE.md |
+| Machine-readable record of approved paths, commands, authority, and activation | project_profile.yaml (contract: project_profile.example.yaml) |
 
 ## WF-CORE: Core feature delivery
 
@@ -159,8 +204,8 @@ Implementation may begin when:
 - affected canonical terms, source-language rules, and human-view consequences are explicit.
 - the work fits the current priority and does not contradict the product brief, current state,
   roadmap, or accepted decisions.
-- when delivery groups are active, the delivery sequencing gate has passed in the mandatory order
-  `delivery_group -> group_order -> dependencies -> approval/exact scope`.
+- when delivery groups are active, the delivery sequencing gate owned by
+  framework/workflow/WF-PLANNING.md has passed in its mandatory order.
 
 The Product Owner approves material product, priority, authority, and risk choices. The AI owns
 ordinary technical execution within those choices.
@@ -218,279 +263,6 @@ After verification:
 
 This is the project's practical use of Agile feedback, Lean learning, Kanban flow, Continuous
 Delivery evidence, and risk management.
-
-## WF-COMMUNICATION: Language, terminology, and translation
-
-Every project records a compact communication contract during initialization. Ask for one bundled
-decision with a recommended default rather than presenting a language questionnaire.
-
-Recommended default:
-
-- the Product Owner and AI converse in the Product Owner's preferred language.
-- maintained code identifiers, schemas, typed values, technical documentation, configuration names,
-  and version-control records use one engineering language of record, normally English.
-- human-facing views may use one or more approved presentation locales.
-- externally sourced evidence preserves its original text, source language when known, time, URL,
-  hash, and lineage.
-- translation is a derived presentation artifact. It does not replace source evidence, add claims,
-  change typed values, or turn unknown, stale, or insufficient data into a conclusion.
-
-Record conversation languages, the engineering language of record, the language of code identifiers
-and typed values, human-view locales, source-evidence treatment, and the translation policy as
-separate facts. Do not use one field called merely `language` for all of these responsibilities.
-
-Create a terminology registry only when domain language, multiple locales, external contracts, or
-observed ambiguity justify it. The normal path is `docs/terminology.md`. Each governed term records
-a stable term ID, canonical engineering term, definition, code or schema form, approved
-translations, and deprecated or ambiguous aliases. A semantic change receives a new version or
-term ID; do not silently redefine a term already present in code, data, decisions, or history.
-
-Conversation and human-view translation may be flexible in style, but engineering terms and typed
-semantics remain exact. Historical material without a versioned language or terminology marker is
-unknown under that contract; do not infer, translate, backfill, re-embed, re-index, or rewrite it as
-if missing provenance were known.
-
-## WF-STRUCTURE: Repository structure
-
-Organize the repository by responsibility so that a human or future AI can locate truth, source,
-tests, tools, and runtime evidence without reconstructing the whole project from history.
-
-PROJECT_STRUCTURE_REFERENCE.md owns the complete directory and artifact catalog. Initialization
-selects from that reference and records the actual names and ownership in Project facts. Use only
-categories the project needs.
-
-Rules:
-
-- Do not create every category by default or keep empty directories for appearance.
-- Do not mix production data, generated output, or cache with maintained source.
-- Identify authoritative data, derived projections, and disposable output explicitly.
-- Keep entry points small and preserve a clear dependency direction between modules.
-- Give each important data set, interface, and module one owner.
-- Put secrets outside version control and record only how they are supplied.
-- Update this map when a new responsibility or runtime category appears.
-
-### Module identity and ownership
-
-Once maintained code exists, give each stable module or pipeline a responsibility-based module ID.
-The current-state document records, at a depth proportionate to the project:
-
-- module ID, responsibility, and owner.
-- entry points and public interfaces.
-- data, schema, and configuration it owns.
-- allowed and forbidden dependency directions.
-- test owner and operating surface.
-- a pointer to a detailed module document when one is justified.
-
-Keep a compact project in one current-state map. Create `docs/modules/MODULE-ID.md` only when a
-module has enough contracts, risks, or operating detail to need its own owner document. The
-current-state map then keeps a summary and pointer instead of copying the detail.
-
-Every non-trivial feature names the modules it changes and whether it introduces a new dependency,
-data owner, runtime boundary, or public contract. A small request that unexpectedly crosses several
-unrelated modules is drift evidence and must be explained before implementation continues.
-
-### Current and planned state
-
-- Current-state documents and Project facts contain observed present reality only.
-- Approved future architecture, paths, schedules, and commands belong in a feature brief, roadmap,
-  ADR, or deferred trigger.
-- Never turn a proposed default branch, runtime command, production store, or schedule into a
-  current fact before it exists.
-- "Not found" and "not yet established" remain explicit unknowns or deferred items.
-
-## WF-VCS: Version control
-
-Use the Git tailoring guidance in PROJECT_STRUCTURE_REFERENCE.md to select and record the repository
-mode. Local Git is the normal software-project default; remote hosting and branch complexity require
-their own evidence and approval.
-
-- Inspect repository state before changing files or Git configuration.
-- Preserve existing history, user work, remotes, and unrelated changes.
-- Never remove .git, rewrite shared history, force-push, or discard work without explicit authority.
-- Keep commits small, coherent, verified, and traceable to permanent work IDs.
-- Inspect status and intended diffs before and after commits, merges, and integration.
-- Keep secrets, production data, runtime output, caches, reports, and backups out of commits unless
-  an explicit evidence policy says otherwise.
-- Activate branches, pull requests, worktrees, protection, and integration rules only when review,
-  concurrency, release isolation, or baseline stability requires them.
-- Treat remote creation, visibility changes, pushes, publication, and administrative changes as
-  external actions requiring user approval.
-
-The initial project commit follows successful initialization validation. Git history does not
-replace data backup, artifact retention, or recovery testing.
-
-### Complexity ladder
-
-Use the least complex Git mode supported by current evidence:
-
-| Condition | Normal mode |
-|---|---|
-| One writer and no protected production baseline | Small verified commits on the default branch |
-| Independent review or a protected remote baseline | Short-lived branch and pull request |
-| Concurrent writers | One branch or worktree per writer and one integration owner |
-| Stable production baseline plus long-running next release | Default baseline plus one integration branch |
-
-A branch isolates code; it is not the source of work-item status, phase ownership, or completed-work
-truth. Do not encode mutable phase, priority, status, or assignee in permanent work IDs.
-
-Record an activation condition and a retirement condition for every non-default branch model. When
-the condition disappears, preserve necessary historical receipts, retire the topology deliberately,
-and remove obsolete branch commands and merge sources from live governance documents. Historical
-documents may retain them as history.
-
-When the default branch is also a production worktree, inspect related schedules and running
-processes before editing runtime-sensitive files. Verify schema and runtime changes with temporary
-data, synthetic fixtures, regression checks, and deployment preflight before a scheduler or service
-can observe the new version. Do not stage, overwrite, or clean runtime state merely to prepare a
-code commit.
-
-If Git is deliberately deferred, Project facts and project_profile.yaml must record the reason,
-risk, approval evidence, and activation trigger. The rest of this section remains in force.
-
-## WF-DOCS: Documentation and work tracking
-
-### Document map
-
-Initialization fills the actual paths. Create only documents that have a clear responsibility.
-
-| Question | Owner |
-|---|---|
-| Why does the project exist? | Product brief |
-| What is true now? | Current-state document and executable system |
-| What work is active? | Current work list |
-| What was agreed for a non-trivial feature? | Feature brief or feature plan |
-| What is planned later? | Roadmap, when WF-PLANNING is active |
-| Why was a decision made? | Decision record |
-| What already happened? | History and version control |
-| What did the latest review find? | Review report, when peer review is active in AGENTS.md |
-| Which engineering terms have exact meanings? | Terminology registry, when ambiguity triggers it |
-| What must each human role see to govern the project? | Required HTML control surface and its declared sources |
-| Which maintained sources generate each split or live view? | View registry, when the control surface expands beyond one static page |
-
-One line of work has one detailed owner. Other documents may point to it but must not copy its
-status in full.
-
-Do not treat history as current state. Do not treat a roadmap as the current work list. Generated
-HTML is a human view and not a source of truth.
-
-project_profile.yaml owns initialization state, approval evidence, module activation summary,
-structure decisions, unresolved decisions, and pointers. It does not own current work status,
-current system behavior, roadmap status, or completed-work history.
-
-### Authoritative documents and derived views
-
-Maintained Markdown is the authoritative layer for project intent, current architecture, plans,
-decisions, work tracking, terminology, and history. Executable code, configuration, schemas, and
-authoritative business data retain their own explicit ownership; do not copy them into Markdown and
-pretend the copy is executable truth.
-
-HTML, dashboards, diagrams, and HTTP responses are derived views. They may combine maintained
-documents with declared runtime evidence, but they may not own approvals, work status, architecture
-facts, business truth, or open decisions. A human correction enters the owning source through the
-normal workflow and is then regenerated into the view.
-
-### Permanent work identity
-
-Every feature and every bug fix receives a permanent unique work ID before implementation begins.
-
-- Allocate the ID from one project-owned registry or sequence.
-- Never reuse, rename, or delete an ID from historical records.
-- Do not encode mutable priority, status, phase, release, or assignee in the ID.
-- Use the same ID in the feature discussion, active work list, implementation plan, test evidence,
-  commits, accepted review findings, decisions, and completed-work history wherever those artifacts
-  apply.
-- A review-local finding ID is temporary. When the finding is accepted as work, assign or link it to
-  a permanent work ID immediately.
-- Removing completed work from the active list does not retire its ID. History and version control
-  retain it permanently.
-- If one item is split into independently deliverable work, create permanent child IDs and preserve
-  the parent relationship. Do not silently reuse the original ID for several unrelated outcomes.
-
-The identifier proves continuity of the work, not its current location or status.
-
-### Current work list
-
-- Keep unfinished work only.
-- Give each item a priority and a clear status.
-- This list is the only source of truth for current work-item status. Other artifacts point to the
-  item and must not copy its mutable status.
-- Record why blocked work is blocked and what would unblock it.
-- Remove completed work after its result is recorded in history.
-- Before removing an item, confirm that the current-state document reflects any lasting system
-  change.
-
-### Decisions and history
-
-- Record decisions that affect architecture, data contracts, authority, or long-term behavior.
-- Record the reason, not only the outcome.
-- Give accepted defects or follow-up work stable references.
-- Use history and version control for completed work.
-- Do not use a temporary review report as a permanent backlog.
-
-## WF-VIEWS: Human-readable project views
-
-Every initialized project provides a static `project-overview.html` as its mandatory human control
-surface. `index.html` remains the permanent framework guide. Do not replace either role with the
-other.
-
-The human role is not to act as an assistant who reconstructs the project by reading raw logs,
-development notes, databases, configuration, or source files. The interface must let people govern
-direction, architecture, scope, progress, cadence, risk, health, and decisions while retaining
-clickable access to the underlying evidence.
-
-### Four mandatory perspectives
-
-The control surface contains four stable perspectives from initialization onward:
-
-| Perspective | Primary audience | Required content |
-|---|---|---|
-| Management | Product Owner, management, and project leadership | Direction, intended value, scope, progress, cadence, material risks, open decisions, and management advice |
-| Business | Domain specialists and daily business operators | Business recommendations, domain logic, data health, decision status, exceptions, and actions needing specialist judgment |
-| Operations | IT operators and reliability owners | Services, jobs, providers, storage, backups, incidents, recovery, capacity, and current health |
-| Architecture and delivery | Developers, architects, and delivery owners | Current and approved target architecture, module boundaries, dependencies, phase and feature plans, implementation status, technical risk, and drift |
-
-All four perspectives are present even when the project is new. A perspective without current data
-must show `not_yet_available`, `not_applicable`, `blocked`, or `degraded` with its reason, source
-owner, and activation or recovery trigger. It must not disappear, invent healthy status, or force
-the user to inspect raw evidence to learn that the capability does not exist.
-
-Management advice and business recommendations remain proposals unless their owning source records
-an approval or decision. Business health is not inferred from system uptime, and operational health
-is not inferred from business outcomes. Architecture views distinguish current observed structure
-from approved target plans.
-
-Every generated view displays or embeds:
-
-- a stable page role and view ID.
-- authoritative source paths.
-- generation time and source version or commit when available.
-- freshness, stale, incomplete, or generation-error state.
-- visible unresolved decisions relevant to that view.
-- a statement that the view is derived and not an independent source of truth.
-
-Generation fails closed. Missing or conflicting sources produce visible error or discrepancy
-evidence; an old HTML file must not silently stand in for missing current truth.
-
-The four perspectives may begin as sections in one static page. Split pages activate when their
-sources, audiences, or navigation depth justify independent surfaces:
-
-| View | Normal sources | Trigger |
-|---|---|---|
-| Management | Product brief, roadmap, active work, risks, decisions, verification evidence | Management history or decision volume outgrows the overview section |
-| Business | Typed domain read model, business contracts, recommendations, exception queues | Live business health or daily specialist workflow exists |
-| Operations | Job manifest, health read model, runbooks, logs and status evidence | A service or unattended job requires live operational handling |
-| Architecture and delivery | Current-state map, module owner docs, ADRs, phase and feature plans | Several modules or plans need interactive navigation |
-
-When the control surface splits into a second generated page or live endpoint, create one view
-registry, normally `docs/view_registry.md`, that owns view IDs, source lists, generator commands,
-locale, freshness rules, and output paths. It does not own the facts being rendered.
-
-Static HTML is the default. A local HTTP service activates only when live refresh, search, filtering,
-or structured local-AI access is needed. It binds to loopback and remains read-only by default.
-Network exposure, authentication, browser approval, source write-back, or business-data mutation are
-separate capabilities requiring explicit authority, threat analysis, audit evidence, and applicable
-WF-OPS or WF-HIGH-IMPACT controls. Local AI configuration is a consumer, never the sole store for
-open decisions or project truth.
 
 ## WF-DOD: Definition of Done
 
@@ -562,210 +334,6 @@ A change is complete only when every applicable item below is satisfied.
    those modules are active.
 
 The project-specific commands used for these checks belong in Project facts.
-
-## WF-PLANNING: Multi-level planning
-
-Activation condition:
-
-- the target project currently has at least two phases, releases, or long-running work lines whose
-  priority or dependency must be managed separately
-
-Ignore the rest of this section until its checkbox is checked.
-
-A roadmap imagined during initialization is not activation evidence. If only one bounded work item
-is ready, keep this module inactive and record a trigger for the point at which competing work
-appears.
-
-Use up to four levels, and only when each active level has a distinct purpose:
-
-| Level | Purpose |
-|---|---|
-| Roadmap | Major outcomes, releases, and future priority |
-| Phase delivery plan | Ordered dependencies and early-start boundaries inside one release or long work line |
-| Current work list | Work in the current phase or release |
-| Feature plan | Detailed breakdown of one large feature |
-
-Rules:
-
-- The Product Owner approves movement between phases or major priorities.
-- The current work list contains current unfinished work only.
-- Future work belongs in the roadmap, not the current queue.
-- A phase delivery plan owns within-phase order and dependencies; the roadmap does not copy them.
-- A large feature keeps its detailed status in one feature plan.
-- Other files point to the feature plan instead of copying its details.
-- Completed work moves to history.
-
-### Delivery-group ownership and sequencing gate
-
-Activate delivery groups when two or more approved or proposed work units must be coordinated as a
-delivery sequence. Do not create groups merely to decorate a single bounded item.
-
-Information ownership is fixed:
-
-| Control | Sole detailed owner | Other files may contain |
-|---|---|---|
-| `delivery_group` membership | Active phase delivery plan | A pointer to the group ID |
-| `group_order` | Active phase delivery plan | A rendered summary or pointer |
-| Cross-group and cross-feature dependencies | Active phase delivery plan | Internal feature-plan dependencies that do not redefine delivery order |
-| Exact feature scope and non-goals | Feature plan; current-work item only when no feature plan is justified | Scope revision and pointer |
-| Approval of exact scope | The same feature plan or current-work item that owns exact scope | Approval state, evidence pointer, and approved scope revision |
-
-The phase plan uses stable `DG-NNN` group IDs. Every sequenced work item belongs to exactly one
-delivery group. Every active group has one unique positive `group_order`; order values define the
-delivery sequence and may have gaps so later insertion does not require renumbering stable groups.
-Dependencies use stable group or work IDs, name their reason and type, and must be resolvable and
-acyclic. A dependency on a later group means the declared order is invalid; correct `group_order`
-before implementation rather than treating the dependency as an informal exception.
-
-Exact scope has a stable revision, such as `WORK-012-scope-v3`. Approval evidence must name that
-same revision. Changing scope, non-goals, delivery-group membership, or a material dependency
-invalidates readiness; re-evaluate the sequence and obtain new approval when the approved scope
-changed. Approval of an earlier scope revision must never authorize a later one implicitly.
-
-An active gate has a project-specific validator and one current machine-readable receipt. The
-validator runs the four checks, then atomically writes the receipt described in
-PROJECT_STRUCTURE_REFERENCE.md. The receipt binds its `pass` result to SHA-256 digests of the phase
-plan, validator, and every exact-scope owner. Any bound file change makes the receipt stale. Merely
-declaring a command, keeping an old receipt, or setting delivery control to active is not evidence
-that the gate passed.
-
-Before beginning any grouped implementation, check in this exact order:
-
-1. `delivery_group`: every intended work item has exactly one group; membership and the group
-   outcome are coherent.
-2. `group_order`: every active group has one unique order and the proposed execution sequence is
-   explicit.
-3. `dependencies`: all dependency IDs resolve, the graph is acyclic, and no dependency contradicts
-   the declared group order. If it does, return to step 2 and correct the order.
-4. `approval/exact scope`: the next work item has an exact scope, non-goals, scope revision, approval
-   state, and approval evidence bound to that same revision.
-
-This is a gate, not a reporting format. Failure at any step prevents implementation of the affected
-item. Completing step 4 does not excuse a failure in steps 1-3, and an approval does not determine
-delivery order by itself.
-
-Implementation may begin only when the delivery validator exits successfully and the core project
-validator confirms a current `pass` receipt. A missing, malformed, failed, or stale receipt is
-blocking. The HTML control surface displays configuration state separately from validation state
-and must never render `active` as if it meant `pass`.
-
-### Forward-data timing and gate reachability
-
-When proposing implementation order, dependencies, or early work, check each item for a data clock:
-
-- whether valid evidence can be faithfully reconstructed later.
-- whether collection is prospective or only forward from an activation epoch.
-- how long labels, roots, outcomes, or other evidence require to mature.
-- whether delay permanently loses point-in-time availability, provider latency, market context,
-  cost, or concurrent-condition evidence.
-
-Mark work `data-clock critical` when code may be implemented later but its valid observation window
-cannot be recovered. Record the latest safe activation point, the smallest isolated shadow or
-bounded capture that can begin earlier, and how it avoids canonical write-back and production
-interference. Mark retrospective reconstruction separately; it must not masquerade as prospective
-or point-in-time calibration evidence.
-
-Before adopting an evidence threshold or exit gate, estimate its reachability from the actual or
-expected generation funnel: exclusion reasons, eligible rate, independence, maturity delay, and
-time to threshold. A methodologically attractive gate that can never receive enough valid evidence
-is an unresolved product or methodology decision, not a completed plan.
-
-## WF-DRIFT: Architecture and governance drift control
-
-Activation condition:
-
-- the project has several stable modules, pipelines, or generated views whose ownership or
-  dependency direction must remain consistent
-- a material architecture or documentation drift has been observed
-- a branch strategy, module, interface, or source of truth has been retired or replaced
-
-Ignore the rest of this section until its checkbox is checked.
-
-Define proportionate, repeatable checks for:
-
-- stable work, module, term, view, and decision IDs.
-- pointers and single ownership of mutable status or detailed plans.
-- phase dependency existence, ordering, and cycles.
-- delivery-group membership completeness, unique group order, dependency/order consistency, and
-  approval-to-scope-revision binding.
-- code dependency direction and public interface boundaries.
-- code, schema, job manifest, current-state, and human-view consistency.
-- stale paths, commands, modules, branch markers, and retired operating instructions in live docs.
-- generated-view freshness and source completeness.
-- deprecated or ambiguous terminology.
-
-The project records the commands in Project facts and adds regression cases for drift that has
-already occurred. A drift report is evidence or a work input, not a second current-state source.
-
-## WF-DATA: Authoritative and non-cleanable data
-
-Activation condition:
-
-- the current or next approved increment creates, reads, changes, or depends on production,
-  append-only, sensitive, authoritative, or otherwise non-cleanable data
-
-Ignore the rest of this section until its checkbox is checked.
-
-- Tests use temporary databases, fixtures, or synthetic data.
-- Read-only diagnostics use read-only connections.
-- Tests and review commands do not write production data.
-- Authoritative data, derived views, caches, and projections have explicit ownership.
-- Schema changes have a migration and recovery plan.
-- Append-only or irreversible rules are enforced where practical.
-- Prospective, forward-only, retrospective, synthetic, and migrated evidence remain explicitly
-  distinguishable.
-- A blocked full feature may use an approved isolated shadow capture only when it cannot alter
-  canonical truth, backfill an old ledger, or interfere with production scheduling.
-
-## WF-OPS: Unattended operation
-
-Activation condition:
-
-- the current or next approved increment runs on a schedule or without a person present
-
-Ignore the rest of this section until its checkbox is checked.
-
-- Record the real runtime, schedule, and job owner.
-- Consider whether files may be read while being edited.
-- Use atomic replacement for shared runtime configuration when needed.
-- Make repeated execution safe.
-- Define locks, timeouts, retries, health checks, and human takeover conditions.
-- Record failure evidence instead of silently treating failure as no data.
-- Before runtime-sensitive edits in a production worktree, inspect related schedules and running
-  processes and avoid leaving entry points in a readable intermediate state.
-- A local HTTP project portal binds to loopback and stays read-only unless separately approved;
-  non-loopback exposure and write-back require explicit security and authority controls.
-
-## WF-RECOVERY: Backup and recovery
-
-Activation condition:
-
-- authoritative state would be costly or impossible to reconstruct
-- a migration, release, retention rule, or incident requires a tested recovery path
-
-Ignore the rest of this section until its checkbox is checked.
-
-- Identify authoritative data that requires backup.
-- Verify backups rather than relying on file presence.
-- Define the recovery path and its acceptance evidence.
-- Keep destructive cleanup separate from ordinary processing.
-
-## WF-HIGH-IMPACT: High-impact changes
-
-Activation condition:
-
-- system output can materially affect money, health, safety, legal rights, privacy, or security
-- a change affects concurrency, critical data contracts, or another difficult-to-detect failure mode
-
-Ignore the rest of this section until its checkbox is checked.
-
-- Define the boundary between analysis and real-world action.
-- Require explicit human approval for risk-increasing actions.
-- Use independent calculation or review for critical logic and contracts.
-- Record assumptions, uncertainty, and known limitations.
-- Provide safe failure, rollback, and disable behavior.
-- Do not allow learned or generated output to gain authority silently.
-- Identify professional, legal, regulatory, or security review when applicable.
 
 ## Project facts
 

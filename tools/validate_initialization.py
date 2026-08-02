@@ -77,57 +77,109 @@ FRAMEWORK_FILES = {
     "AGENTS.md": (
         "Framework invariant:",
         "ROLE-CORE: Core roles and working rules",
-        "ROLE-PARTNER: The partnership",
+        "## ROLE-PARTNER: Human and AI partnership",
         "ROLE-REVIEW: Independent peer review",
         "ROLE-MULTIWRITER: Multiple project writers and worktrees",
-        "delivery_group -> group_order -> dependencies -> approval/exact scope",
+        "docs/review_scope.md",
+        "machine-checked record",
         "BEGIN PROJECT CONFIG: ROLE MODULE ACTIVATION",
         "BEGIN PROJECT CONFIG: TEAM FACTS",
     ),
     "START_HERE.md": (
-        "Protocol version: 0.8.0",
+        "Protocol version: 0.9.0",
         "Framework invariant:",
         "Establish language without creating a language questionnaire",
         "Keep human views subordinate to project truth",
         "Use external reference material without confusing it with the target",
         "There is no `approved` state.",
         "project-overview.html",
-        "delivery_group -> group_order -> dependencies -> approval/exact scope",
+        "framework/workflow/WF-PLANNING.md",
         "current `pass` receipt",
     ),
     "PROJECT_WORKFLOW.md": (
         "Framework invariant:",
         "WF-CORE: Core feature delivery",
-        "WF-COMMUNICATION: Language, terminology, and translation",
-        "WF-STRUCTURE: Repository structure",
-        "WF-VCS: Version control",
-        "WF-DOCS: Documentation and work tracking",
-        "WF-VIEWS: Human-readable project views",
-        "Four mandatory perspectives",
         "WF-DOD: Definition of Done",
-        "WF-PLANNING: Multi-level planning",
-        "Delivery-group ownership and sequencing gate",
-        "current `pass` receipt",
-        "WF-DRIFT: Architecture and governance drift control",
-        "WF-DATA: Authoritative and non-cleanable data",
-        "WF-OPS: Unattended operation",
-        "WF-RECOVERY: Backup and recovery",
-        "WF-HIGH-IMPACT: High-impact changes",
+        "## Workflow module routing",
+        "## Concept ownership registry",
+        "framework/workflow/WF-PLANNING.md",
         "BEGIN PROJECT CONFIG: WORKFLOW MODULE ACTIVATION",
         "BEGIN PROJECT CONFIG: PROJECT FACTS",
     ),
     "PROJECT_STRUCTURE_REFERENCE.md": (
         "Framework invariant:",
-        "## 4. Git and version-control reference",
+        "## 1. Selection principles",
+        "## 2. Tailoring protocol",
         "framework_retained",
-        "### 9.4 Phase delivery plan",
+        "## Structure catalog routing",
+        "framework/structure/documentation-catalog.md",
+    ),
+    "framework/workflow/WF-COMMUNICATION.md": (
+        "## WF-COMMUNICATION: Language, terminology, and translation",
+        "engineering language of record",
+    ),
+    "framework/workflow/WF-STRUCTURE.md": (
+        "## WF-STRUCTURE: Repository structure",
+        "Module identity and ownership",
+    ),
+    "framework/workflow/WF-VCS.md": (
+        "## WF-VCS: Version control",
+        "Complexity ladder",
+    ),
+    "framework/workflow/WF-DOCS.md": (
+        "## WF-DOCS: Documentation and work tracking",
+        "Permanent work identity",
+    ),
+    "framework/workflow/WF-VIEWS.md": (
+        "## WF-VIEWS: Human-readable project views",
+        "Four mandatory perspectives",
+    ),
+    "framework/workflow/WF-PLANNING.md": (
+        "## WF-PLANNING: Multi-level planning",
+        "Delivery-group ownership and sequencing gate",
         "delivery_group -> group_order -> dependencies -> approval/exact scope",
-        "### 9.12 Human-view registry",
+        "current `pass` receipt",
+        "Forward-data timing and gate reachability",
+    ),
+    "framework/workflow/WF-DRIFT.md": (
+        "## WF-DRIFT: Architecture and governance drift control",
+    ),
+    "framework/workflow/WF-DATA.md": (
+        "## WF-DATA: Authoritative and non-cleanable data",
+    ),
+    "framework/workflow/WF-OPS.md": (
+        "## WF-OPS: Unattended operation",
+    ),
+    "framework/workflow/WF-RECOVERY.md": (
+        "## WF-RECOVERY: Backup and recovery",
+    ),
+    "framework/workflow/WF-HIGH-IMPACT.md": (
+        "## WF-HIGH-IMPACT: High-impact changes",
+    ),
+    "framework/structure/root-files.md": (
+        "## 3. Root files",
         "project-overview.html",
+    ),
+    "framework/structure/git-reference.md": (
+        "## 4. Git and version-control reference",
+        "### 4.5 Commit contract",
+    ),
+    "framework/structure/directory-catalog.md": (
+        "## 5. Maintained source directories",
+        "## 7. Generated and runtime directories",
+    ),
+    "framework/structure/documentation-catalog.md": (
+        "## 8. Documentation directory",
+        "### 9.4 Phase delivery plan",
+        "delivery_sequence_validation.json",
+        "### 9.12 Human-view registry",
+        "## 10. Artifact relationship rules",
+    ),
+    "framework/structure/minimal-start.md": (
         "## 11. Minimal greenfield starting set",
     ),
     "project_profile.example.yaml": (
-        'schema_version: "0.8.0"',
+        'schema_version: "0.9.0"',
         "communication:",
         "human_interface:",
         "perspectives:",
@@ -135,6 +187,7 @@ FRAMEWORK_FILES = {
         "state_reason:",
         "reference_adoptions:",
         "framework_retained:",
+        'path: "framework/workflow/"',
         "unresolved_decisions:",
         "delivery_control:",
         "validator_path:",
@@ -145,20 +198,19 @@ FRAMEWORK_FILES = {
     "index.html": (
         'name="aipartner-page-role" content="human-start-guide"',
         'id="begin"',
-        "Protocol 0.8",
-        "Language and terminology",
+        "Protocol 0.9",
         "START_HERE.md",
     ),
     "README.md": (
         "START_HERE.md",
         "AGENTS.md",
         "PROJECT_WORKFLOW.md",
-        "Protocol version: 0.8.0",
-        "delivery_group -> group_order -> dependencies -> approval/exact scope",
+        "Protocol version: 0.9.0",
+        "framework/workflow/WF-PLANNING.md",
     ),
     "framework_manifest.json": (
         '"schema_version": 1',
-        '"protocol_version": "0.8.0"',
+        '"protocol_version": "0.9.0"',
         '"files"',
     ),
     "tools/render_project_overview.py": (
@@ -788,7 +840,7 @@ def validate_profile(root: Path, report: Report) -> None:
         report.ok("project_profile.yaml contains all required top-level sections")
 
     version = field(lines, "schema_version")
-    if version != "0.8.0":
+    if version != "0.9.0":
         report.error(f"Unsupported project profile schema_version: {version or '(missing)'}")
 
     initialization = block(lines, "initialization")
@@ -797,7 +849,7 @@ def validate_profile(root: Path, report: Report) -> None:
     if status not in ALLOWED_STATES:
         report.error(f"Invalid initialization status: {status or '(missing)'}")
     if mode != "greenfield":
-        report.error(f"Protocol 0.8 supports only greenfield mode, found: {mode or '(missing)'}")
+        report.error(f"Protocol 0.9 supports only greenfield mode, found: {mode or '(missing)'}")
 
     approval = block(initialization, "approval", indent=2)
     approval_state = field(approval, "state", minimum_indent=4)
@@ -909,6 +961,8 @@ def validate_profile(root: Path, report: Report) -> None:
         "tools/render_project_overview.py",
         "framework_manifest.json",
         "introduction/",
+        "framework/workflow/",
+        "framework/structure/",
     }
     missing_retained = sorted(required_retained - set(retained))
     if missing_retained:
