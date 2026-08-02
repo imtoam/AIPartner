@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
 """Render project-overview.html from declared AIPartner project sources.
 
 The renderer uses only the Python standard library. It fails before replacing the output when a

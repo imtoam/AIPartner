@@ -1,4 +1,5 @@
 # WF-DATA — Authoritative and non-cleanable data
+<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 AIPartner framework workflow module. Module ID: `WF-DATA` (stable).
 

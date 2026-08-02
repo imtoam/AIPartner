@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="A guide for students in grades 8–12: what AI is great at, where it gets lost, and how you become the person who steers a real software project." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://imtoam.github.io/AIPartner/introduction/ai-native-project-youth.html" />
+  <meta property="og:site_name" content="Human and AI Software Development" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="You + AI Can Build Real Software" />
+  <meta property="og:description" content="AI can write the code. That doesn't make the project build itself. Here's how to be the one who steers." />
+  <meta property="og:image" content="https://imtoam.github.io/AIPartner/introduction/facebook-share-card.png" />
+  <link rel="canonical" href="https://imtoam.github.io/AIPartner/introduction/ai-native-project-youth.html" />
+  <meta name="aipartner-source" content="AIPartner 0.9.0" />
+  <meta name="aipartner-source-url" content="https://github.com/imtoam/AIPartner" />
+  <meta name="aipartner-licence" content="CC BY-SA 4.0" />
+  <title>You + AI Can Build Real Software</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e7;
+      --paper-deep: #e9e1d3;
+      --ink: #202a2a;
+      --muted: #65706d;
+      --line: #cdc3b3;
+      --accent: #a44d2f;
+      --accent-soft: #f0d9cc;
+      --forest: #184d49;
+      --forest-dark: #123a37;
+      --white: #fffdf8;
+      --shadow: 0 18px 55px rgba(35, 45, 42, 0.11);
+      --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --serif: Iowan Old Style, Baskerville, "Times New Roman", serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: var(--forest);
+      text-decoration-color: rgba(24, 77, 73, 0.4);
+      text-underline-offset: 0.18em;
+    }
+
+    a:hover {
+      text-decoration-color: var(--forest);
+    }
+
+    .masthead {
+      background:
+        radial-gradient(
+          circle at calc(100% - 110px) calc(100% - 25px),
+          rgba(233, 184, 164, 0.14) 0,
+          rgba(255, 253, 248, 0.045) 78px,
+          transparent 170px
+        ),
+        var(--forest-dark);
+      color: var(--white);
+      min-height: 530px;
+      padding: 30px 32px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .masthead::before,
+    .masthead::after {
+      content: "";
+      width: 180px;
+      height: 180px;
+      border: 1px solid rgba(255, 253, 248, 0.38);
+      border-radius: 50%;
+      position: absolute;
+      right: 20px;
+      bottom: -65px;
+      opacity: 0;
+      box-shadow:
+        0 0 16px rgba(233, 184, 164, 0.24),
+        inset 0 0 12px rgba(255, 253, 248, 0.09);
+      pointer-events: none;
+      transform: scale(0.28);
+      transform-origin: center;
+      animation: radiating-glow 6.4s ease-out infinite;
+      will-change: transform, opacity;
+    }
+
+    .masthead::after {
+      animation-delay: 3.2s;
+    }
+
+    @keyframes radiating-glow {
+      0% {
+        opacity: 0;
+        transform: scale(0.28);
+      }
+
+      14% {
+        opacity: 0.3;
+      }
+
+      58% {
+        opacity: 0.13;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(4);
+      }
+    }
+
+    .masthead-inner {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topline {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      font-family: var(--sans);
+      font-size: 0.77rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: rgba(255, 253, 248, 0.72);
+    }
+
+    .topline span:last-child {
+      text-align: right;
+    }
+
+    .hero-copy {
+      max-width: 880px;
+      margin-top: 108px;
+    }
+
+    .eyebrow {
+      margin: 0 0 18px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 0;
+      font-size: clamp(3rem, 7vw, 6.7rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 0.96;
+    }
+
+    .dek {
+      max-width: 680px;
+      margin: 34px 0 0;
+      color: rgba(255, 253, 248, 0.78);
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      line-height: 1.55;
+    }
+
+    .page-shell {
+      width: min(1120px, calc(100% - 48px));
+      margin: -42px auto 80px;
+      display: grid;
+      grid-template-columns: 245px minmax(0, 1fr);
+      gap: 54px;
+      align-items: start;
+      position: relative;
+      z-index: 2;
+    }
+
+    .contents {
+      position: sticky;
+      top: 28px;
+      background: rgba(255, 253, 248, 0.94);
+      border: 1px solid var(--line);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      font-family: var(--sans);
+    }
+
+    .contents h2 {
+      margin: 0 0 15px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.72rem;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .contents ol {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: nav;
+    }
+
+    .contents li {
+      counter-increment: nav;
+      border-top: 1px solid #e6ded1;
+    }
+
+    .contents a {
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 6px;
+      padding: 10px 0;
+      color: var(--ink);
+      font-size: 0.79rem;
+      line-height: 1.35;
+      text-decoration: none;
+    }
+
+    .contents a::before {
+      content: counter(nav, decimal-leading-zero);
+      color: var(--accent);
+      font-size: 0.68rem;
+      letter-spacing: 0.06em;
+    }
+
+    .article {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: clamp(38px, 7vw, 86px);
+      box-shadow: var(--shadow);
+    }
+
+    .article-header {
+      padding-bottom: 42px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 58px;
+    }
+
+    .article-header p {
+      max-width: 680px;
+      margin: 0;
+      font-size: 1.32rem;
+      color: #3f4b49;
+    }
+
+    .article section {
+      scroll-margin-top: 28px;
+      margin: 0 0 66px;
+    }
+
+    .article section:last-child {
+      margin-bottom: 0;
+    }
+
+    .section-number {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-family: var(--sans);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .article h2 {
+      max-width: 720px;
+      margin: 0 0 26px;
+      font-size: clamp(2rem, 4vw, 3.45rem);
+      font-weight: 500;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+    }
+
+    .article h3 {
+      margin: 38px 0 12px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+    }
+
+    .article p {
+      max-width: 720px;
+      margin: 0 0 22px;
+      font-size: 1.08rem;
+    }
+
+    .article ul,
+    .article ol {
+      max-width: 700px;
+      margin: 24px 0 30px;
+      padding-left: 1.3rem;
+    }
+
+    .article li {
+      padding-left: 0.35rem;
+      margin: 0 0 10px;
+      font-size: 1.03rem;
+    }
+
+    .pull-quote {
+      max-width: 720px;
+      margin: 38px 0;
+      padding: 28px 30px;
+      border-left: 5px solid var(--accent);
+      background: var(--accent-soft);
+      color: #512b1f;
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+      line-height: 1.35;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin: 30px 0;
+    }
+
+    .framework-card {
+      border: 1px solid var(--line);
+      background: #faf7f1;
+      padding: 22px;
+    }
+
+    .framework-card h3 {
+      margin: 0 0 9px;
+      color: var(--accent);
+    }
+
+    .framework-card p {
+      margin: 0;
+      font-size: 0.96rem;
+      line-height: 1.55;
+    }
+
+    .loop {
+      margin: 18px 0;
+      padding: 20px 22px;
+      border: 1px solid var(--line);
+      background: #f8f5ee;
+    }
+
+    .loop strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--forest);
+      font-family: var(--sans);
+      font-size: 0.83rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .loop p {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .principle {
+      max-width: 720px;
+      margin: 34px 0;
+      padding: 25px 28px;
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .principle span {
+      display: block;
+      margin-bottom: 8px;
+      color: #e9b8a4;
+      font-family: var(--sans);
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .principle p {
+      margin: 0;
+      font-size: 1.28rem;
+      line-height: 1.45;
+    }
+
+    .source-list {
+      border-top: 1px solid var(--line);
+      margin-top: 35px;
+      padding-top: 22px;
+      font-family: var(--sans);
+      font-size: 0.86rem;
+    }
+
+    .source-list h3 {
+      margin-top: 0;
+    }
+
+    .closing-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      max-width: 720px;
+      margin: 32px 0 40px;
+      font-family: var(--sans);
+    }
+
+    .closing-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 12px 18px;
+      border: 1px solid var(--forest);
+      font-size: 0.84rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .closing-action.primary {
+      background: var(--forest);
+      color: var(--white);
+    }
+
+    .closing-action.secondary {
+      background: transparent;
+      color: var(--forest);
+    }
+
+    .closing-action:hover,
+    .closing-action:focus-visible {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--white);
+      outline: none;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 48px));
+      margin: 0 auto 52px;
+      color: var(--muted);
+      font-family: var(--sans);
+      font-size: 0.78rem;
+      text-align: right;
+    }
+
+    @media (max-width: 900px) {
+      .masthead {
+        min-height: 480px;
+      }
+
+      .hero-copy {
+        margin-top: 82px;
+      }
+
+      .page-shell {
+        display: block;
+        margin-top: -30px;
+      }
+
+      .contents {
+        position: relative;
+        top: 0;
+        margin-bottom: 20px;
+      }
+
+      .contents ol {
+        columns: 2;
+        column-gap: 28px;
+      }
+
+      .contents li {
+        break-inside: avoid;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .masthead {
+        min-height: 440px;
+        padding: 22px 20px 58px;
+      }
+
+      .topline {
+        align-items: flex-start;
+        font-size: 0.63rem;
+      }
+
+      .hero-copy {
+        margin-top: 70px;
+      }
+
+      h1 {
+        font-size: clamp(2.8rem, 14vw, 4.2rem);
+      }
+
+      .dek {
+        font-size: 1.05rem;
+      }
+
+      .page-shell {
+        width: min(100% - 24px, 1120px);
+      }
+
+      .contents {
+        padding: 19px;
+      }
+
+      .contents ol {
+        columns: 1;
+      }
+
+      .article {
+        padding: 34px 24px;
+      }
+
+      .article h2 {
+        font-size: 2.15rem;
+      }
+
+      .article p {
+        font-size: 1rem;
+      }
+
+      .framework-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pull-quote {
+        padding: 22px;
+      }
+
+      .closing-actions {
+        flex-direction: column;
+      }
+
+      .closing-action {
+        width: 100%;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .masthead::before {
+        animation: none;
+        opacity: 0.12;
+        transform: scale(2.5);
+      }
+
+      .masthead::after {
+        display: none;
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+      }
+
+      .masthead {
+        min-height: auto;
+        padding: 30px;
+        color: #000;
+        background: #fff;
+        border-bottom: 2px solid #000;
+      }
+
+      .masthead::before,
+      .masthead::after,
+      .contents {
+        display: none;
+      }
+
+      .hero-copy {
+        margin-top: 45px;
+      }
+
+      .dek,
+      .eyebrow,
+      .topline {
+        color: #222;
+      }
+
+      .page-shell {
+        display: block;
+        width: 100%;
+        margin: 0;
+      }
+
+      .article {
+        border: 0;
+        box-shadow: none;
+        padding: 32px 0;
+      }
+
+      .article section {
+        break-inside: avoid;
+      }
+    }
+
+    /* Youth edition additions */
+    .prompt-panel {
+      margin: 26px 0 8px;
+      padding: 22px 24px;
+      background: var(--forest-dark);
+      color: var(--white);
+      border-radius: 10px;
+      font-family: var(--sans);
+    }
+    .prompt-panel h3 { margin: 0 0 4px; color: var(--white); }
+    .prompt-panel p { margin: 0 0 12px; color: rgba(255,253,248,0.75); font-size: 0.9rem; }
+    .prompt-text {
+      width: 100%;
+      min-height: 110px;
+      padding: 12px;
+      border: 1px solid rgba(255,253,248,0.35);
+      border-radius: 6px;
+      background: rgba(255,253,248,0.06);
+      color: var(--white);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      resize: vertical;
+    }
+    .copy-button {
+      margin-top: 10px;
+      padding: 9px 16px;
+      border: 1px solid var(--glow, #e9b8a4);
+      background: #e9b8a4;
+      color: var(--forest-dark);
+      font-family: var(--sans);
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .copy-button:hover { background: var(--white); }
+    .steps-list { counter-reset: step; list-style: none; padding: 0; margin: 18px 0 0; }
+    .steps-list li {
+      counter-increment: step;
+      position: relative;
+      padding: 0 0 14px 46px;
+      font-size: 1.02rem;
+    }
+    .steps-list li::before {
+      content: counter(step, decimal-leading-zero);
+      position: absolute; left: 0; top: 2px;
+      font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <div class="topline">
+        <span>Human and AI Software Development</span>
+        <span>Youth edition · Grades 8–12</span>
+      </div>
+      <div class="hero-copy">
+        <p class="eyebrow">For students who want to build, not just prompt</p>
+        <h1>You + AI Can Build Real Software</h1>
+        <p class="dek">
+          AI can write the code — a lot of it, fast. That still doesn't make a project build
+          itself. This guide shows you what AI is great at, where it gets lost, and how you become
+          the person who steers.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <nav class="contents" aria-label="Article contents">
+      <h2>Contents</h2>
+      <ol>
+        <li><a href="#build">You can build real things</a></li>
+        <li><a href="#trap">The trap</a></li>
+        <li><a href="#limits">What AI can't do for you</a></li>
+        <li><a href="#director">You're the director</a></li>
+        <li><a href="#hats">Five hats you'll learn to wear</a></li>
+        <li><a href="#habits">Six habits that keep a project alive</a></li>
+        <li><a href="#start">How to start today</a></li>
+        <li><a href="#safety">Rules that keep you safe</a></li>
+      </ol>
+    </nav>
+
+    <main class="article">
+      <div class="article-header">
+        <p>
+          Ten years ago, the app you're imagining would have taken a paid team months to build.
+          Today it takes you, an AI tool, and some patience. The skill that matters is no longer
+          typing the code — it's steering the project.
+        </p>
+      </div>
+
+      <article>
+        <section id="build">
+          <span class="section-number">01 / Good news first</span>
+          <h2>You can build real things now</h2>
+          <p>
+            A study planner that actually fits your school's schedule. A website for your club. A
+            game you invented at lunch. A bot that reminds your team about practice. These are all
+            real projects that students build with AI today — you describe what you want, the AI
+            writes code, you test it, and it grows.
+          </p>
+          <p>
+            You don't need to know every programming language. You do need to know what you want,
+            say it clearly, and check what you get. That part — the thinking part — is yours, and
+            this guide is about doing it well.
+          </p>
+        </section>
+
+        <section id="trap">
+          <span class="section-number">02 / The catch</span>
+          <h2>The trap: "AI will just do it for me"</h2>
+          <p>
+            Your first session feels like magic. One conversation, and there's a working demo. So
+            you keep going — and somewhere around week two, the magic gets weird. You ask for one
+            small new feature, and it quietly breaks something that worked last week. You open a
+            new chat, and the AI has never heard of your project. It rebuilds a thing you already
+            had, a different way, and now there are two of them.
+          </p>
+          <p>
+            Nothing is broken. You've just discovered the truth that professional developers hit
+            too: <strong>a project is more than its code.</strong> It's also the decisions you made,
+            the things you rejected, the reasons why, and the promise that tomorrow's work won't
+            wreck yesterday's. AI doesn't carry that part for free.
+          </p>
+          <p class="pull-quote">
+            Getting code out of an AI is easy. Keeping a project on track is the actual game.
+          </p>
+        </section>
+
+        <section id="limits">
+          <span class="section-number">03 / Know your teammate</span>
+          <h2>Six things AI can't do for you</h2>
+          <p>
+            None of these mean AI is bad. They mean AI is a teammate with specific blind spots —
+            and knowing them is what makes you good at this.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>It forgets</h3>
+              <p>
+                Every new chat starts blank. The AI wasn't there when you decided the app should
+                save data locally, and it won't remember unless you tell it — every time, or in a
+                file it can read.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>It runs out of room</h3>
+              <p>
+                An AI can only "see" a limited amount at once — like a backpack. Your project keeps
+                growing; the backpack doesn't. Eventually the AI is working with only a slice of
+                the truth.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>It sounds sure — even when it's wrong</h3>
+              <p>
+                AI writes confident code and confident explanations with the same tone, right or
+                wrong. A test can pass and still be testing the wrong thing. Confidence is not
+                evidence.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Great at pieces, weak at the whole</h3>
+              <p>
+                Each answer solves the thing in front of it. Nobody is checking that all the
+                pieces still fit together — unless you are.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>More AIs ≠ a team</h3>
+              <p>
+                Two chat windows don't share a goal, don't review each other, and don't agree on
+                what "done" means. Ten of them just make the mess faster.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>It's not responsible</h3>
+              <p>
+                If your app deletes someone's homework, the AI doesn't get in trouble — you do. It
+                can suggest a risky move; it can't take the blame for one.
+              </p>
+            </div>
+          </div>
+          <div class="principle">
+            <span>The one-line summary</span>
+            <p>Code now appears faster than understanding — unless someone manages the gap. That someone is you.</p>
+          </div>
+        </section>
+
+        <section id="director">
+          <span class="section-number">04 / Your real job</span>
+          <h2>You're the director, not the typist</h2>
+          <p>
+            Think of a film set. The AI is an incredible crew — camera, lighting, editing, all at
+            once, all fast. But the crew doesn't decide what the movie is about. The director does.
+          </p>
+          <p>
+            Directing a software project means four things: say clearly what the app is for and who
+            it serves. Decide what "good" looks like before you see the result. Ask for proof — "run
+            it, show me" — instead of trusting a confident answer. And choose what happens next,
+            one small step at a time.
+          </p>
+          <p class="pull-quote">
+            You don't have to type every line. You do have to own every decision.
+          </p>
+        </section>
+
+        <section id="hats">
+          <span class="section-number">05 / Skills, not job titles</span>
+          <h2>Five hats you'll learn to wear</h2>
+          <p>
+            Professional teams hire different people for these. Working with AI, you get to try
+            them all — a hat at a time, whenever the project needs one:
+          </p>
+          <ul>
+            <li><strong>The product hat</strong> — who is this app for, and what problem does it actually solve? "My teammates keep missing practice" beats "an app with lots of features".</li>
+            <li><strong>The planner hat</strong> — what's first, what's later, and what's deliberately "not now"? Small finished steps beat giant unfinished ones.</li>
+            <li><strong>The builder hat</strong> — keep parts separate, so changing the scoreboard can't break the login. Ask the AI to explain the structure until you can draw it.</li>
+            <li><strong>The detective hat</strong> — "show me it works." Try to break your own app before your friends do. A thing isn't done because the AI said so.</li>
+            <li><strong>The keeper hat</strong> — once real people use it, their stuff matters. Back things up, change things carefully, and never experiment directly on data people care about.</li>
+          </ul>
+        </section>
+
+        <section id="habits">
+          <span class="section-number">06 / The system</span>
+          <h2>Six habits that keep a project alive</h2>
+          <p>
+            These six habits are how you beat the blind spots from section 03. They're the same
+            habits professional teams use — just lighter.
+          </p>
+          <div class="framework-grid">
+            <div class="framework-card">
+              <h3>Write the plan down</h3>
+              <p>
+                Keep one file that says what you're building, for whom, and what's next. When you
+                open a new chat, point the AI at it. Now it remembers — because you made memory.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Keep a project diary</h3>
+              <p>
+                When you decide something ("we're using a simple file, not a database — here's
+                why"), write it down. Future-you will forget. Future-AI never knew.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>One thing at a time</h3>
+              <p>
+                Ask for one small feature, test it, save it, then move on. Five half-finished
+                features are worth less than one finished one.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Ask for proof</h3>
+              <p>
+                Before believing "done", ask: how do we know? Run it. Test the weird cases — empty
+                input, wrong password, two users at once. "It ran once" is not "it works".
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Save your progress</h3>
+              <p>
+                Use version control (Git) — it's save points for code, like in a game. When
+                something works, commit it. When an experiment goes wrong, you can go back.
+              </p>
+            </div>
+            <div class="framework-card">
+              <h3>Know what only you decide</h3>
+              <p>
+                Publishing to the internet, spending money, deleting data, using other people's
+                information — the AI can suggest, but these calls are yours (and sometimes an
+                adult's — see section 08).
+              </p>
+            </div>
+          </div>
+          <p>
+            Here's the good news: you don't have to invent this system. The AIPartner template sets
+            these habits up for you — the plan file, the diary, the roles, the checkpoints — and
+            teaches your AI to follow them from the very first conversation.
+          </p>
+        </section>
+
+        <section id="start">
+          <span class="section-number">07 / Hands on</span>
+          <h2>How to start today</h2>
+          <ol class="steps-list">
+            <li><strong>Pick a small, real project.</strong> Something you would actually use this month. Small and real beats big and imaginary.</li>
+            <li><strong>Get the template.</strong> Go to the <a href="https://github.com/imtoam/AIPartner">AIPartner repository</a> and copy it into a new, empty project folder (on GitHub: "Use this template", or just download it).</li>
+            <li><strong>Open it with an AI tool that can read and write files</strong> — most AI coding tools and editors can. A plain chat window works less well, because it can't see your project.</li>
+            <li><strong>Send the starter instruction below</strong>, with your idea at the end. The AI will read the rules and interview you — like a friendly producer asking a director about the film.</li>
+            <li><strong>Answer honestly, approve the plan, then build one small piece at a time.</strong> It's fine to answer "I don't know yet". The AI must ask before creating files — that's by design. You stay the director.</li>
+          </ol>
+          <div class="prompt-panel">
+            <h3>Your starter instruction</h3>
+            <p>Copy this, add your idea at the end, and send it as your first message.</p>
+            <textarea class="prompt-text" id="start-prompt" readonly="readonly">Read START_HERE.md in full and follow its greenfield initialization protocol. Guide me through the initialization in my preferred language. I am a student and new to software projects, so explain decisions in plain language. Do not create project files until I approve the initialization proposal. My idea is:</textarea>
+            <button class="copy-button" id="copy-button" type="button">Copy instruction</button>
+          </div>
+        </section>
+
+        <section id="safety">
+          <span class="section-number">08 / Non-negotiables</span>
+          <h2>Rules that keep you (and others) safe</h2>
+          <p>
+            Professional developers follow these rules too. They're not training wheels — they're
+            the seatbelts everyone wears.
+          </p>
+          <ul>
+            <li><strong>Never paste passwords, API keys, or codes into a chat or a code file.</strong> Not yours, not your family's. If a project needs a key, the AI should tell you where it goes <em>without</em> ever seeing its value.</li>
+            <li><strong>Protect people's private info.</strong> Don't put friends' full names, photos, or contact details into an app without asking them. If your app stores other people's data, treat it like something borrowed.</li>
+            <li><strong>Stop and check with an adult you trust</strong> — a parent or teacher — before anything that goes public on the internet, costs money, or deletes data that can't come back. (Pros have the same rule; they call it "human approval for irreversible actions".)</li>
+            <li><strong>Be honest about what's tested.</strong> Telling your club "it works" when you never tried the edge cases isn't confidence — it's a bug report you haven't received yet.</li>
+            <li><strong>If an answer feels off, push back.</strong> "Are you sure? Show me the evidence" is not rude. It's the single most professional sentence in this whole guide.</li>
+          </ul>
+          <p class="pull-quote">
+            The AI writes fast. You decide what's true, what's good, and what ships. That's the job
+            — and you can absolutely do it.
+          </p>
+
+          <div class="closing-actions" aria-label="Continue with AIPartner">
+            <a class="closing-action primary" href="https://github.com/imtoam/AIPartner">Get the template</a>
+            <a class="closing-action secondary" href="ai-native-project.html">Read the full article</a>
+          </div>
+        </section>
+      </article>
+    </main>
+  </div>
+
+  <footer>
+    Human and AI Software Development / Version 0.9 / Youth &amp; beginners ·
+    <a href="ai-native-project.html" lang="en">Full article</a> /
+    <a href="ai-native-project-cn.html" lang="zh-Hant">繁體中文</a> /
+    <a href="ai-native-project-fr.html" lang="fr">Français</a>
+  </footer>
+
+  <script>
+    (function () {
+      var button = document.getElementById("copy-button");
+      var text = document.getElementById("start-prompt");
+      if (!button || !text) return;
+      button.addEventListener("click", function () {
+        var done = function () {
+          button.textContent = "Copied!";
+          setTimeout(function () { button.textContent = "Copy instruction"; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text.value).then(done);
+        } else {
+          text.select();
+          document.execCommand("copy");
+          done();
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

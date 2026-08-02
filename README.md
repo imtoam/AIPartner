@@ -1,4 +1,5 @@
 # AIPartner
+<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 Protocol version: 0.9.0
 
