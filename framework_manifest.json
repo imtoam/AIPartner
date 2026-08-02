@@ -26,11 +26,11 @@
     },
     "index.html": {
       "mode": "immutable",
-      "sha256": "7696fbba8d0b40dbc101c4d32f68d53339175531455aaa6c5bcf58d6e75bee6b"
+      "sha256": "3bc42459e220ff0b73b55a5c721af766352848ebe079a6a2348fa287b64eda05"
     },
     "README.md": {
       "mode": "immutable",
-      "sha256": "cb2cea55812b2a07ecd4443704b2fcf660ef269c96fa3f800dcc46face352ef8"
+      "sha256": "03ea7cc476f967396efa56d9fd54e16761c742b238416f33b97e82fdd84f5961"
     },
     "LICENSE": {
       "mode": "immutable",
