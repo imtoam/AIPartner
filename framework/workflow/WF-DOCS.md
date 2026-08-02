@@ -1,5 +1,5 @@
 # WF-DOCS — Documentation and work tracking
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 AIPartner framework workflow module. Module ID: `WF-DOCS` (stable).
 

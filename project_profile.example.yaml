@@ -1,16 +1,16 @@
-# AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
+# AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
 # project_profile.example.yaml
 #
-# Exact project_profile.yaml contract for AIPartner protocol 0.9.
+# Exact project_profile.yaml contract for AIPartner protocol 0.10.
 # Copy this structure after proposal approval. Replace example values; do not remove required keys.
 # Mutable work-item status belongs only in current_work_source and must not be copied here.
 
-schema_version: "0.9.0"
+schema_version: "0.11.0"
 
 template:
   name: "AIPartner"
   protocol_id: "BOOTSTRAP-001"
-  protocol_version: "0.9.0"
+  protocol_version: "0.11.0"
   source: "repository URL, release, or commit used"
 
 input:
@@ -86,6 +86,10 @@ role_modules:
     state: "inactive"
     evidence: ""
     trigger: "A second writer may change project source, control files, or version history"
+  ROLE-DELEGATION:
+    state: "inactive"
+    evidence: ""
+    trigger: "The Product Owner chooses guided delegation, or later asks to switch to it"
 
 workflow_modules:
   WF-CORE:
@@ -121,6 +125,14 @@ workflow_modules:
     state: "inactive"
     evidence: ""
     trigger: "The next approved increment crosses an authoritative or non-cleanable data boundary"
+  WF-PERSISTENCE:
+    state: "inactive"
+    evidence: ""
+    trigger: "The project must keep state that survives a restart, or a store changes shape, owner, or retention"
+  WF-ML:
+    state: "inactive"
+    evidence: ""
+    trigger: "Parameters are learned or calibrated from data, or a pretrained model becomes part of the output"
   WF-OPS:
     state: "inactive"
     evidence: ""
@@ -133,6 +145,52 @@ workflow_modules:
     state: "inactive"
     evidence: ""
     trigger: "The next approved increment can materially affect money, health, safety, rights, privacy, or security"
+
+delegation:
+  # Owned by framework/roles/ROLE-DELEGATION.md. Meaningful only when ROLE-DELEGATION is active.
+  # Record the mode, never a judgement about the person.
+  mode: "expert"
+  # Allowed: guided, expert
+  chosen_on: ""
+  charter_path: ""
+  # docs/delegation_charter.md when mode is guided; empty otherwise.
+  charter_revision: ""
+  switches: []
+  # One entry per switch: {on, from, to, review_outcome, stated_reason}
+
+persistence:
+  # Owned by framework/workflow/WF-PERSISTENCE.md. Meaningful only when WF-PERSISTENCE is active.
+  # "none" is a recorded decision with evidence, not an omission.
+  decision: "none"
+  # Allowed: none, files, embedded_database, server_database, document_store, mixed
+  access_pattern: ""
+  # What is written, how often, who reads it, which query shapes matter, how large it may grow.
+  stores: []
+  # One entry per store:
+  # {name, owner_module, schema_path, authority, write_semantics, retention, rebuild_command}
+  #   authority: authoritative | derived
+  #   write_semantics: overwrite | append_only
+  #   rebuild_command is required when authority is derived.
+
+machine_learning:
+  # Owned by framework/workflow/WF-ML.md. Meaningful only when WF-ML is active.
+  context_of_use: ""
+  # The question answered, the decision that consumes the output, the valid population and period.
+  excluded_uses: []
+  model_risk: "not_rated"
+  # Allowed: not_rated, light_evidence, full_evidence, full_evidence_independent_review
+  model_classes: {}
+  # One key per class in WF-ML section 3, each with a tailoring decision state and evidence:
+  # retrieval_indexing, calibrated_rules, supervised, sequential, unsupervised,
+  # pretrained_as_is, adapted_general
+  layers: {}
+  # One key per layer in WF-ML section 4: data, representation, retrieval, reasoning, governance.
+  # governance is never deferred while any other layer is selected_now.
+  artifacts: []
+  # One entry per frozen artifact: {id, version, sha256, evaluated_on, approved_by}
+  revalidation_triggers: []
+  # Written before deployment; normally input shift, code or dependency change, elapsed time,
+  # and measured decay.
 
 version_control:
   mode: "local_git"
@@ -186,6 +244,7 @@ structure:
     - path: "PROJECT_STRUCTURE_REFERENCE.md"
     - path: "framework/workflow/"
     - path: "framework/structure/"
+    - path: "framework/roles/"
     - path: "project_profile.example.yaml"
     - path: "index.html"
     - path: "README.md"

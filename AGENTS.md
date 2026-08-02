@@ -1,5 +1,5 @@
 # AGENTS.md
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 Team charter and role rules
 
@@ -29,6 +29,7 @@ Checked sections apply. Unchecked sections are ignored except for their activati
 - [x] ROLE-PARTNER: Human and AI partnership
 - [ ] ROLE-REVIEW: Independent peer review
 - [ ] ROLE-MULTIWRITER: Multiple project writers and worktrees
+- [ ] ROLE-DELEGATION: Decision delegation modes
 <!-- END PROJECT CONFIG: ROLE MODULE ACTIVATION -->
 
 During initialization, the AI recommends which optional role sections are needed. The Product
@@ -47,6 +48,10 @@ Read:
   is relevant.
 - read and follow PROJECT_WORKFLOW.md before shaping, planning, implementing, testing, reviewing,
   releasing, or operating a project change.
+- [framework/roles/ROLE-DELEGATION.md](framework/roles/ROLE-DELEGATION.md) when the delegation mode
+  is being chosen or switched, or when deciding whether a decision may be made on the Product
+  Owner's behalf. That file is the sole owner of the two modes, the delegation charter, the
+  delegable boundary, and the reporting requirements guided delegation imposes.
 - only the project facts, active modules, and sources of truth relevant to the current task.
 
 For a factual answer or a small mechanical edit, do not load the complete project methodology

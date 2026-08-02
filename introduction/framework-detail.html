@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="aipartner-source" content="AIPartner 0.9.0" />
+  <meta name="aipartner-source" content="AIPartner 0.11.0" />
   <meta name="aipartner-source-url" content="https://github.com/imtoam/AIPartner" />
   <meta name="aipartner-licence" content="CC BY-SA 4.0" />
   <title>AIPartner — Framework Scope Details</title>
@@ -166,10 +166,10 @@
     <div class="masthead-inner">
       <div class="topline">
         <span>AIPartner</span>
-        <span>Protocol 0.9 / Scope details</span>
+        <span>Protocol 0.11 / Scope details</span>
       </div>
       <p class="eyebrow">Scope details</p>
-      <h1>The thirteen governed aspects, in detail.</h1>
+      <h1>The fourteen governed aspects, in detail.</h1>
       <p class="dek">
         Expanded notes and authoritative sources for every card on the
         <a href="framework-scope.html">framework scope map</a>. Source links open the maintained
@@ -180,7 +180,7 @@
 
   <div class="provenance">
     <strong>Derived view.</strong> The Markdown files linked under each section are authoritative;
-    if this page and a source disagree, the source wins. Generated 2026-08-02 for protocol 0.9.0.
+    if this page and a source disagree, the source wins. Generated 2026-08-02 for protocol 0.11.0.
   </div>
 
   <main class="page">
@@ -195,9 +195,10 @@
       <li><a href="#aspect-08">08 Anti-drift defenses</a></li>
       <li><a href="#aspect-09">09 Structure &amp; tailoring</a></li>
       <li><a href="#aspect-10">10 Version control</a></li>
-      <li><a href="#aspect-11">11 Data, ops, recovery, high impact</a></li>
+      <li><a href="#aspect-11">11 Data, persistence, ops, recovery</a></li>
       <li><a href="#aspect-12">12 Machine contracts &amp; tools</a></li>
-      <li><a href="#aspect-13">13 Boundaries &amp; non-goals</a></li>
+      <li><a href="#aspect-13">13 Machine learning &amp; model output</a></li>
+      <li><a href="#aspect-14">14 Boundaries &amp; non-goals</a></li>
     </ul>
 
     <section class="aspect" id="aspect-01">
@@ -216,8 +217,19 @@
         user statement, observed fact, AI inference, AI proposal, unresolved. An inference never
         becomes a project fact without confirmation.
       </p>
+      <p>
+        A further optional module governs <em>how</em> that authority is exercised. Guided
+        delegation lets the Product Owner approve outcomes, boundaries, delivery conditions, and
+        accepted risk in ordinary language while the framework selects the modules that implement
+        them; expert selection is the original behaviour, in which the Product Owner also chooses
+        the modules. The recorded state is identical either way — only the interview differs — and
+        the mode can be switched at any time, each switch opening with a review of what already
+        exists. Every delegated decision must name the Product Owner statement it derives from; one
+        that cannot is invention, not delegation.
+      </p>
       <p class="sources"><strong>Sources:</strong>
         <a href="../AGENTS.md">AGENTS.md</a>
+        <a href="../framework/roles/ROLE-DELEGATION.md">framework/roles/ROLE-DELEGATION.md</a>
       </p>
       <a class="backtop" href="framework-scope.html">← Back to scope map</a>
     </section>
@@ -407,8 +419,15 @@
         overview. Everything else appears when a real consumer exists, and deferred needs record
         their trigger instead of materializing early.
       </p>
+      <p>
+        The catalog says what may exist; WF-STRUCTURE says how what exists must be organized. It
+        owns repository organization by responsibility, module identity and ownership, and the
+        separation of current state from planned state — so a later reader can locate truth,
+        source, tests, tools, and runtime evidence without reconstructing the project from history.
+      </p>
       <p class="sources"><strong>Sources:</strong>
         <a href="../PROJECT_STRUCTURE_REFERENCE.md">PROJECT_STRUCTURE_REFERENCE.md (spine)</a>
+        <a href="../framework/workflow/WF-STRUCTURE.md">framework/workflow/WF-STRUCTURE.md</a>
         <a href="../framework/structure/root-files.md">root-files.md</a>
         <a href="../framework/structure/directory-catalog.md">directory-catalog.md</a>
         <a href="../framework/structure/minimal-start.md">minimal-start.md</a>
@@ -440,7 +459,15 @@
 
     <section class="aspect" id="aspect-11">
       <span class="num">11 · When stakes rise</span>
-      <h2>Data, operations, recovery &amp; high impact</h2>
+      <h2>Data, persistence, operations, recovery &amp; high impact</h2>
+      <p>
+        WF-PERSISTENCE owns the decision layer beneath all of these: whether the project keeps state
+        at all — "it keeps none" being a recorded decision rather than an omission — which mechanism
+        the access pattern justifies, who owns each schema and how it evolves, whether a record is
+        overwritten or appended so that the past stays answerable, and how long anything is kept.
+        The directory catalog says which stores may exist; presence there is never evidence that the
+        project needs one.
+      </p>
       <p>
         Four optional risk modules activate when their conditions become real. WF-DATA: tests use
         temporary or synthetic data, diagnostics use read-only connections, append-only rules are
@@ -456,6 +483,7 @@
         verification, and learned or generated output never gains authority silently.
       </p>
       <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-PERSISTENCE.md">WF-PERSISTENCE.md</a>
         <a href="../framework/workflow/WF-DATA.md">WF-DATA.md</a>
         <a href="../framework/workflow/WF-OPS.md">WF-OPS.md</a>
         <a href="../framework/workflow/WF-RECOVERY.md">WF-RECOVERY.md</a>
@@ -476,7 +504,10 @@
       </p>
       <p>
         Three retained tools enforce the contracts: tools/validate_initialization.py (framework
-        integrity plus profile validation), tools/delivery_receipt.py (receipt evaluation and the
+        integrity, profile validation, and derived-view consistency — every Markdown link in these
+        HTML pages must resolve, every framework module must be presented here, the scope map and
+        this page must describe the same aspects, and every version claim must equal the protocol
+        constant, so a view cannot quietly go stale while its hash stays valid), tools/delivery_receipt.py (receipt evaluation and the
         machine constant of the gate order), and tools/render_project_overview.py (atomic
         generation of the overview from declared sources).
       </p>
@@ -490,10 +521,55 @@
     </section>
 
     <section class="aspect" id="aspect-13">
-      <span class="num">13 · Honest edges</span>
+      <span class="num">13 · Learned output</span>
+      <h2>Machine learning &amp; model-derived output</h2>
+      <p>
+        WF-ML activates when a project fits, trains, fine-tunes, or calibrates parameters from data,
+        or uses a pretrained model as part of what it produces. Its first rule closes the most
+        common escape hatch: a calibrated threshold is a learned parameter, because choosing a
+        number by looking at outcomes is training whatever the code calls it. Before any model work
+        begins, the context of use is declared — the question answered, the decision that consumes
+        the answer, the population and period it is valid on, and what it must never be used for.
+        Model risk is then rated on two axes, influence over the decision and consequence of the
+        decision, and evidence depth follows the higher one.
+      </p>
+      <p>
+        What kind of model to build is a selection, never a default. The module carries a menu of
+        seven model classes — retrieval and indexing, calibrated rules, supervised, sequential,
+        unsupervised, pretrained models used as-is, and adapted general models — each stating what
+        is actually learned, by what mechanism, and therefore what evidence it owes: walk-forward
+        with purge and embargo for sequential models, corpus provenance and reproducible rebuilds
+        for retrieval, pinned versions and prompts in version control for pretrained models. The
+        architecture is selected the same way, layer by layer — data, representation, retrieval,
+        reasoning, governance — using the ordinary tailoring decision states. A project may skip
+        retrieval or representation entirely; it may not select any layer while leaving governance
+        unselected, because without governance nothing distinguishes a working model from a
+        plausible one.
+      </p>
+      <p>
+        The remaining rules exist to keep learned output honest. Training material may contain
+        nothing that was not knowable when the prediction would have been made. Every deployed
+        artifact carries a version and a content hash, and every recorded prediction names the
+        artifact that produced it. Re-validation triggers are written down in advance, since "it
+        has not broken yet" is not a measurement. A model that fails its evaluation is recorded as
+        failed — retuning against the same evaluation set until it passes consumes the set and
+        produces a number that means nothing. And a learned output never becomes project truth or
+        takes action by itself: acting on the world routes to WF-HIGH-IMPACT, storing predictions
+        routes to WF-PERSISTENCE, and showing a number to a person routes to WF-VIEWS, which
+        requires the view to say that the number is derived and from which artifact.
+      </p>
+      <p class="sources"><strong>Sources:</strong>
+        <a href="../framework/workflow/WF-ML.md">framework/workflow/WF-ML.md</a>
+        <a href="../PROJECT_STRUCTURE_REFERENCE.md">PROJECT_STRUCTURE_REFERENCE.md (decision states)</a>
+      </p>
+      <a class="backtop" href="framework-scope.html">← Back to scope map</a>
+    </section>
+
+    <section class="aspect" id="aspect-14">
+      <span class="num">14 · Honest edges</span>
       <h2>Boundaries &amp; non-goals</h2>
       <p>
-        Version 0.9 initializes greenfield projects only; brownfield adoption, import, and
+        Protocol 0.11 initializes greenfield projects only; brownfield adoption, import, and
         re-initialization are reserved modes, not permission to improvise. The framework never
         collects or stores secrets — only their purpose, delivery mechanism, and variable names.
       </p>

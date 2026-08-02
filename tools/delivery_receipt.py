@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
+# AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
 """Shared validation for the delivery-sequence receipt contract."""
 
 from __future__ import annotations

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
+# AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0
 """Validate AIPartner framework integrity and initialized project contracts.
 
 The validator intentionally uses only the Python standard library. It checks the stable subset of
@@ -59,6 +59,20 @@ POST_MATERIALIZATION_STATES = {
     "complete",
 }
 
+PROTOCOL_VERSION = "0.11.0"
+PROTOCOL_SERIES = "0.11"
+
+# HTML derived views: the Markdown they cite is authoritative, so they are checked against it.
+FRAMEWORK_DETAIL_VIEW = "introduction/framework-detail.html"
+FRAMEWORK_SCOPE_VIEW = "introduction/framework-scope.html"
+MD_HREF_PATTERN = re.compile(r'href="([^"#?]+\.md)(?:#[^"]*)?"')
+ASPECT_CARD_PATTERN = re.compile(r'href="framework-detail\.html#aspect-(\d+)"')
+ASPECT_TOC_PATTERN = re.compile(r'<li><a href="#aspect-(\d+)">')
+ASPECT_SECTION_PATTERN = re.compile(r'<section class="aspect" id="aspect-(\d+)">')
+VERSION_CLAIM_PATTERN = re.compile(
+    r"(?:AIPartner|[Pp]rotocol(?: version)?|[Vv]ersion|版本)\s+(\d+\.\d+(?:\.\d+)?)"
+)
+
 REQUIRED_PERSPECTIVES = {
     "management": "perspective-management",
     "business": "perspective-business",
@@ -87,7 +101,7 @@ FRAMEWORK_FILES = {
         "BEGIN PROJECT CONFIG: TEAM FACTS",
     ),
     "START_HERE.md": (
-        "Protocol version: 0.9.0",
+        "Protocol version: 0.11.0",
         "Framework invariant:",
         "Establish language without creating a language questionnaire",
         "Keep human views subordinate to project truth",
@@ -114,6 +128,40 @@ FRAMEWORK_FILES = {
         "framework_retained",
         "## Structure catalog routing",
         "framework/structure/documentation-catalog.md",
+    ),
+    "framework/workflow/WF-PERSISTENCE.md": (
+        "# WF-PERSISTENCE — Where project state lives",
+        "Module ID: `WF-PERSISTENCE` (stable)",
+        "Activation condition:",
+        "### Boundary with neighbouring modules",
+        "Record the persistence decision even when the answer is none.",
+        "Classify every store at creation as authoritative or derived.",
+        "Write semantics are explicit for each store",
+        "Retention is an approved period with a named owner",
+    ),
+    "framework/workflow/WF-ML.md": (
+        "# WF-ML — Machine learning and model-derived output",
+        "Module ID: `WF-ML` (stable)",
+        "Activation condition:",
+        "**A calibrated threshold is a learned parameter.**",
+        "### 1. Context of use — declared before building",
+        "### 2. Model risk is two-dimensional",
+        "### 3. Model class — a selection, not a default",
+        "### 4. Layers — selected one by one",
+        "**The governance layer is not optional.**",
+        "### 6. Freezing and identity",
+        "### 7. Re-validation and honest failure",
+        "### 8. Effective challenge and monitoring",
+        "### 9. Authority boundary",
+    ),
+    "framework/roles/ROLE-DELEGATION.md": (
+        "# ROLE-DELEGATION — Decision delegation modes",
+        "## 5. Switching modes at any time",
+        "### 5.2 Every switch begins with a review",
+        "## 6. What may be delegated",
+        "## 7. Traceability — the anti-drift rule",
+        "## 8. The delegation charter",
+        "Record the mode, never a judgement about the person",
     ),
     "framework/workflow/WF-COMMUNICATION.md": (
         "## WF-COMMUNICATION: Language, terminology, and translation",
@@ -180,7 +228,7 @@ FRAMEWORK_FILES = {
         "## 11. Minimal greenfield starting set",
     ),
     "project_profile.example.yaml": (
-        'schema_version: "0.9.0"',
+        'schema_version: "0.11.0"',
         "communication:",
         "human_interface:",
         "perspectives:",
@@ -199,19 +247,19 @@ FRAMEWORK_FILES = {
     "index.html": (
         'name="aipartner-page-role" content="human-start-guide"',
         'id="begin"',
-        "Protocol 0.9",
+        "Protocol 0.11",
         "START_HERE.md",
     ),
     "README.md": (
         "START_HERE.md",
         "AGENTS.md",
         "PROJECT_WORKFLOW.md",
-        "Protocol version: 0.9.0",
+        "Protocol version: 0.11.0",
         "framework/workflow/WF-PLANNING.md",
     ),
     "framework_manifest.json": (
         '"schema_version": 1',
-        '"protocol_version": "0.9.0"',
+        '"protocol_version": "0.11.0"',
         '"files"',
     ),
     "tools/render_project_overview.py": (
@@ -490,6 +538,111 @@ def validate_framework(root: Path, report: Report) -> None:
         else:
             report.ok(f"{relative} retains required framework content")
     validate_manifest(root, report)
+    validate_derived_views(root, report)
+
+
+def derived_view_pages(root: Path) -> list[Path]:
+    pages = []
+    index = root / "index.html"
+    if index.is_file():
+        pages.append(index)
+    introduction = root / "introduction"
+    if introduction.is_dir():
+        pages.extend(sorted(introduction.glob("*.html")))
+    return pages
+
+
+def validate_derived_views(root: Path, report: Report) -> None:
+    """Check that the HTML derived views still agree with the Markdown they present.
+
+    The manifest hashes each file independently, so it cannot detect a view that went stale
+    because its source changed. These three checks close that gap deterministically: a broken
+    source link, an unpresented framework module, or a version claim that drifted from the
+    protocol constant all fail here instead of surviving as a plausible-looking page.
+    """
+    pages = derived_view_pages(root)
+    if not pages:
+        return
+
+    # 1. Every Markdown source link in a derived view resolves to a real file.
+    for page in pages:
+        relative_page = page.relative_to(root).as_posix()
+        text = page.read_text(encoding="utf-8")
+        broken = []
+        for href in MD_HREF_PATTERN.findall(text):
+            if href.startswith(("http://", "https://", "/")):
+                continue
+            if not (page.parent / href).resolve().is_file():
+                broken.append(href)
+        if broken:
+            report.error(
+                f"{relative_page} links Markdown sources that do not exist: "
+                + ", ".join(sorted(set(broken)))
+            )
+        else:
+            report.ok(f"{relative_page} Markdown source links all resolve")
+
+    # 2. Every framework module file is presented by the scope detail view.
+    detail = root / FRAMEWORK_DETAIL_VIEW
+    framework_dir = root / "framework"
+    if detail.is_file() and framework_dir.is_dir():
+        detail_text = detail.read_text(encoding="utf-8")
+        cited = {
+            (detail.parent / href).resolve()
+            for href in MD_HREF_PATTERN.findall(detail_text)
+            if not href.startswith(("http://", "https://", "/"))
+        }
+        uncited = sorted(
+            module.relative_to(root).as_posix()
+            for module in framework_dir.rglob("*.md")
+            if module.resolve() not in cited
+        )
+        if uncited:
+            report.error(
+                f"{FRAMEWORK_DETAIL_VIEW} does not present these framework modules: "
+                + ", ".join(uncited)
+            )
+        else:
+            report.ok(f"{FRAMEWORK_DETAIL_VIEW} presents every framework module file")
+
+    # 3. The scope map, its table of contents, and the detail sections describe the same aspects.
+    scope = root / FRAMEWORK_SCOPE_VIEW
+    if scope.is_file() and detail.is_file():
+        scope_text = scope.read_text(encoding="utf-8")
+        detail_text = detail.read_text(encoding="utf-8")
+        counts = {
+            f"{FRAMEWORK_SCOPE_VIEW} cards": len(ASPECT_CARD_PATTERN.findall(scope_text)),
+            f"{FRAMEWORK_DETAIL_VIEW} contents entries": len(
+                ASPECT_TOC_PATTERN.findall(detail_text)
+            ),
+            f"{FRAMEWORK_DETAIL_VIEW} sections": len(ASPECT_SECTION_PATTERN.findall(detail_text)),
+        }
+        if len(set(counts.values())) != 1:
+            report.error(
+                "Framework aspect counts disagree: "
+                + ", ".join(f"{name}={value}" for name, value in counts.items())
+            )
+        else:
+            report.ok(
+                f"Framework scope map, contents, and sections all describe "
+                f"{next(iter(counts.values()))} aspects"
+            )
+
+    # 4. Every version claim in a derived view matches the protocol constant.
+    accepted = {PROTOCOL_VERSION, PROTOCOL_SERIES}
+    stale = []
+    for page in pages:
+        relative_page = page.relative_to(root).as_posix()
+        for claimed in VERSION_CLAIM_PATTERN.findall(page.read_text(encoding="utf-8")):
+            if claimed not in accepted:
+                stale.append(f"{relative_page}: {claimed}")
+    if stale:
+        report.error(
+            f"Derived views claim a version other than {PROTOCOL_VERSION}: "
+            + ", ".join(sorted(set(stale)))
+        )
+    else:
+        report.ok(f"Derived view version claims all match protocol {PROTOCOL_VERSION}")
 
 
 def validate_communication(
@@ -841,7 +994,7 @@ def validate_profile(root: Path, report: Report) -> None:
         report.ok("project_profile.yaml contains all required top-level sections")
 
     version = field(lines, "schema_version")
-    if version != "0.9.0":
+    if version != "0.11.0":
         report.error(f"Unsupported project profile schema_version: {version or '(missing)'}")
 
     initialization = block(lines, "initialization")
@@ -850,7 +1003,7 @@ def validate_profile(root: Path, report: Report) -> None:
     if status not in ALLOWED_STATES:
         report.error(f"Invalid initialization status: {status or '(missing)'}")
     if mode != "greenfield":
-        report.error(f"Protocol 0.9 supports only greenfield mode, found: {mode or '(missing)'}")
+        report.error(f"Protocol 0.11 supports only greenfield mode, found: {mode or '(missing)'}")
 
     approval = block(initialization, "approval", indent=2)
     approval_state = field(approval, "state", minimum_indent=4)
@@ -964,6 +1117,7 @@ def validate_profile(root: Path, report: Report) -> None:
         "introduction/",
         "framework/workflow/",
         "framework/structure/",
+        "framework/roles/",
     }
     missing_retained = sorted(required_retained - set(retained))
     if missing_retained:

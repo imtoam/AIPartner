@@ -1,11 +1,11 @@
 # START_HERE.md
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.9.0
+Protocol version: 0.11.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -255,7 +255,15 @@ states are defined by WF-VIEWS.
 
 ## 2. How to conduct the initialization conversation
 
-Initialization is not a fixed long-form questionnaire. Use an adaptive interview:
+Initialization is not a fixed long-form questionnaire. Use an adaptive interview.
+
+**Ask the delegation-mode question first.** Before any other initialization question, offer the two
+ways of working defined in framework/roles/ROLE-DELEGATION.md §4: the AI decides the technical
+setup from plain-language answers and reports what it chose, or the user selects the setup from the
+options. The answer determines how every later question is phrased, and whether ROLE-DELEGATION is
+activated. Neither answer changes what is recorded, and the user may switch at any time.
+
+Then continue the adaptive interview:
 
 1. Extract information the user has already provided.
 2. Restate your current understanding before asking the user to repeat anything.
@@ -546,8 +554,8 @@ Include the initial alignment check, expected boundary questions, test layers, a
 the stop-and-discuss rule for discrepancies, and the first permanent work ID allocated through
 PROJECT_WORKFLOW.md.
 
-If the first feature crosses a durable boundary or activates WF-DATA, WF-OPS, WF-RECOVERY, or
-WF-HIGH-IMPACT, include a durable feature-plan file in the proposal. Do not reduce a high-risk
+If the first feature crosses a durable boundary or activates WF-DATA, WF-PERSISTENCE, WF-ML, WF-OPS,
+WF-RECOVERY, or WF-HIGH-IMPACT, include a durable feature-plan file in the proposal. Do not reduce a high-risk
 agreement to one acceptance sentence in the active queue.
 
 When grouped delivery is active, include a delivery-sequence table in the proposal. For every work
@@ -828,7 +836,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.9 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.11 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization

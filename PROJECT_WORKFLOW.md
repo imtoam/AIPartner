@@ -1,5 +1,5 @@
 # PROJECT_WORKFLOW.md
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 Project delivery and governance method
 
@@ -70,6 +70,8 @@ Checked sections apply. Unchecked sections are ignored except for their activati
 - [ ] WF-PLANNING: Multi-level planning
 - [ ] WF-DRIFT: Architecture and governance drift control
 - [ ] WF-DATA: Authoritative and non-cleanable data
+- [ ] WF-PERSISTENCE: Where project state lives
+- [ ] WF-ML: Machine learning and model-derived output
 - [ ] WF-OPS: Unattended operation
 - [ ] WF-RECOVERY: Backup and recovery
 - [ ] WF-HIGH-IMPACT: High-impact changes
@@ -98,6 +100,8 @@ sole normative owner of its rules. Load a module file only when the task touches
 | WF-PLANNING | [framework/workflow/WF-PLANNING.md](framework/workflow/WF-PLANNING.md) | Phases, delivery groups, sequencing, or evidence gates are involved |
 | WF-DRIFT | [framework/workflow/WF-DRIFT.md](framework/workflow/WF-DRIFT.md) | Consistency checks or drift control are involved |
 | WF-DATA | [framework/workflow/WF-DATA.md](framework/workflow/WF-DATA.md) | Authoritative, production, or non-cleanable data is crossed |
+| WF-PERSISTENCE | [framework/workflow/WF-PERSISTENCE.md](framework/workflow/WF-PERSISTENCE.md) | State must survive a restart, or a store's shape, ownership, or retention changes |
+| WF-ML | [framework/workflow/WF-ML.md](framework/workflow/WF-ML.md) | Parameters are learned from data, or a pretrained model becomes part of the output |
 | WF-OPS | [framework/workflow/WF-OPS.md](framework/workflow/WF-OPS.md) | Scheduled or unattended operation is involved |
 | WF-RECOVERY | [framework/workflow/WF-RECOVERY.md](framework/workflow/WF-RECOVERY.md) | Backup, restore, or recovery paths are involved |
 | WF-HIGH-IMPACT | [framework/workflow/WF-HIGH-IMPACT.md](framework/workflow/WF-HIGH-IMPACT.md) | Output can materially affect money, health, safety, rights, privacy, or security |
@@ -120,6 +124,8 @@ framework defect.
 | Permanent work identity | framework/workflow/WF-DOCS.md |
 | Git complexity ladder and commit contract | framework/workflow/WF-VCS.md and framework/structure/git-reference.md |
 | Tailoring decision states and protocol | PROJECT_STRUCTURE_REFERENCE.md |
+| Persistence decision, schema ownership, write semantics, and retention | framework/workflow/WF-PERSISTENCE.md |
+| Context of use, model class and layer selection, model risk, artifact freezing, and re-validation | framework/workflow/WF-ML.md |
 | Directory and artifact catalogs | framework/structure/ catalog files |
 | Roles, authority, and information discipline | AGENTS.md |
 | One-time initialization protocol and its state machine | START_HERE.md |

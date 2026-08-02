@@ -1,36 +1,36 @@
 {
   "schema_version": 1,
-  "protocol_version": "0.9.0",
+  "protocol_version": "0.11.0",
   "source": "https://github.com/imtoam/AIPartner",
   "licence": "CC BY-SA 4.0",
   "files": {
     "AGENTS.md": {
       "mode": "managed_blocks",
-      "sha256": "9ef08a9f6492754f2370ddd1c6cc418ffd0459180dcb460a3be10712a9b0a78d"
+      "sha256": "bc2d68d330e3ea5d57b23c875c01591d7b66ce619175942083891ac6c8015353"
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "32fa1384273c67fa2876a2d81179931483678ebf2d692a88e629ef069302dcbb"
+      "sha256": "6620e395300422a1b5b25b81d5575665630c0e1db70f0553dc6ad1ce56be7ecd"
     },
     "START_HERE.md": {
       "mode": "immutable",
-      "sha256": "86667b43bed31dd7648cc0af30317e5b3bf0dd1868d2a5a9b89475fd7634ad28"
+      "sha256": "5e9db8e7be366f7ff20a393872f2909e38abaa598a8263637ce514b8908366a7"
     },
     "PROJECT_STRUCTURE_REFERENCE.md": {
       "mode": "immutable",
-      "sha256": "bca123e8c6c88637d07924c446a649ee50a4c6a11b65c88ad24c19ee379a42f7"
+      "sha256": "2814bbcddd9f3a18759c0d781e93c522ca9d0f7ea0b75ee90ad30e47ee6fdec0"
     },
     "project_profile.example.yaml": {
       "mode": "immutable",
-      "sha256": "37331698b9d8db5e58f4f8b1aaa3e21c4a6f9f5a7a9b0c6569381680a755f562"
+      "sha256": "7a87f4636d5387e48ba2e934cad3d9921cc78b74098ae2561f98e711b4d39bf0"
     },
     "index.html": {
       "mode": "immutable",
-      "sha256": "f60f32cadb8d3a02a3e553defba273ff1166e92472aaaf626ed2fe626baecb90"
+      "sha256": "625117729165ece56fe1c5edb3e3479d69103c6a27ee27c4cc71d9e08232904d"
     },
     "README.md": {
       "mode": "immutable",
-      "sha256": "e6421f8dca5bb9d1a40026c8f74d85a14cee49933ec53da9e17f8c95e1cae7f7"
+      "sha256": "cb2cea55812b2a07ecd4443704b2fcf660ef269c96fa3f800dcc46face352ef8"
     },
     "LICENSE": {
       "mode": "immutable",
@@ -38,103 +38,115 @@
     },
     "tools/validate_initialization.py": {
       "mode": "immutable",
-      "sha256": "5f8acd0969138042723d43ec354acacb8846b85e8103deb170863c5702c64015"
+      "sha256": "3a40605c388adddb22de2ef8b056d210da51983b126f32bfc4758a09dd51ed10"
     },
     "tools/render_project_overview.py": {
       "mode": "immutable",
-      "sha256": "23cd806fcc2d98b75eab3d7973ebd3c7138591d22122fedd7aadbacce6053369"
+      "sha256": "b45e87533578f0fda014eb6df485c45136a68ec35822ace6bf6c76ec27380b81"
     },
     "tools/delivery_receipt.py": {
       "mode": "immutable",
-      "sha256": "8e3d818a23daa22b312dd850cfdafb02ccfd2efaa3fa2ff2c64aebe61dcbd1ac"
+      "sha256": "5ac4a9479aa14ceeb0ce3495945b16c6ce7243c1bab30b5c0ade41be6229b7f5"
     },
     "introduction/ai-native-project.html": {
       "mode": "immutable",
-      "sha256": "8631cbd3b0271fad4a9317a63b62be352d5c738d18755476c3e6519ca964248d"
+      "sha256": "c1b5f61bea8edfdc107c495bb304366a3e5212ae6ba7786b9f9960000372dc4e"
     },
     "introduction/ai-native-project-fr.html": {
       "mode": "immutable",
-      "sha256": "58ad6f80b75bfd149afb046751c1317f000ea6129f8592b291abe71d8ae91018"
+      "sha256": "0179937c11008a91fe70cc811ce7ca107896817217f894e14e6674d52803a130"
     },
     "introduction/ai-native-project-cn.html": {
       "mode": "immutable",
-      "sha256": "a9bc3f802578bf4c8f1b1a62629fdbb9d729f47cdb21bc0afe1cee9008071947"
+      "sha256": "5877851a4c82f401f0253ad970b16aff9d7155dac23a9ae68512e9c9fafccd4d"
     },
     "introduction/ai-native-project-youth.html": {
       "mode": "immutable",
-      "sha256": "6029e5d36de7e8502a7881cfc02b26b71295ad880306f7b4d31529947386e6dd"
+      "sha256": "cab3776d8c16183e433157a6946e728bfaa4cf99e2e0432aeb0f22ee332bfab9"
     },
     "introduction/framework-scope.html": {
       "mode": "immutable",
-      "sha256": "d49c27cbb88ee3ac720908c1c319905c3ac7c917b28fb756b2f70183c7324a61"
+      "sha256": "1a6db417a00999f9887561f9ed480e7726457d8d3a63f1e3d498e47223243c40"
     },
     "introduction/framework-detail.html": {
       "mode": "immutable",
-      "sha256": "bb63aa4e1b6b6d5a094ac43b1d2a6a544082d37c853ad234f548dba551d0ba64"
+      "sha256": "81fa606c51453610ef2e7fda98997152bc17b9c3c7423c2809dc588e54ee51ed"
+    },
+    "framework/roles/ROLE-DELEGATION.md": {
+      "mode": "immutable",
+      "sha256": "568dcef92fe6327914f38166e7d61bd53227bc6176c775e6404a37447b24a43f"
     },
     "framework/structure/directory-catalog.md": {
       "mode": "immutable",
-      "sha256": "31dd04608ed413e4fb6cb6a4e79f0c4db70ad8c224c4bf93ecbf946c02d4671e"
+      "sha256": "16dd359daf31fba62e6409b231e92cf8849bda703716ff949652910cf173749c"
     },
     "framework/structure/documentation-catalog.md": {
       "mode": "immutable",
-      "sha256": "63078587190c0ec206344bc9b46252bb548845752dd6885ccc6c731ba3e59406"
+      "sha256": "9e5fff03dc4e1768e85aed0b14550bb555ff63a5656d05c1801536804badd85d"
     },
     "framework/structure/git-reference.md": {
       "mode": "immutable",
-      "sha256": "3669f56853a4101a18eccf5a221631bfec5688342f2cc3b5316f8247617b4b0a"
+      "sha256": "daaee31ad8548d41b66dd9ebcc4b517873f99abd65d91d9f13c47e5600eb9c78"
     },
     "framework/structure/minimal-start.md": {
       "mode": "immutable",
-      "sha256": "3e1aaf216a994d7e66e020abc425c2c4ab5974e57be214f345828f2795883482"
+      "sha256": "a98245d962129235c3c6c6fd2d30fcc5b89c4695326d58fa30a4df6fcc8f68f1"
     },
     "framework/structure/root-files.md": {
       "mode": "immutable",
-      "sha256": "d4a6eba306fad3141904b7468cc63330450932c7c88aba03e4523c0bcbdc5257"
+      "sha256": "b98c4869ee83f4b595f0ae9024021d8d756b77f7872e4a653a6dafb6118fc85c"
     },
     "framework/workflow/WF-COMMUNICATION.md": {
       "mode": "immutable",
-      "sha256": "11832ef38b1f24fa37966a5b99278ac06833d1ed3f411ddc2fddd69452ce0fa7"
+      "sha256": "974dab7dcdd9686dc33602b721819ced7bf6482079d2126cb9fe4ad5d80f50ab"
     },
     "framework/workflow/WF-DATA.md": {
       "mode": "immutable",
-      "sha256": "73297392ed582b6a90bda07aba351508386f1909ea434c2168336cc1e61e940f"
+      "sha256": "a4ee345148889885ad9a761ab47fb5024fa1608076410a7c21379a8bf00e019f"
+    },
+    "framework/workflow/WF-PERSISTENCE.md": {
+      "mode": "immutable",
+      "sha256": "4c46a6b78a9d06e700448190c6288f188a8cc1615a46b71cb23848455a4192d0"
+    },
+    "framework/workflow/WF-ML.md": {
+      "mode": "immutable",
+      "sha256": "e5cf4904a9a213d410721bb6d057daa9099cdf2d325ad4a5d3fcc9d4cef5b815"
     },
     "framework/workflow/WF-DOCS.md": {
       "mode": "immutable",
-      "sha256": "477f9ed958fb7463186ebe741dce6605f69678b534d016390d39f873a3334215"
+      "sha256": "7fe608a54a7683f7621c3780a40307308e414ed20141bb539cfae37868007799"
     },
     "framework/workflow/WF-DRIFT.md": {
       "mode": "immutable",
-      "sha256": "bf7c7fcdce1fcfec0588d44ff566768620896d1fdf3eaae8e9c407a3029894b5"
+      "sha256": "cd6b19ccb799cec3c5ffbc0f5497afb8da47c17339e5c79b23a5dcb047f3c743"
     },
     "framework/workflow/WF-HIGH-IMPACT.md": {
       "mode": "immutable",
-      "sha256": "335ee96fa9bc2f3414e009969b478ccd26864e9a5d6800c0a18c3801c6f45870"
+      "sha256": "643b47914935bf970e8c1cd91075999df7c1cce349a8bd07db644899ec6860e7"
     },
     "framework/workflow/WF-OPS.md": {
       "mode": "immutable",
-      "sha256": "a527dca8e5541fd01e76da477cd8e4446f76d7eb1d0976c1427799094194e95f"
+      "sha256": "b09d5e71d307698efa835f582c4b3415bccb3f982db41ecfc69ce6433112d7f5"
     },
     "framework/workflow/WF-PLANNING.md": {
       "mode": "immutable",
-      "sha256": "f88f32cd5a1bf2d8355b5555906c36a5bef4dfaf0baf1a5f50211c9a9c5fbe06"
+      "sha256": "6f38ce7e21f298813207b280ab2792eef60e233d23b735675c7e7485e0f56b6c"
     },
     "framework/workflow/WF-RECOVERY.md": {
       "mode": "immutable",
-      "sha256": "027b13c4617410da5754a552382f08efef6dfc5ab41c90a78234098dac9dd0aa"
+      "sha256": "e7e8dab238a4beef997e9bb5ae6c3b6218c3db10973745208c4aadbf0e209ffe"
     },
     "framework/workflow/WF-STRUCTURE.md": {
       "mode": "immutable",
-      "sha256": "bbe960ed2df646efef555785377b6611f95ff0d8ba75bc6d99b40840c91f8711"
+      "sha256": "b55f999a72129cd8829b3b29acb23bc3b811d516fccc4282a4e898efbba91a78"
     },
     "framework/workflow/WF-VCS.md": {
       "mode": "immutable",
-      "sha256": "0516aa3c9b672ee08cd9bb625883e310c0162118053bed919dc7491620dfac46"
+      "sha256": "aaed2bf2650f11396638ca4e15674b1695ed5806add09afed4e96a186ba3cc09"
     },
     "framework/workflow/WF-VIEWS.md": {
       "mode": "immutable",
-      "sha256": "e7b9d28a31727263ba20c60c15026a0dc27a5e16d652b80157cfed4e602f9278"
+      "sha256": "48d5e0848af344d814716ab3e35c1f95f506457bfb0eb381e8e5bb75956ce399"
     }
   }
 }

@@ -1,7 +1,7 @@
 # AIPartner
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
-Protocol version: 0.9.0
+Protocol version: 0.11.0
 
 Human entry: open [index.html](index.html). This guide remains the human entrance after
 initialization.

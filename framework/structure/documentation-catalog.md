@@ -1,5 +1,5 @@
 # Structure catalog — Documentation and planning artifact contracts
-<!-- AIPartner framework file · protocol 0.9.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
+<!-- AIPartner framework file · protocol 0.11.0 · source: https://github.com/imtoam/AIPartner · licence: CC BY-SA 4.0 -->
 
 AIPartner framework structure-reference catalog file.
 
@@ -169,7 +169,8 @@ record the outcome in history under the same permanent work ID.
 Default path pattern: docs/feature_plans/WORK-ID_short_name.md
 
 Use for a feature that is too large for the current work list, crosses a durable boundary, spans
-sessions or milestones, or is governed by WF-DATA, WF-OPS, WF-RECOVERY, or WF-HIGH-IMPACT.
+sessions or milestones, or is governed by WF-DATA, WF-PERSISTENCE, WF-ML, WF-OPS, WF-RECOVERY, or
+WF-HIGH-IMPACT.
 
 Minimum content:
 
