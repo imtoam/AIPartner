@@ -179,6 +179,7 @@ The trigger starts a proposal. It does not authorize silent restructuring.
 | framework_manifest.json | Integrity contract for retained rules and managed configuration boundaries | Always |
 | .gitignore | Exclusion policy for secrets, generated output, runtime state, and local tools | Version-controlled repository |
 | tools/validate_initialization.py | Deterministic framework and initialization validator | Retained framework tool |
+| tools/delivery_receipt.py | Shared evaluator for current, failed, invalid, and stale delivery receipts | Retained framework tool |
 | tools/render_project_overview.py | Atomic default renderer from declared project sources to the derived overview | Retained framework tool |
 
 `project-overview.html` is the only generated project page in the minimal starting set. It contains
@@ -509,13 +510,50 @@ does not belong in the roadmap or active queue.
 Minimum content:
 
 - phase or release ID and intended outcome.
-- ordered feature IDs and resolvable dependencies.
+- delivery-group registry with stable `DG-NNN` IDs, one unique positive `group_order` per active
+  group, and the intended outcome of each group.
+- membership table assigning every sequenced work ID to exactly one `delivery_group`.
+- resolvable cross-group and cross-feature dependencies, including dependency type and reason.
+- for every work ID, pointers to its exact-scope owner, scope revision, and approval evidence.
 - entry, early-start, and exit conditions.
 - data-clock-critical items, latest activation points, maturity delays, and isolated shadow options.
 - pointers to detailed feature plans without copying their milestone status.
 
-The phase plan owns within-phase order and dependencies. The roadmap owns phase priority; the
-current work list owns active status; feature plans own detailed milestones.
+The phase plan owns `delivery_group`, `group_order`, and within-phase cross-item dependencies. It
+does not own exact scope or approval prose; it points to their owner and records the approved scope
+revision needed by the sequencing gate. The roadmap owns phase priority; the current work list owns
+active status; feature plans own detailed milestones.
+
+Before implementation, read the phase plan in the mandatory sequence
+`delivery_group -> group_order -> dependencies -> approval/exact scope`. Missing group membership,
+duplicate order, unresolved or cyclic dependencies, a dependency on a later group, or approval that
+does not name the current scope revision blocks the affected work.
+
+#### Delivery validation receipt
+
+Default current receipt path: `state/status/delivery_sequence_validation.json`
+
+The project-specific delivery validator writes this receipt atomically after evaluating the active
+phase plan. It is derived status, not a source of planning truth. Minimum JSON contract:
+
+- `schema_version`: `1`.
+- `result`: `pass` or `fail`.
+- `validated_on`: non-empty UTC timestamp.
+- `coordination_source` and `coordination_source_sha256`.
+- `validator_path` and `validator_sha256`.
+- `validation_command`.
+- `check_order` and `checked_steps` in the mandatory order.
+- `items`: at least one record containing `work_id`, `delivery_group`, `group_order`,
+  `dependencies`, `scope_owner`, `scope_owner_sha256`, `scope_revision`, `approval_state`,
+  `approval_evidence_ref`, and `approved_scope_revision`.
+- `errors`: an array, empty only when `result` is `pass`.
+
+The core validator verifies the receipt rather than trusting its filename: all paths and commands
+must match `project_profile.yaml`; all bound files must exist and match their recorded SHA-256; work
+IDs must be unique; group IDs and order values must be valid and consistent; approval state must be
+`approved`; and `approved_scope_revision` must equal the current `scope_revision`. Any mismatch is
+`stale` or `failed` and blocks implementation. Completed-work history preserves the receipt or its
+digest when the active receipt is replaced.
 
 ### 9.5 Current work list
 
@@ -532,6 +570,9 @@ Minimum content for every item:
 - owner.
 - blocker, entry condition, and evidence path when blocked.
 - pointer to a detailed feature plan instead of copied detail.
+- `delivery_group` pointer when grouped delivery is active.
+- when no feature plan is justified: exact scope, non-goals, stable scope revision, approval state,
+  approval evidence, and the approved scope revision.
 
 Keep unfinished work only. Before removing a completed item, update current state when necessary and
 record the outcome in history under the same permanent work ID.
@@ -547,7 +588,10 @@ Minimum content:
 
 - permanent parent work ID and child work IDs.
 - connection to product intent and roadmap outcome.
-- scope, non-goals, boundaries, contracts, assumptions, and risks.
+- exact scope, non-goals, boundaries, contracts, assumptions, and risks.
+- stable scope revision plus approval state, approver, date, evidence reference, and approved scope
+  revision. A scope change creates a new revision and requires approval to be re-evaluated.
+- `delivery_group` pointer and phase-plan pointer when grouped delivery is active.
 - ordered milestones with phase ownership where relevant.
 - test strategy, acceptance evidence, rollback, and observability.
 - evidence-generation funnel, maturity delay, and gate reachability when thresholds depend on data.
@@ -555,8 +599,9 @@ Minimum content:
 - history and commit references for completed milestones.
 
 The current work list remains the only source of the feature's current queue status. The feature
-plan owns milestone detail and evidence state. The roadmap and current work list point to this file;
-they do not reproduce its checklist.
+plan owns exact scope, approval binding, milestone detail, and evidence state. The phase plan owns
+delivery grouping, group order, and cross-item dependencies. The roadmap and current work list point
+to these owners; they do not reproduce their checklists.
 
 ### 9.7 Architecture Decision Record
 
@@ -653,6 +698,8 @@ prerequisites, authority, commands, evidence, failure handling, rollback, and co
 - Product brief owns purpose and success.
 - Roadmap owns future major priority.
 - A phase delivery plan owns order and dependencies inside one phase when that layer is active.
+- That phase plan also owns delivery-group membership and group order; exact scope and its approval
+  remain together in the feature plan or small current-work item.
 - Current work owns the active queue.
 - One feature plan owns the detailed status of one large feature.
 - Current state owns what the system is now.

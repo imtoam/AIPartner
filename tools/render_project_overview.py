@@ -17,6 +17,11 @@ import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
+try:
+    from delivery_receipt import DELIVERY_CHECK_ORDER, evaluate_delivery_receipt
+except ModuleNotFoundError:
+    from tools.delivery_receipt import DELIVERY_CHECK_ORDER, evaluate_delivery_receipt
+
 
 PERSPECTIVES = (
     ("management", "Management consultation", "perspective-management"),
@@ -193,6 +198,7 @@ def render(root: Path) -> Path:
     lines = profile_path.read_text(encoding="utf-8").splitlines()
     project = top_block(lines, "project")
     initialization = top_block(lines, "initialization")
+    delivery = top_block(lines, "delivery_control")
     interface = top_block(lines, "human_interface")
     overview = child_block(interface, "overview", 2)
     perspective_root = child_block(interface, "perspectives", 2)
@@ -212,6 +218,53 @@ def render(root: Path) -> Path:
         raise ValueError("default overview locale is missing")
     if not sources:
         raise ValueError("default overview has no declared sources")
+
+    delivery_state = field(delivery, "state", 2)
+    delivery_source = field(delivery, "coordination_source", 2)
+    delivery_command = field(delivery, "validation_command", 2)
+    delivery_validator_path = field(delivery, "validator_path", 2)
+    delivery_receipt_path = field(delivery, "receipt_path", 2)
+    delivery_group_format = field(delivery, "delivery_group_id_format", 2)
+    delivery_check_order = field(delivery, "check_order", 2)
+    delivery_trigger = field(delivery, "trigger", 2)
+    if delivery_state not in {"inactive", "active"}:
+        raise ValueError(f"invalid delivery-control state: {delivery_state or '(missing)'}")
+    if delivery_group_format != "DG-NNN" or delivery_check_order != DELIVERY_CHECK_ORDER:
+        raise ValueError("delivery-control identity or check-order contract is invalid")
+    if delivery_state == "active":
+        if not all(
+            (
+                delivery_source,
+                delivery_command,
+                delivery_validator_path,
+                delivery_receipt_path,
+            )
+        ):
+            raise ValueError(
+                "active delivery control requires source, validator, command, and receipt paths"
+            )
+        if delivery_source not in sources:
+            raise ValueError(
+                "active delivery coordination source is absent from overview.sources: "
+                + delivery_source
+            )
+        delivery_validation_state, delivery_receipt, delivery_issues = evaluate_delivery_receipt(
+            root,
+            coordination_source=delivery_source,
+            validation_command=delivery_command,
+            validator_path=delivery_validator_path,
+            receipt_path=delivery_receipt_path,
+        )
+    elif not delivery_trigger:
+        raise ValueError("inactive delivery control requires an activation trigger")
+    else:
+        if delivery_source or delivery_command or delivery_validator_path or delivery_receipt_path:
+            raise ValueError(
+                "inactive delivery control must not declare source, validator, command, or receipt"
+            )
+        delivery_validation_state = "inactive"
+        delivery_receipt = {}
+        delivery_issues = []
 
     perspective_contracts: list[dict[str, object]] = []
     for perspective_id, title, html_id in PERSPECTIVES:
@@ -284,6 +337,63 @@ def render(root: Path) -> Path:
     else:
         decisions = '<p class="empty">No open decisions are recorded.</p>'
 
+    if delivery_state == "active":
+        delivery_source_html = (
+            f'<a href="{html.escape(delivery_source, quote=True)}">'
+            f"{html.escape(delivery_source)}</a>"
+        )
+        delivery_validator_html = (
+            f'<a href="{html.escape(delivery_validator_path, quote=True)}">'
+            f"{html.escape(delivery_validator_path)}</a>"
+        )
+        if (root / delivery_receipt_path).is_file():
+            delivery_receipt_html = (
+                f'<a href="{html.escape(delivery_receipt_path, quote=True)}">'
+                f"{html.escape(delivery_receipt_path)}</a>"
+            )
+        else:
+            delivery_receipt_html = f"<code>{html.escape(delivery_receipt_path)}</code>"
+        if delivery_issues:
+            delivery_issue_html = "<ul>" + "".join(
+                f"<li>{html.escape(category)}: {html.escape(issue)}</li>"
+                for category, issue in delivery_issues
+            ) + "</ul>"
+        else:
+            delivery_issue_html = '<p class="empty">No receipt discrepancies detected.</p>'
+        validated_on = delivery_receipt.get("validated_on")
+        source_digest = delivery_receipt.get("coordination_source_sha256")
+        validator_digest = delivery_receipt.get("validator_sha256")
+        readiness = (
+            "Implementation gate passed."
+            if delivery_validation_state == "pass"
+            else "Implementation is blocked until a current pass receipt exists."
+        )
+        delivery_detail = (
+            f"<p><strong>Coordination source:</strong> {delivery_source_html}</p>"
+            f"<p><strong>Validator:</strong> {delivery_validator_html}</p>"
+            f"<p><strong>Validation command:</strong> <code>{html.escape(delivery_command)}</code></p>"
+            f"<p><strong>Receipt:</strong> {delivery_receipt_html}</p>"
+            f"<p><strong>Validated on:</strong> {html.escape(str(validated_on or 'not_available'))}</p>"
+            f"<p><strong>Source digest:</strong> <code>{html.escape(str(source_digest or 'not_available'))}</code></p>"
+            f"<p><strong>Validator digest:</strong> <code>{html.escape(str(validator_digest or 'not_available'))}</code></p>"
+            f'<p class="readiness readiness-{html.escape(delivery_validation_state, quote=True)}">'
+            f"{html.escape(readiness)}</p>{delivery_issue_html}"
+        )
+    else:
+        delivery_detail = (
+            '<p class="empty">Grouped delivery is not active.</p>'
+            f"<p><strong>Activation trigger:</strong> {html.escape(delivery_trigger)}</p>"
+        )
+    delivery_gate_html = (
+        '<div id="delivery-sequence-gate" class="delivery-gate">'
+        '<h3>Delivery sequence gate</h3>'
+        f'<p><strong>Configuration state:</strong> {html.escape(delivery_state)}</p>'
+        f'<p><strong>Validation state:</strong> {html.escape(delivery_validation_state)}</p>'
+        f'<p><strong>Group ID format:</strong> {html.escape(delivery_group_format)}</p>'
+        f'<p><strong>Required check order:</strong> <code>{html.escape(delivery_check_order)}</code></p>'
+        f"{delivery_detail}</div>"
+    )
+
     perspective_sections: list[str] = []
     for contract in perspective_contracts:
         perspective_sources = contract["sources"]
@@ -312,6 +422,9 @@ def render(root: Path) -> Path:
             if contract["id"] == "management"
             else ""
         )
+        delivery_html = (
+            delivery_gate_html if contract["id"] == "architecture_delivery" else ""
+        )
         perspective_sections.append(
             f'<section id="{contract["html_id"]}" class="perspective">'
             '<div class="perspective-heading">'
@@ -323,7 +436,7 @@ def render(root: Path) -> Path:
             f'<p><strong>Accountable owner:</strong> {html.escape(str(contract["owner"]))}</p>'
             f'<p><strong>State reason:</strong> {html.escape(str(contract["state_reason"]))}</p>'
             '<h3>Declared sources</h3>'
-            f"{source_contract}{trigger_html}{decision_html}</section>"
+            f"{source_contract}{trigger_html}{decision_html}{delivery_html}</section>"
         )
 
     source_sections = []
@@ -370,6 +483,9 @@ def render(root: Path) -> Path:
     .state-blocked,.state-degraded {{ color:var(--warn); border-color:var(--warn); }}
     .trigger {{ border-top:1px solid var(--line); margin-top:18px; padding-top:14px; }}
     .management-decisions {{ border-top:1px solid var(--line); margin-top:22px; padding-top:10px; }}
+    .delivery-gate {{ border-top:1px solid var(--line); margin-top:22px; padding-top:10px; }}
+    .readiness {{ border-left:4px solid var(--warn); padding:10px 14px; }}
+    .readiness-pass {{ border-color:var(--accent); }}
     footer {{ color:var(--muted); padding:32px 0 56px; }}
   </style>
 </head>

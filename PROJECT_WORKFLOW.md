@@ -159,6 +159,8 @@ Implementation may begin when:
 - affected canonical terms, source-language rules, and human-view consequences are explicit.
 - the work fits the current priority and does not contradict the product brief, current state,
   roadmap, or accepted decisions.
+- when delivery groups are active, the delivery sequencing gate has passed in the mandatory order
+  `delivery_group -> group_order -> dependencies -> approval/exact scope`.
 
 The Product Owner approves material product, priority, authority, and risk choices. The AI owns
 ordinary technical execution within those choices.
@@ -533,7 +535,9 @@ A change is complete only when every applicable item below is satisfied.
 8. Tracking
 
    Remove completed work from the active list. Record the outcome in history. Update the roadmap or
-   feature plan when an activated planning section requires it.
+   feature plan when an activated planning section requires it. When delivery groups are active,
+   preserve the group assignment, group order, dependency, scope-revision, and approval receipt
+   that governed the delivered work.
 
 9. Human views
 
@@ -591,6 +595,60 @@ Rules:
 - Other files point to the feature plan instead of copying its details.
 - Completed work moves to history.
 
+### Delivery-group ownership and sequencing gate
+
+Activate delivery groups when two or more approved or proposed work units must be coordinated as a
+delivery sequence. Do not create groups merely to decorate a single bounded item.
+
+Information ownership is fixed:
+
+| Control | Sole detailed owner | Other files may contain |
+|---|---|---|
+| `delivery_group` membership | Active phase delivery plan | A pointer to the group ID |
+| `group_order` | Active phase delivery plan | A rendered summary or pointer |
+| Cross-group and cross-feature dependencies | Active phase delivery plan | Internal feature-plan dependencies that do not redefine delivery order |
+| Exact feature scope and non-goals | Feature plan; current-work item only when no feature plan is justified | Scope revision and pointer |
+| Approval of exact scope | The same feature plan or current-work item that owns exact scope | Approval state, evidence pointer, and approved scope revision |
+
+The phase plan uses stable `DG-NNN` group IDs. Every sequenced work item belongs to exactly one
+delivery group. Every active group has one unique positive `group_order`; order values define the
+delivery sequence and may have gaps so later insertion does not require renumbering stable groups.
+Dependencies use stable group or work IDs, name their reason and type, and must be resolvable and
+acyclic. A dependency on a later group means the declared order is invalid; correct `group_order`
+before implementation rather than treating the dependency as an informal exception.
+
+Exact scope has a stable revision, such as `WORK-012-scope-v3`. Approval evidence must name that
+same revision. Changing scope, non-goals, delivery-group membership, or a material dependency
+invalidates readiness; re-evaluate the sequence and obtain new approval when the approved scope
+changed. Approval of an earlier scope revision must never authorize a later one implicitly.
+
+An active gate has a project-specific validator and one current machine-readable receipt. The
+validator runs the four checks, then atomically writes the receipt described in
+PROJECT_STRUCTURE_REFERENCE.md. The receipt binds its `pass` result to SHA-256 digests of the phase
+plan, validator, and every exact-scope owner. Any bound file change makes the receipt stale. Merely
+declaring a command, keeping an old receipt, or setting delivery control to active is not evidence
+that the gate passed.
+
+Before beginning any grouped implementation, check in this exact order:
+
+1. `delivery_group`: every intended work item has exactly one group; membership and the group
+   outcome are coherent.
+2. `group_order`: every active group has one unique order and the proposed execution sequence is
+   explicit.
+3. `dependencies`: all dependency IDs resolve, the graph is acyclic, and no dependency contradicts
+   the declared group order. If it does, return to step 2 and correct the order.
+4. `approval/exact scope`: the next work item has an exact scope, non-goals, scope revision, approval
+   state, and approval evidence bound to that same revision.
+
+This is a gate, not a reporting format. Failure at any step prevents implementation of the affected
+item. Completing step 4 does not excuse a failure in steps 1-3, and an approval does not determine
+delivery order by itself.
+
+Implementation may begin only when the delivery validator exits successfully and the core project
+validator confirms a current `pass` receipt. A missing, malformed, failed, or stale receipt is
+blocking. The HTML control surface displays configuration state separately from validation state
+and must never render `active` as if it meant `pass`.
+
 ### Forward-data timing and gate reachability
 
 When proposing implementation order, dependencies, or early work, check each item for a data clock:
@@ -628,6 +686,8 @@ Define proportionate, repeatable checks for:
 - stable work, module, term, view, and decision IDs.
 - pointers and single ownership of mutable status or detailed plans.
 - phase dependency existence, ordering, and cycles.
+- delivery-group membership completeness, unique group order, dependency/order consistency, and
+  approval-to-scope-revision binding.
 - code dependency direction and public interface boundaries.
 - code, schema, job manifest, current-state, and human-view consistency.
 - stale paths, commands, modules, branch markers, and retired operating instructions in live docs.
@@ -782,6 +842,14 @@ Deferred structure triggers:
 Local structure extensions and reasons:
 
 Planning and tracking artifact paths:
+
+Active delivery-group and group-order source:
+
+Exact-scope and approval owner paths:
+
+Delivery-sequence validation command:
+
+Delivery-sequence validator and current receipt paths:
 
 Human-interface mode and bind scope:
 

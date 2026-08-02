@@ -1,15 +1,15 @@
 # project_profile.example.yaml
 #
-# Exact project_profile.yaml contract for AIPartner protocol 0.6.
+# Exact project_profile.yaml contract for AIPartner protocol 0.8.
 # Copy this structure after proposal approval. Replace example values; do not remove required keys.
 # Mutable work-item status belongs only in current_work_source and must not be copied here.
 
-schema_version: "0.6.0"
+schema_version: "0.8.0"
 
 template:
   name: "AIPartner"
   protocol_id: "BOOTSTRAP-001"
-  protocol_version: "0.6.0"
+  protocol_version: "0.8.0"
   source: "repository URL, release, or commit used"
 
 input:
@@ -189,6 +189,7 @@ structure:
     - path: "LICENSE"
     - path: "framework_manifest.json"
     - path: "tools/validate_initialization.py"
+    - path: "tools/delivery_receipt.py"
     - path: "tools/render_project_overview.py"
     - path: "introduction/"
   selected_now:
@@ -246,6 +247,17 @@ unresolved_decisions:
     owner: "Product Owner"
     resolution: ""
     evidence_ref: ""
+
+delivery_control:
+  state: "inactive"
+  # Allowed: inactive, active
+  coordination_source: ""
+  validation_command: ""
+  validator_path: ""
+  receipt_path: ""
+  delivery_group_id_format: "DG-NNN"
+  check_order: "delivery_group -> group_order -> dependencies -> approval/exact scope"
+  trigger: "Two or more work units require coordinated grouping, ordering, dependencies, and scope-bound approval"
 
 human_interface:
   mode: "static_html"

@@ -1043,6 +1043,11 @@
             identités de module stables, des contrôles de dépendances, la fraîcheur des vues et des
             conditions explicites d'activation et de retrait de la stratégie Git rendent la dérive
             visible avant que des changements locaux ne dissolvent la cohérence de l'ensemble.
+            Lorsque plusieurs unités de travail doivent être coordonnées, l'appartenance au groupe
+            de livraison, l'ordre des groupes, les dépendances, puis l'approbation liée à une
+            révision exacte du périmètre sont vérifiés dans cet ordre avant l'implémentation. Un
+            reçu de validation lié par empreintes distingue un contrôle seulement configuré d'un
+            contrôle dont les sources actuelles ont réellement réussi.
           </p>
           <p>
             Le modèle préserve ce qui a été appris jusqu'ici et le propose comme point de départ

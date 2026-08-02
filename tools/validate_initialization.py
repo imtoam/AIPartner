@@ -10,9 +10,21 @@ from __future__ import annotations
 import hashlib
 import json
 import re
+import shlex
 import subprocess
 import sys
 from pathlib import Path
+
+try:
+    from delivery_receipt import (
+        DELIVERY_CHECK_ORDER,
+        evaluate_delivery_receipt,
+    )
+except ModuleNotFoundError:
+    from tools.delivery_receipt import (
+        DELIVERY_CHECK_ORDER,
+        evaluate_delivery_receipt,
+    )
 
 
 ALLOWED_STATES = {
@@ -68,17 +80,20 @@ FRAMEWORK_FILES = {
         "ROLE-PARTNER: The partnership",
         "ROLE-REVIEW: Independent peer review",
         "ROLE-MULTIWRITER: Multiple project writers and worktrees",
+        "delivery_group -> group_order -> dependencies -> approval/exact scope",
         "BEGIN PROJECT CONFIG: ROLE MODULE ACTIVATION",
         "BEGIN PROJECT CONFIG: TEAM FACTS",
     ),
     "START_HERE.md": (
-        "Protocol version: 0.6.0",
+        "Protocol version: 0.8.0",
         "Framework invariant:",
         "Establish language without creating a language questionnaire",
         "Keep human views subordinate to project truth",
         "Use external reference material without confusing it with the target",
         "There is no `approved` state.",
         "project-overview.html",
+        "delivery_group -> group_order -> dependencies -> approval/exact scope",
+        "current `pass` receipt",
     ),
     "PROJECT_WORKFLOW.md": (
         "Framework invariant:",
@@ -91,6 +106,8 @@ FRAMEWORK_FILES = {
         "Four mandatory perspectives",
         "WF-DOD: Definition of Done",
         "WF-PLANNING: Multi-level planning",
+        "Delivery-group ownership and sequencing gate",
+        "current `pass` receipt",
         "WF-DRIFT: Architecture and governance drift control",
         "WF-DATA: Authoritative and non-cleanable data",
         "WF-OPS: Unattended operation",
@@ -104,12 +121,13 @@ FRAMEWORK_FILES = {
         "## 4. Git and version-control reference",
         "framework_retained",
         "### 9.4 Phase delivery plan",
+        "delivery_group -> group_order -> dependencies -> approval/exact scope",
         "### 9.12 Human-view registry",
         "project-overview.html",
         "## 11. Minimal greenfield starting set",
     ),
     "project_profile.example.yaml": (
-        'schema_version: "0.6.0"',
+        'schema_version: "0.8.0"',
         "communication:",
         "human_interface:",
         "perspectives:",
@@ -118,12 +136,16 @@ FRAMEWORK_FILES = {
         "reference_adoptions:",
         "framework_retained:",
         "unresolved_decisions:",
+        "delivery_control:",
+        "validator_path:",
+        "receipt_path:",
+        'check_order: "delivery_group -> group_order -> dependencies -> approval/exact scope"',
         'path: "project-overview.html"',
     ),
     "index.html": (
         'name="aipartner-page-role" content="human-start-guide"',
         'id="begin"',
-        "Protocol 0.6",
+        "Protocol 0.8",
         "Language and terminology",
         "START_HERE.md",
     ),
@@ -131,18 +153,29 @@ FRAMEWORK_FILES = {
         "START_HERE.md",
         "AGENTS.md",
         "PROJECT_WORKFLOW.md",
-        "Protocol version: 0.6.0",
+        "Protocol version: 0.8.0",
+        "delivery_group -> group_order -> dependencies -> approval/exact scope",
     ),
     "framework_manifest.json": (
         '"schema_version": 1',
-        '"protocol_version": "0.6.0"',
+        '"protocol_version": "0.8.0"',
         '"files"',
     ),
     "tools/render_project_overview.py": (
         "Render project-overview.html from declared AIPartner project sources",
         'name="aipartner-derived-view" content="true"',
         "PERSPECTIVES",
+        "evaluate_delivery_receipt",
         "os.replace",
+    ),
+    "tools/delivery_receipt.py": (
+        "Shared validation for the delivery-sequence receipt contract",
+        "evaluate_delivery_receipt",
+        "scope_owner_sha256",
+    ),
+    "tools/validate_initialization.py": (
+        "validate_delivery_control",
+        "delivery_group -> group_order -> dependencies -> approval/exact scope",
     ),
 }
 
@@ -288,6 +321,44 @@ def validate_required_modules(lines: list[str], report: Report) -> None:
                 report.error(f"Required module {module_id} must be active, found: {state or '(missing)'}")
             else:
                 report.ok(f"Required module {module_id} is active")
+
+
+def validate_workflow_activation(
+    root: Path,
+    lines: list[str],
+    status: str,
+    report: Report,
+) -> None:
+    if status not in POST_MATERIALIZATION_STATES:
+        return
+    workflow_path = root / "PROJECT_WORKFLOW.md"
+    if not workflow_path.is_file():
+        return
+    workflow_text = workflow_path.read_text(encoding="utf-8")
+    checked: dict[str, bool] = {}
+    for match in re.finditer(r"^- \[([ xX])\] (WF-[A-Z-]+):", workflow_text, re.MULTILINE):
+        checked[match.group(2)] = match.group(1).lower() == "x"
+
+    profile_modules: dict[str, bool] = {}
+    workflow_modules = block(lines, "workflow_modules")
+    for line in workflow_modules:
+        match = re.match(r"^  (WF-[A-Z-]+):\s*$", line)
+        if match:
+            module_id = match.group(1)
+            module = child_block(lines, "workflow_modules", module_id)
+            profile_modules[module_id] = field(module, "state", minimum_indent=4) == "active"
+
+    for module_id in sorted(set(checked) | set(profile_modules)):
+        if module_id not in checked:
+            report.error(f"Workflow activation checkbox is missing: {module_id}")
+        elif module_id not in profile_modules:
+            report.error(f"project_profile workflow module is missing: {module_id}")
+        elif checked[module_id] != profile_modules[module_id]:
+            report.error(
+                f"Workflow activation drift for {module_id}: profile="
+                f"{'active' if profile_modules[module_id] else 'inactive'}, "
+                f"PROJECT_WORKFLOW checkbox={'checked' if checked[module_id] else 'unchecked'}"
+            )
 
 
 def git_repository_exists(root: Path) -> bool:
@@ -569,6 +640,115 @@ def validate_human_interface(
             report.error(f"{overview_path} hides blocking decision {item_id}")
 
 
+def validate_delivery_control(
+    root: Path,
+    lines: list[str],
+    status: str,
+    report: Report,
+) -> None:
+    delivery = block(lines, "delivery_control")
+    state = field(delivery, "state", minimum_indent=2)
+    source = field(delivery, "coordination_source", minimum_indent=2)
+    command = field(delivery, "validation_command", minimum_indent=2)
+    validator_path = field(delivery, "validator_path", minimum_indent=2)
+    receipt_path = field(delivery, "receipt_path", minimum_indent=2)
+    group_id_format = field(delivery, "delivery_group_id_format", minimum_indent=2)
+    check_order = field(delivery, "check_order", minimum_indent=2)
+    trigger = field(delivery, "trigger", minimum_indent=2)
+    receipt_state = "inactive"
+    receipt: dict[str, object] = {}
+
+    if state not in {"inactive", "active"}:
+        report.error(f"Invalid delivery-control state: {state or '(missing)'}")
+    if group_id_format != "DG-NNN":
+        report.error("delivery_control.delivery_group_id_format must be DG-NNN")
+    if check_order != DELIVERY_CHECK_ORDER:
+        report.error(f"delivery_control.check_order must be: {DELIVERY_CHECK_ORDER}")
+
+    if state == "inactive":
+        if not trigger:
+            report.error("Inactive delivery control requires an activation trigger")
+        if source or command or validator_path or receipt_path:
+            report.error(
+                "Inactive delivery control must not declare source, validator, command, or receipt"
+            )
+    elif state == "active":
+        required_values = {
+            "coordination_source": source,
+            "validation_command": command,
+            "validator_path": validator_path,
+            "receipt_path": receipt_path,
+        }
+        for name, value in required_values.items():
+            if not value:
+                report.error(f"Active delivery control requires {name}")
+
+        if command and validator_path:
+            try:
+                command_parts = shlex.split(command)
+            except ValueError as error:
+                report.error(f"Cannot parse delivery validation command: {error}")
+                command_parts = []
+            if command_parts and validator_path not in command_parts:
+                report.error("Delivery validation command does not invoke validator_path")
+
+        if source and status in POST_MATERIALIZATION_STATES and not (root / source).is_file():
+            report.error(f"Delivery coordination source does not exist: {source}")
+        if (
+            validator_path
+            and status in POST_MATERIALIZATION_STATES
+            and not (root / validator_path).is_file()
+        ):
+            report.error(f"Delivery validator does not exist: {validator_path}")
+
+        planning_module = child_block(lines, "workflow_modules", "WF-PLANNING")
+        if field(planning_module, "state", minimum_indent=4) != "active":
+            report.error("Active delivery control requires WF-PLANNING to be active")
+
+        if status in POST_MATERIALIZATION_STATES:
+            receipt_state, receipt, receipt_issues = evaluate_delivery_receipt(
+                root,
+                coordination_source=source,
+                validation_command=command,
+                validator_path=validator_path,
+                receipt_path=receipt_path,
+            )
+            for category, issue in receipt_issues:
+                report.error(f"{category.title()} delivery receipt: {issue}")
+
+    interface = block(lines, "human_interface")
+    overview = block(interface, "overview", indent=2)
+    overview_sources = list_values(overview, "sources", indent=4)
+    if state == "active" and source and source not in overview_sources:
+        report.error(
+            f"Active delivery coordination source is absent from overview.sources: {source}"
+        )
+
+    overview_path = field(overview, "path", minimum_indent=4)
+    overview_file = root / overview_path if overview_path else None
+    if (
+        state in {"inactive", "active"}
+        and status in POST_MATERIALIZATION_STATES
+        and overview_file is not None
+        and overview_file.is_file()
+    ):
+        overview_text = overview_file.read_text(encoding="utf-8")
+        displayed_order = DELIVERY_CHECK_ORDER.replace(">", "&gt;")
+        required_values = ('id="delivery-sequence-gate"', state, receipt_state, displayed_order)
+        for value in required_values:
+            if value not in overview_text:
+                report.error(f"{overview_path} does not display delivery-control value: {value}")
+        expected_details = [source] if state == "active" else [trigger]
+        if receipt_path:
+            expected_details.append(receipt_path)
+        validated_on = receipt.get("validated_on")
+        if isinstance(validated_on, str):
+            expected_details.append(validated_on)
+        for detail in expected_details:
+            if detail and detail not in overview_text:
+                report.error(f"{overview_path} does not display delivery-control detail: {detail}")
+
+
 def validate_profile(root: Path, report: Report) -> None:
     profile_path = root / "project_profile.yaml"
     if not profile_path.exists():
@@ -592,6 +772,7 @@ def validate_profile(root: Path, report: Report) -> None:
         "first_work",
         "structure",
         "unresolved_decisions",
+        "delivery_control",
         "human_interface",
         "verification",
     }
@@ -607,7 +788,7 @@ def validate_profile(root: Path, report: Report) -> None:
         report.ok("project_profile.yaml contains all required top-level sections")
 
     version = field(lines, "schema_version")
-    if version != "0.6.0":
+    if version != "0.8.0":
         report.error(f"Unsupported project profile schema_version: {version or '(missing)'}")
 
     initialization = block(lines, "initialization")
@@ -616,7 +797,7 @@ def validate_profile(root: Path, report: Report) -> None:
     if status not in ALLOWED_STATES:
         report.error(f"Invalid initialization status: {status or '(missing)'}")
     if mode != "greenfield":
-        report.error(f"Protocol 0.6 supports only greenfield mode, found: {mode or '(missing)'}")
+        report.error(f"Protocol 0.8 supports only greenfield mode, found: {mode or '(missing)'}")
 
     approval = block(initialization, "approval", indent=2)
     approval_state = field(approval, "state", minimum_indent=4)
@@ -643,7 +824,9 @@ def validate_profile(root: Path, report: Report) -> None:
         )
 
     validate_required_modules(lines, report)
+    validate_workflow_activation(root, lines, status, report)
     validate_communication(root, lines, status, report)
+    validate_delivery_control(root, lines, status, report)
     validate_human_interface(root, lines, status, open_blockers, report)
 
     first_work = block(lines, "first_work")
@@ -722,6 +905,7 @@ def validate_profile(root: Path, report: Report) -> None:
         "README.md",
         "LICENSE",
         "tools/validate_initialization.py",
+        "tools/delivery_receipt.py",
         "tools/render_project_overview.py",
         "framework_manifest.json",
         "introduction/",

@@ -1,6 +1,6 @@
 # AIPartner
 
-Protocol version: 0.6.0
+Protocol version: 0.8.0
 
 Human entry: open [index.html](index.html). This guide remains the human entrance after
 initialization.
@@ -26,6 +26,14 @@ delete inactive framework rules.
 Maintained Markdown is the authoritative project-document layer. Human-facing HTML and any local
 HTTP portal are derived views with explicit sources, generation time, and stale-state handling;
 they never become an independent source of project truth.
+
+When several work units require coordinated delivery, the active phase plan owns
+`delivery_group`, `group_order`, and cross-item dependencies. Exact scope and approval remain
+together in the feature plan, or in the current-work item when no feature plan is justified.
+Implementation readiness is checked in the fixed order
+`delivery_group -> group_order -> dependencies -> approval/exact scope`. An active configuration is
+not a pass: the project validator must produce a current receipt bound to the phase plan, validator,
+scope-owner files, scope revisions, and approvals, and the core validator must accept that receipt.
 
 The published AIPartner framework guide is
 [https://imtoam.github.io/AIPartner/](https://imtoam.github.io/AIPartner/).

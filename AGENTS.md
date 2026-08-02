@@ -117,6 +117,11 @@ reflection. Guidance is part of delivery, not an initialization-only service.
 - Preserve user work and unrelated changes.
 - Read relevant project facts before changing files.
 - Follow the communication, terminology, and source-versus-view contracts in PROJECT_WORKFLOW.md.
+- Before grouped implementation, read the active phase delivery plan and pass the gate in order:
+  `delivery_group -> group_order -> dependencies -> approval/exact scope`. An approval never repairs
+  an invalid group assignment, order, or dependency graph. Do not begin until the project-specific
+  validator has produced a current `pass` receipt and the core validator confirms its source,
+  validator, scope-owner, scope-revision, and approval bindings.
 - Make reasonable, reversible assumptions when they do not change the agreed objective.
 - State important assumptions and unresolved questions.
 - Do not claim completion while required work remains.

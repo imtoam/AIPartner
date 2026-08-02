@@ -4,7 +4,7 @@ AI Project Initialization Entry Point
 
 Protocol ID: BOOTSTRAP-001
 
-Protocol version: 0.6.0
+Protocol version: 0.8.0
 
 Purpose: AI-facilitated greenfield project initialization
 
@@ -522,6 +522,21 @@ The proposal must also identify:
 - where feature discussions and test strategies will be recorded when they need durable form.
 - where durable decisions and completed-work history will be preserved.
 
+#### Delivery sequencing when several work units exist
+
+If two or more features or implementation units must be coordinated, gather enough information to
+propose:
+
+- stable `delivery_group` membership for every sequenced work ID.
+- one unique `group_order` for every active group.
+- cross-group and cross-feature dependencies using resolvable IDs.
+- the exact-scope owner for every work item and a stable scope revision.
+- approval evidence that explicitly names the approved scope revision.
+
+Do not ask the Product Owner to invent a grouping system. The AI proposes the smallest coherent
+grouping and explains conflicts. Do not infer that initialization approval, roadmap placement, or
+priority is approval of an unstated feature scope.
+
 ### 5.7 First feature working agreement
 
 Describe how the human and AI will discuss, approve, implement, test, and close the first feature.
@@ -532,6 +547,17 @@ PROJECT_WORKFLOW.md.
 If the first feature crosses a durable boundary or activates WF-DATA, WF-OPS, WF-RECOVERY, or
 WF-HIGH-IMPACT, include a durable feature-plan file in the proposal. Do not reduce a high-risk
 agreement to one acceptance sentence in the active queue.
+
+When grouped delivery is active, include a delivery-sequence table in the proposal. For every work
+ID, show `delivery_group`, group outcome, `group_order`, dependencies, exact-scope owner, scope
+revision, approval state, and approval evidence reference. State that implementation readiness is
+checked only in this order:
+
+`delivery_group -> group_order -> dependencies -> approval/exact scope`
+
+If dependencies contradict the declared order, revise `group_order` and repeat the remaining
+checks. If scope changes after approval, create a new scope revision and return to the sequencing
+gate; do not carry the earlier approval forward.
 
 ### 5.8 Git and repository proposal
 
@@ -582,6 +608,11 @@ Explain how initialization will verify:
 - deferred and not-applicable reference items were not created.
 - Git state, tracked and ignored files, branch configuration, and approved authority match the
   proposal.
+- when delivery groups are active: every sequenced work ID has exactly one group, every active group
+  has a unique order, dependencies resolve without cycles or later-group contradictions, and
+  approval evidence names the current exact-scope revision.
+- the delivery validation command was actually executed and produced a current `pass` receipt bound
+  to the phase plan, validator, scope-owner files, scope revisions, and approvals.
 - the communication contract contains separate language responsibilities and no ambiguous general
   language field.
 - generated human views identify sources, locale, generation time, version, freshness, and failure
@@ -611,6 +642,11 @@ Silence is not approval.
 Record approval in project_profile.yaml with state, approver, date, approved scope, and an evidence
 reference that a future AI can interpret. Do not write "approved by the Product Owner" merely
 because the AI completed a proposal.
+
+Initialization approval authorizes only its recorded initialization scope. When delivery groups
+are active, each feature approval must separately name the exact scope revision it authorizes.
+Roadmap placement, priority, group membership, or a general instruction to proceed is not a
+substitute for that binding.
 
 Explicit approval is required for:
 
@@ -642,17 +678,22 @@ After approval:
    documents.
 9. Establish the permanent work ID format and allocation source, feature discussion loop, explicit
    work-state flow, risk-based test strategy, and minimum Definition of Done.
-10. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
+10. When grouped delivery is active, materialize the phase delivery plan and exact-scope owners,
+    then run the project-specific validator in order: `delivery_group -> group_order -> dependencies
+    -> approval/exact scope`. It must atomically write the standard delivery receipt. Run the core
+    initialization validator afterwards; do not begin implementation unless both checks pass and
+    the receipt is current.
+11. Keep index.html unchanged as the permanent human starting guide. Generate the approved project
     state as project-overview.html from declared sources, with visible provenance, freshness, and
     management, business, operations, and architecture/delivery perspectives; the framework
     default command is `python3 tools/render_project_overview.py .`.
-11. Run tools/validate_initialization.py and any project-specific structural, reference, drift, and
+12. Run tools/validate_initialization.py and any project-specific structural, reference, drift, and
     consistency checks. Record actual evidence rather than self-declared pass values.
-12. Apply the approved local Git configuration without discarding existing history or user work.
-13. Create the initial project commit only after validation and only when approved.
-14. Create or change a remote, push, publish, expose a service, or change visibility only when
+13. Apply the approved local Git configuration without discarding existing history or user work.
+14. Create the initial project commit only after validation and only when approved.
+15. Create or change a remote, push, publish, expose a service, or change visibility only when
     explicitly approved.
-15. Report actual writes, validation results, Git state, and remaining unknowns to the user.
+16. Report actual writes, validation results, Git state, and remaining unknowns to the user.
 
 If a required tool or renderer has not yet been implemented:
 
@@ -708,8 +749,8 @@ During initialization, read:
 
 1. the compact AGENTS.md.
 2. project_profile.example.yaml as the profile contract.
-3. initialization, activation, approval, communication, human-interface, structure, and
-   unresolved-decision state in project_profile.yaml, if it exists.
+3. initialization, activation, approval, communication, delivery-control, human-interface,
+   structure, and unresolved-decision state in project_profile.yaml, if it exists.
 4. PROJECT_WORKFLOW.md.
 5. PROJECT_STRUCTURE_REFERENCE.md while preparing the repository and control-artifact proposal.
 6. the entry points for active modules.
@@ -784,7 +825,7 @@ smallest useful group of unanswered questions.
 
 ### If this is an existing project
 
-Explain that version 0.6 supports greenfield initialization only. Do not inspect the project beyond
+Explain that version 0.8 supports greenfield initialization only. Do not inspect the project beyond
 what was needed to identify it as existing work. Do not propose migration or make changes.
 
 ## 13. Minimum completion standard for initialization
@@ -806,6 +847,9 @@ Initialization may be marked complete only when all of the following are true:
 - the selected version-control mode, repository authority, ignore policy, license state, and initial
   commit or explicit deferral are recorded.
 - the first feature or experiment has an agreed boundary and evidence approach.
+- when grouped delivery is active, group membership, group order, dependencies, and scope-bound
+  approval pass the mandatory sequencing gate, and a current validation receipt binds that result
+  to the phase plan, validator, exact-scope owners, and approval revisions.
 - the current work source is the only owner of mutable work-item status.
 - project-overview.html is generated from declared sources and exposes provenance, locale,
   generation time, freshness, errors, every blocking decision, and all four required human
