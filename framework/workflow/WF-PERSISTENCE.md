@@ -34,6 +34,9 @@ restate what its neighbours own:
 
 ### Rules
 
+- Before adding or keeping a store, apply the necessity-before-structure discipline in WF-CORE to
+  the store itself: justify why it exists as a separate store and whether a near-equivalent store
+  should absorb it, rather than adding stores by default.
 - Record the persistence decision even when the answer is none. "This project keeps no state" is a
   decision with evidence, not an omission.
 - State the access pattern before naming a mechanism: what is written, how often, who reads it,

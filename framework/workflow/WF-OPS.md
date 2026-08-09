@@ -20,6 +20,9 @@ Activation condition:
 
 Ignore the rest of this section until its checkbox is checked.
 
+- Before adopting a schedule, apply the necessity-before-structure discipline in WF-CORE to the
+  cadence itself: justify the frequency and interval, confirm the cadence cannot overload the
+  system, and prefer merged, serial, or dependent jobs over parallel or back-to-back stacking.
 - Record the real runtime, schedule, and job owner.
 - Consider whether files may be read while being edited.
 - Use atomic replacement for shared runtime configuration when needed.

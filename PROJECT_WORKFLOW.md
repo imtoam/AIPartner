@@ -133,10 +133,31 @@ framework defect.
 
 ## WF-CORE: Core feature delivery
 
-- Sole normative owner of: the delivery loop every change follows, the readiness and alignment gate, and the discrepancy protocol
+- Sole normative owner of: the delivery loop every change follows, the readiness and alignment gate, the discrepancy protocol, and the necessity-before-structure discipline
 
 Use this loop for every non-trivial feature, defect, or operational change. A mechanical edit may
 use a shorter version, but it still needs a stated intent and proportionate verification.
+
+### Question necessity before adopting structure
+
+This discipline applies to every stage below and to every domain module. Before introducing,
+expanding, or keeping any unit of structure — including but not limited to a module, library,
+service, data store, table, schedule, job, interface, abstraction, or dependency — interrogate the
+choice and record the answers:
+
+- Necessity: why must this unit exist, and why as a separate unit rather than merged into an
+  existing one?
+- Rationale: what concrete boundary justifies it — distinct ownership, lifecycle, scaling, reuse, or
+  risk — and is that supported by evidence rather than convenience?
+- Simpler alternative: is there a merged, serial, dependent, or smaller arrangement that meets the
+  same need?
+- Consequence: what happens if it is not done this way, and is that consequence acceptable?
+
+Apply this proactively, without being asked, and most strictly when no person is reviewing each
+step. Record the answers where the decision lives. When the trade-off carries material risk, do not
+decide alone: escalate to the Product Owner per step 7 and the authority rules in AGENTS.md. Domain
+modules apply this discipline to their own units (for example WF-OPS to schedules, WF-PERSISTENCE to
+stores, WF-PLANNING to delivery groups); they inherit it and do not replace it.
 
 ### 1. Reconnect to purpose
 
