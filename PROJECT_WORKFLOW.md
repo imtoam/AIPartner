@@ -130,6 +130,7 @@ framework defect.
 | Roles, authority, and information discipline | AGENTS.md |
 | One-time initialization protocol and its state machine | START_HERE.md |
 | Machine-readable record of approved paths, commands, authority, and activation | project_profile.yaml (contract: project_profile.example.yaml) |
+| Rule waivers (approved rule-level exceptions) | framework/workflow/WF-DOCS.md |
 
 ## WF-CORE: Core feature delivery
 
@@ -204,6 +205,9 @@ Consider:
 - security, privacy, performance, concurrency, and recovery tests when the risk requires them.
 - terminology, source-preservation, translation, and generated-view checks when those contracts are
   affected.
+- scale or accumulation tests when correctness or output quality depends on data volume: verify with
+  representative-scale data, because early absence of data can hide a defect that surfaces only once
+  the store has grown.
 
 Cover applicable positive, negative, boundary, failure, retry, idempotency, permission, and data
 isolation cases. State what will not be tested and why. Use temporary or synthetic data when real
@@ -222,6 +226,11 @@ is true:
 
 A small low-risk change may keep the agreement in the active-work item. A high-risk change may not
 skip durable agreement merely because it is the first feature.
+
+At the end of each shaping discussion, confirm whether its conclusion — the agreed scope, non-goals,
+and decisions — is written into the durable brief or plan that governs implementation. A conclusion
+that is only spoken does not constrain later work; the recorded brief is the binding scope of
+record, and implementation is held to its full extent, not to memory of the conversation.
 
 ### 4. Pass the readiness and alignment gate
 
@@ -260,6 +269,9 @@ Before declaring completion, compare:
 - changed boundaries against the documented architecture and data ownership.
 - actual risk and operating behavior against the approved assumptions.
 - delivered scope against the agreed non-goals and deferred work.
+- each item in the recorded feature brief against its implementation, listing any agreed item not
+  yet built. Never report a partial implementation as complete, and never narrow agreed scope to a
+  subset without recording the reduction and obtaining approval.
 - maintained sources against generated HTML or service views, including freshness and unresolved
   discrepancies.
 

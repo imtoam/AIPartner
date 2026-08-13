@@ -34,6 +34,16 @@ Define proportionate, repeatable checks for:
 - code, schema, job manifest, current-state, and human-view consistency.
 - stale paths, commands, modules, branch markers, and retired operating instructions in live docs.
 - generated-view freshness and source completeness.
+- agreed-scope coverage: implemented behaviour covers the full set of items in the approved feature
+  brief, and any unimplemented item is explicitly marked rather than silently dropped.
+- work-ID tree integrity: every ID resolves to exactly one parent and one detailed owner; no ID is
+  defined in two lineages, orphaned, or duplicated.
+- parallel-implementation lifecycle: every capability implemented by more than one coexisting module
+  or algorithm has a recorded reason, one authoritative producer at a time with challengers
+  explicitly marked, a pre-agreed comparison metric, a distinct version identity per implementation,
+  and a dated retirement trigger with an owner; no parallel state outlives its trigger.
+- waiver integrity: every active waiver names a rule, an approver, and an unexpired expiry or review
+  trigger; expired waivers are surfaced, not silently honoured.
 - deprecated or ambiguous terminology.
 
 The project records the commands in Project facts and adds regression cases for drift that has

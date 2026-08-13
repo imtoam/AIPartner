@@ -5,7 +5,7 @@ AIPartner framework workflow module. Module ID: `WF-ML` (stable).
 
 - Spine, activation checkbox, and module routing: [PROJECT_WORKFLOW.md](../../PROJECT_WORKFLOW.md)
 - Optional module: active only when its checkbox is checked in the spine; its activation condition is stated below.
-- Sole normative owner of: context of use, model-class and layer selection, model risk rating, learned-artifact freezing, re-validation triggers, effective challenge, and decay monitoring
+- Sole normative owner of: context of use, model-class and layer selection, model risk rating, learned-artifact freezing, re-validation triggers, effective challenge, decay monitoring, and competing model-set selection and KPI comparison
 
 Framework invariant: this module file is retained framework content. Tailoring changes only its
 activation checkbox in the spine; it never edits, renames, or deletes this file.
@@ -30,6 +30,24 @@ Record, before any model work begins: the question the model answers, the decisi
 its output, the population and period it is valid on, and what it must never be used for. A model
 without a declared context of use cannot be evaluated, because there is no statement of what
 "working" means.
+
+**A context of use is not yet a learning specification.** Before any fitting, training, calibration,
+or threshold selection begins, define — and have the Product Owner approve — a recorded learning
+specification:
+
+- Target: the exact quantity, label, or outcome being learned or predicted, and how it is measured.
+- Inputs: the specific features or parameters the model may use, each with its provenance and
+  point-in-time availability.
+- Data: the training and evaluation material, its period, and how the two are kept separate.
+- Success: the metric and threshold that decide whether the result is usable, agreed before any
+  result is seen.
+
+The specification need not exist at project inception, but it must be complete and approved at the
+moment ML work is activated. It may come from the Product Owner, from a Product-Owner-and-AI
+discussion, or from an AI proposal grounded in the current system design that the Product Owner then
+approves. Until it exists, "the project needs machine learning" is an unresolved product decision,
+not an implementable requirement: a model built without a defined target and inputs learns nothing,
+and that emptiness stays invisible until enough data has accumulated to expose it.
 
 ### 2. Model risk is two-dimensional
 
@@ -74,6 +92,24 @@ declared not applicable, with evidence, exactly like any other tailoring decisio
 a single model with no pipeline at all; it may not select any layer while leaving governance
 unselected. Deferring governance means the project has no way to tell a working model from a
 plausible one.
+
+**Consider a competing model set, not only a single model.** The reasoning layer may run more than
+one producer over the same input and compare them, rather than committing to one model up front. A
+common arrangement is a rule-based baseline, one or more locally trained models, and optionally one
+or more external or third-party models, each emitting its own output for the same case. When this
+arrangement is selected:
+
+- The rule-based baseline is a first-class competitor and the floor every learned model must beat; a
+  model that does not beat the baseline on the agreed metric is not adopted merely because it is a
+  model.
+- The comparison metric and the KPIs that rank producers are defined and approved before results are
+  seen (the learning specification in section 1), and every producer is evaluated on the same
+  frozen, leakage-free material (sections 5 and 6).
+- Adding, removing, or replacing a producer is a recorded, approved change, not a silent edit; each
+  active producer keeps its own version, artifact identity, and live performance record.
+- Selecting or weighting among competing outputs is a decision that KPIs inform but do not make on
+  their own; material selection is approved per the authority boundary in section 9, and a champion
+  chosen over challengers is re-checked on the same re-validation triggers (section 7).
 
 ### 5. Separation and leakage
 

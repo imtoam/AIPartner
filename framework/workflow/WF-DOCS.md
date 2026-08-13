@@ -57,6 +57,11 @@ documents with declared runtime evidence, but they may not own approvals, work s
 facts, business truth, or open decisions. A human correction enters the owning source through the
 normal workflow and is then regenerated into the view.
 
+Raw feature and scope discussion material is a third kind: durable work input, neither authoritative
+nor a derived view. It is kept and linked to its work ID as provenance and a memo, but it never owns
+scope, approval, or current state; a conclusion in it becomes binding only when promoted into the
+owning source. Its artifact contract is section 9.14 of the documentation catalog.
+
 ### Permanent work identity
 
 Every feature and every bug fix receives a permanent unique work ID before implementation begins.
@@ -73,6 +78,16 @@ Every feature and every bug fix receives a permanent unique work ID before imple
   retain it permanently.
 - If one item is split into independently deliverable work, create permanent child IDs and preserve
   the parent relationship. Do not silently reuse the original ID for several unrelated outcomes.
+- Identity is a single-rooted tree. Top-level feature IDs are owned by the product brief and roadmap
+  — the project's charter and master outline — and are refined downward as understanding deepens; a
+  refinement adds child IDs under an existing parent, it never mints a second top-level ID for the
+  same outcome.
+- Every non-root ID has exactly one parent, and the tree may be several levels deep (a child may
+  itself have children). The same feature is never represented by two IDs in different branches, and
+  an ID is never re-parented to fabricate a new grouping.
+- Because each ID has one parent and one detailed owner, every other place that needs it — a workflow
+  step, a phase plan, another feature, or a view — points to that single node. Independent governance
+  of the same ID in several places (multi-headed control) is the drift this rule prevents.
 
 The identifier proves continuity of the work, not its current location or status.
 
@@ -94,3 +109,20 @@ The identifier proves continuity of the work, not its current location or status
 - Give accepted defects or follow-up work stable references.
 - Use history and version control for completed work.
 - Do not use a temporary review report as a permanent backlog.
+
+### Rule waivers
+
+A rule that is in scope may be waived for a bounded case without editing it for everyone. Three
+levers are distinct and must not be confused:
+
+- Tailor: decide a rule or module is out of scope (PROJECT_STRUCTURE_REFERENCE.md decision states).
+- Waive: keep the rule in scope but grant an approved, recorded exception — cancel it, or replace it
+  with an alternative constraint — for a specific work ID or module.
+- Framework change: edit the rule text itself for the whole project, as a separately approved change.
+
+A waiver is a decision and follows every rule above. It cites the waived rule by its owning module ID
+and rule name, names the Product Owner as approver, states the rationale and residual risk, and
+carries an expiry date or review trigger; a waiver without one is invalid. A waiver may not weaken
+human authority, information honesty, or a required safety boundary — the floor tailoring may not
+cross. Active and expired waivers are surfaced by the project's drift checks so no exception stays
+silent. The register artifact is section 9.15 of the documentation catalog.

@@ -10,7 +10,7 @@
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "8b4de77e7aa3afc4d6a7fd2226815f43cff76cb80e3c1f38cb6c1eb75267b4a7"
+      "sha256": "b171573b3415a8f7f658e110332b575d1b40e7bb7129c69078eaa0f979e07ee9"
     },
     "START_HERE.md": {
       "mode": "immutable",
@@ -70,7 +70,7 @@
     },
     "introduction/framework-scope.html": {
       "mode": "immutable",
-      "sha256": "1a0f9d333d234b8365ce882a3706d3a8fd70eb33e3a5b3bbcb47a9f949e54dc3"
+      "sha256": "7741da04c5eda5c921abad6faceedd711157db15c3db510206dcff5e4188598d"
     },
     "introduction/framework-detail.html": {
       "mode": "immutable",
@@ -86,7 +86,7 @@
     },
     "framework/structure/documentation-catalog.md": {
       "mode": "immutable",
-      "sha256": "9e5fff03dc4e1768e85aed0b14550bb555ff63a5656d05c1801536804badd85d"
+      "sha256": "d646136e9a4c2e94fb0682004dad2974da114e8ce441e8cf726ab7409c8cedcd"
     },
     "framework/structure/git-reference.md": {
       "mode": "immutable",
@@ -110,19 +110,19 @@
     },
     "framework/workflow/WF-PERSISTENCE.md": {
       "mode": "immutable",
-      "sha256": "4c46a6b78a9d06e700448190c6288f188a8cc1615a46b71cb23848455a4192d0"
+      "sha256": "150e046e3f7cdb10db5947376bd1dbdb41e7c3561713836dde3b4f5735e17a0b"
     },
     "framework/workflow/WF-ML.md": {
       "mode": "immutable",
-      "sha256": "e5cf4904a9a213d410721bb6d057daa9099cdf2d325ad4a5d3fcc9d4cef5b815"
+      "sha256": "669c13b6754e30dcc154cd9eac32cb585cdb7d08d007e5c63f1335b7d8105115"
     },
     "framework/workflow/WF-DOCS.md": {
       "mode": "immutable",
-      "sha256": "7fe608a54a7683f7621c3780a40307308e414ed20141bb539cfae37868007799"
+      "sha256": "3e06ab1fe1bdc66b94265d107015c43d976400bc8101c71fabb55a7cf14464af"
     },
     "framework/workflow/WF-DRIFT.md": {
       "mode": "immutable",
-      "sha256": "cd6b19ccb799cec3c5ffbc0f5497afb8da47c17339e5c79b23a5dcb047f3c743"
+      "sha256": "c74185dfc073bc9af68419176fe98d70dfdf85f5ddfd371713d0d52f64b80807"
     },
     "framework/workflow/WF-HIGH-IMPACT.md": {
       "mode": "immutable",
@@ -130,7 +130,7 @@
     },
     "framework/workflow/WF-OPS.md": {
       "mode": "immutable",
-      "sha256": "b09d5e71d307698efa835f582c4b3415bccb3f982db41ecfc69ce6433112d7f5"
+      "sha256": "dd1bffbc764fbc3ce508cce1766fc0c6bc52f091da1ae49b585485620245a92d"
     },
     "framework/workflow/WF-PLANNING.md": {
       "mode": "immutable",

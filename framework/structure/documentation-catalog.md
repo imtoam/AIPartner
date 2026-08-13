@@ -281,6 +281,42 @@ Create a runbook for operations that must be repeatable under pressure, includin
 incident response, backup, restore, migration, key rotation, or scheduler cutover. Include
 prerequisites, authority, commands, evidence, failure handling, rollback, and completion criteria.
 
+### 9.14 Feature source and discussion material
+
+Default path pattern: docs/feature_sources/WORK-ID_short_name.md
+
+Optional. Preserve the raw discussion, scope conversation, and background reasoning behind a feature
+when the formal brief cannot capture all of it. This material is supporting input, not a scope owner.
+
+- Carry a stable reference linked to the permanent work ID and child IDs it supports, so a feature ID
+  can be traced back to the conversation it came from and cross-checked.
+- Keep it searchable and durable; it is a memo and provenance aid, not a live status source.
+- It never owns scope, non-goals, approval, or current state. The feature plan or current-work item
+  remains the sole authoritative owner of exact scope; where the two differ, the brief governs.
+- A conclusion that must constrain implementation is promoted into the feature brief (WF-CORE step 3
+  in PROJECT_WORKFLOW.md); leaving it only in source material does not make it binding.
+
+### 9.15 Rule waiver register
+
+Default path: docs/waivers.md
+
+Records approved exceptions to a framework or project rule that remains in scope. A waiver cancels or
+replaces one rule for a bounded case; it does not retire the rule (that is tailoring) or edit it for
+everyone (that is a framework change).
+
+Each waiver records:
+
+- the waived rule, cited by its owning module ID and rule name, and the work IDs or module it covers.
+- whether the rule is cancelled or replaced, and the alternative constraint when replaced.
+- the rationale and the residual risk accepted.
+- the approver — the Product Owner — and the grant date.
+- an expiry date or a review trigger; a waiver without one is invalid.
+- status: active, expired, or withdrawn.
+
+A waiver may not weaken human authority, information honesty, or a required safety boundary — the same
+floor tailoring may not cross. The project's drift checks surface every active and expired waiver so
+no exception is silent.
+
 ## 10. Artifact relationship rules
 
 - Product brief owns purpose and success.
@@ -299,6 +335,9 @@ prerequisites, authority, commands, evidence, failure handling, rollback, and co
 - View registry owns generation contracts; Markdown, executable sources, and authoritative data own
   the facts being rendered.
 - Every feature and bug fix keeps the same permanent work ID across all applicable artifacts.
+- Feature source material owns nothing normative; it is work input linked to a work ID, and the
+  feature plan still owns exact scope.
+- The waiver register owns recorded rule exceptions only; each waived rule keeps its own owner.
 
 When two files answer the same question, choose one owner and replace the other detail with a
 pointer.
