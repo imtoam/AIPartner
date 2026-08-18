@@ -62,6 +62,18 @@ nor a derived view. It is kept and linked to its work ID as provenance and a mem
 scope, approval, or current state; a conclusion in it becomes binding only when promoted into the
 owning source. Its artifact contract is section 9.14 of the documentation catalog.
 
+**Reconcile a memo before persisting it.** Before writing a discussion memo or source document, check
+it against the existing feature plans, roadmap, current work list, and current-state:
+
+- A part that is already planned or already implemented is not re-entered. Point to the existing
+  owner; where the discussion would change it, notify the Product Owner and adjust that owner, not a
+  parallel memo.
+- Only a part that no existing document already owns is written as new source material or new work,
+  under its correct parent work ID.
+
+This stops a new memo from re-introducing features or plans that already exist and driving the
+document set into conflicting, multi-headed control.
+
 ### Permanent work identity
 
 Every feature and every bug fix receives a permanent unique work ID before implementation begins.

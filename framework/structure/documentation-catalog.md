@@ -295,6 +295,8 @@ when the formal brief cannot capture all of it. This material is supporting inpu
   remains the sole authoritative owner of exact scope; where the two differ, the brief governs.
 - A conclusion that must constrain implementation is promoted into the feature brief (WF-CORE step 3
   in PROJECT_WORKFLOW.md); leaving it only in source material does not make it binding.
+- Before it is written, reconcile it against existing plans and current state (WF-DOCS): a part an
+  existing document already owns is routed to that owner and not duplicated here.
 
 ### 9.15 Rule waiver register
 

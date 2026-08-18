@@ -10,7 +10,7 @@
     },
     "PROJECT_WORKFLOW.md": {
       "mode": "managed_blocks",
-      "sha256": "b171573b3415a8f7f658e110332b575d1b40e7bb7129c69078eaa0f979e07ee9"
+      "sha256": "7dc143e3fbae4cb836b2ad7dda31b7eefb932eb0d6d6f6ef04591ecb1789581f"
     },
     "START_HERE.md": {
       "mode": "immutable",
@@ -82,11 +82,11 @@
     },
     "framework/structure/directory-catalog.md": {
       "mode": "immutable",
-      "sha256": "16dd359daf31fba62e6409b231e92cf8849bda703716ff949652910cf173749c"
+      "sha256": "b9210127cfe8f54fc5af0daf6083710e00b96750dc09549ec29a5d2e2ca82308"
     },
     "framework/structure/documentation-catalog.md": {
       "mode": "immutable",
-      "sha256": "d646136e9a4c2e94fb0682004dad2974da114e8ce441e8cf726ab7409c8cedcd"
+      "sha256": "95b04565041791a982b9c0373db67581264c08c5e03bc7cb22d17bc596b50ff0"
     },
     "framework/structure/git-reference.md": {
       "mode": "immutable",
@@ -118,7 +118,7 @@
     },
     "framework/workflow/WF-DOCS.md": {
       "mode": "immutable",
-      "sha256": "3e06ab1fe1bdc66b94265d107015c43d976400bc8101c71fabb55a7cf14464af"
+      "sha256": "d01fae9974e89c5c470c9edcd176083f16d4c369013478f78e08ae49da62cd04"
     },
     "framework/workflow/WF-DRIFT.md": {
       "mode": "immutable",

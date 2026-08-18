@@ -137,7 +137,10 @@ framework defect.
 - Sole normative owner of: the delivery loop every change follows, the readiness and alignment gate, the discrepancy protocol, and the necessity-before-structure discipline
 
 Use this loop for every non-trivial feature, defect, or operational change. A mechanical edit may
-use a shorter version, but it still needs a stated intent and proportionate verification.
+use a shorter version, but it still needs a stated intent and proportionate verification. Whatever
+its size, every change reconciles against the authoritative documents before starting (step 1) and
+again before completion (step 6); this document check is never the part a shorter version drops, and
+it is the project's first defence against drift.
 
 ### Question necessity before adopting structure
 

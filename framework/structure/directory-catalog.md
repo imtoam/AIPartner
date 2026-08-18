@@ -59,8 +59,12 @@ infrastructure implementing ports. Application and domain do not import entrypoi
 | setup/ | Installation, deployment, service, scheduler, and environment setup | Include |
 | assets/ | Maintained static images, styles, templates, or other packaged assets | Include |
 
-Live database files do not become source merely because they are stored under db/. Their authority,
-backup, recovery, sensitivity, and version-control policy must be explicit.
+Live database files — relational, key-value, or vector stores such as SQLite, DuckDB, or Qdrant — do
+not become source merely because they are stored under db/. Their authority, backup, recovery,
+sensitivity, and version-control policy must be explicit, and each is classified as authoritative or
+derived per WF-PERSISTENCE and WF-DATA. When such a store runs inside a container, its files live in
+a Docker volume or bind mount rather than a project directory; record that actual location and apply
+the same classification, backup, and recovery rules to it.
 
 A local project service is not selected merely because `dashboard/` or `web/` exists. Static HTML
 remains the default. When HTTP is justified, bind to loopback and expose read-only projections unless
@@ -91,6 +95,7 @@ differ because some contain evidence or authoritative operational state.
 
 | Path | Responsibility | Normal treatment |
 |---|---|---|
+| build/ or dist/ | Compiled, transpiled, bundled, or packaged build output | Exclude; reproducible from source |
 | logs/ | Append-only or rotating execution and diagnostic logs | Exclude; define retention |
 | reports/ | Generated analysis, test, audit, or user reports | Exclude unless curated as a release artifact |
 | state/status/ | Current health, readiness, and job-status projections | Exclude; usually reconstructible |
